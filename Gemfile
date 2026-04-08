@@ -13,7 +13,7 @@ gem 'puma', '>= 5.0'
 gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'
-gem 'sqlite3', '>= 2.1'
+gem "pg", "~> 1.1"
 gem 'stimulus-rails'
 gem 'thruster', require: false
 gem 'turbo-rails'
