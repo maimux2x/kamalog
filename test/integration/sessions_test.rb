@@ -5,10 +5,11 @@ class SessionsTest < ActionDispatch::IntegrationTest
     OmniAuth.config.mock_auth[:google_oauth2] = nil
 
     OmniAuth.config.add_mock(:google_oauth2, {
-      :provider => 'google_oauth2',
-      :uid      => '12345',
-      :info => {
-        :name     => 'Alice'
+      provider: 'google_oauth2',
+      uid:      '12345',
+
+      info: {
+        name: 'Alice'
       }
     })
 
