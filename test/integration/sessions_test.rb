@@ -9,7 +9,8 @@ class SessionsTest < ActionDispatch::IntegrationTest
       uid:      '12345',
 
       info: {
-        name: 'Alice'
+        name:  'Alice',
+        email: 'alice@example.com'
       }
     })
 
@@ -32,6 +33,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
 
     assert_equal '12345', user.uid
     assert_equal 'Alice', user.name
+    assert_equal 'alice@example.com', user.email
   end
 
   test 'create (After first login)' do

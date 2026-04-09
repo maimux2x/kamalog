@@ -5,7 +5,10 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
     user = User.find_or_initialize_by(uid: auth['uid'])
 
-    user.update! name: auth.dig('info', 'name')
+    user.update!(
+      name:  auth.dig('info', 'name'),
+      email: auth.dig('info', 'email')
+    )
 
     reset_session
     session[:current_user_id] = user.id
