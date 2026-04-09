@@ -2,9 +2,7 @@ require 'test_helper'
 
 class SessionsTest < ActionDispatch::IntegrationTest
   setup do
-    OmniAuth.config.mock_auth[:google_oauth2] = nil
-
-    OmniAuth.config.add_mock(:google_oauth2, {
+    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
       provider: 'google_oauth2',
       uid:      '12345',
 
@@ -12,16 +10,18 @@ class SessionsTest < ActionDispatch::IntegrationTest
         name:  'Alice',
         email: 'alice@example.com'
       }
-    })
+    )
+  end
 
-    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
+  teardown do
+    OmniAuth.config.mock_auth[:google_oauth2] = nil
   end
 
   test 'create (First login)' do
     User.destroy_all
 
-    assert_difference('User.count', 1) do
-      get '/auth/:google_oauth2/callback'
+    assert_difference 'User.count', 1 do
+      get '/auth/google_oauth2/callback'
 
       assert_response :see_other
     end
@@ -37,8 +37,8 @@ class SessionsTest < ActionDispatch::IntegrationTest
   end
 
   test 'create (After first login)' do
-    assert_difference('User.count', 0) do
-      get '/auth/:google_oauth2/callback'
+    assert_no_difference 'User.count' do
+      get '/auth/google_oauth2/callback'
 
       assert_response :see_other
     end
@@ -47,7 +47,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
   end
 
   test 'destroy' do
-    get '/auth/:google_oauth2/callback'
+    get '/auth/google_oauth2/callback'
 
     delete session_path
 
