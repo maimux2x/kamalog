@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     reset_session
     session[:current_user_id] = user.id
 
-    redirect_to home_path, status: :see_other
+    redirect_to home_path, status: :see_other, notice: 'ログインしました。'
   end
 
   def destroy
