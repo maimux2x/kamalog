@@ -14,7 +14,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:current_user_id]) if session[:current_user_id]
+    return @current_user if defined?(@current_user)
+
+    @current_user = (id = session[:current_user_id]) ? User.find_by(id:) : nil
   end
 
   def authenticated?
