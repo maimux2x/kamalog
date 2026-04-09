@@ -8,12 +8,14 @@ gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'kamal', require: false
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 gem 'propshaft'
 gem 'puma', '>= 5.0'
 gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'
-gem "pg", "~> 1.1"
+gem 'pg', '~> 1.1'
 gem 'stimulus-rails'
 gem 'thruster', require: false
 gem 'turbo-rails'
@@ -23,6 +25,7 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
   gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
+  gem 'rubocop-erb', require: false
   gem 'rubocop-rails-omakase', require: false
 end
 
