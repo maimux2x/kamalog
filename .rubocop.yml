@@ -19,3 +19,6 @@ Layout/SpaceInsideHashLiteralBraces:
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+
+plugins:
+  - rubocop-erb

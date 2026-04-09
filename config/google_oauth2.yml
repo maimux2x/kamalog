@@ -1,6 +1,6 @@
 development:
-  client_id: <%= ENV['CLIENT_ID'] %>
-  client_secret: <%= ENV['CLIENT_SECRET'] %>
+  client_id: <%= ENV['GOOGLE_CLIENT_ID'] %>
+  client_secret: <%= ENV['GOOGLE_CLIENT_SECRET'] %>
 
 test:
   client_id: CLIENT_ID
@@ -9,5 +9,3 @@ test:
 production:
   client_id: <%= Rails.application.credentials.dig(:google, :client_id) %>
   client_secret: <%= Rails.application.credentials.dig(:google, :client_secret) %>
-
-
