@@ -1,4 +1,4 @@
-class PieceClay < ApplicationRecord
+class ClayUsage < ApplicationRecord
   belongs_to :piece
   belongs_to :clay
 

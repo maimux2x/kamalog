@@ -12,7 +12,7 @@ class CreateClaysGlazes < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    create_table :piece_clays do |t|
+    create_table :clay_usages do |t|
       t.references :piece, foreign_key: true, null: false
       t.references :clay,  foreign_key: true, null: false
 
@@ -21,7 +21,7 @@ class CreateClaysGlazes < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    create_table :piece_glazes do |t|
+    create_table :glaze_usages do |t|
       t.references :piece, foreign_key: true, null: false
       t.references :glaze, foreign_key: true, null: false
 
