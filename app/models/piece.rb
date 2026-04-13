@@ -1,11 +1,11 @@
 class Piece < ApplicationRecord
   belongs_to :user
 
-  has_many :piece_clays,  dependent: :destroy
-  has_many :piece_glazes, dependent: :destroy
+  has_many :clay_usages,  dependent: :destroy
+  has_many :glaze_usages, dependent: :destroy
 
-  has_many :clays,  through: :piece_clays
-  has_many :glazes, through: :piece_glazes
+  has_many :clays,  through: :clay_usages
+  has_many :glazes, through: :glaze_usages
 
   validates :title, presence: true
 

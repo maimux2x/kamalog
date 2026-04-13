@@ -1,4 +1,4 @@
-class PieceGlaze < ApplicationRecord
+class GlazeUsage < ApplicationRecord
   belongs_to :piece
   belongs_to :glaze
 end
