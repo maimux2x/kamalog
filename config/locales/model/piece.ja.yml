@@ -1,0 +1,11 @@
+ja:
+  enums:
+    piece:
+      status:
+        in_progress: 製作中
+        complete: 完成
+      form_method:
+        coil_building: 紐作り
+        ball_method: 玉作り
+        slab_building: たたら作り
+        electric_wheel: 電動ろくろ

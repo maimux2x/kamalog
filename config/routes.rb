@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resource :home,    only: %i[show]
 
   namespace :my do
-    resources :pieces do
+    resources :pieces, only: %i[show new create] do
       collection do
         resources :in_progress, only: %i[index]
       end
