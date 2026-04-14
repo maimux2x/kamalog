@@ -3,8 +3,15 @@
 <div class="mb-3">
   <%= bootstrap_form_with model: [:my, @piece], method: :post do |f| %>
     <%= f.text_field :title, label: 'タイトル' %>
-    <%= f.collection_radio_buttons :status, Piece.statuses_i18n, :first, :last, label: '進捗' %>
     <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last, label: '成形方法' %>
+
+    <%= f.fields_for :clay_usages do |clay_usage_form| %>
+      <div class="d-flex gap-3">
+        <%= clay_usage_form.select :clay_id, Clay.all.map { [it.name, it.id] }, {include_blank: true, label: '土の種類'} %>
+        <%= clay_usage_form.number_field :weight, label: '使用量' %>
+      </div>
+    <% end %>
+
     <%= f.primary %>
   <% end %>
 </div>

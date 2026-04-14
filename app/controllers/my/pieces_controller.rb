@@ -5,6 +5,8 @@ class My::PiecesController < ApplicationController
 
   def new
     @piece = current_user.pieces.new
+
+    @piece.clay_usages.build
   end
 
   def create

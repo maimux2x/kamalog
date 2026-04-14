@@ -21,5 +21,5 @@ class Piece < ApplicationRecord
     electric_wheel: 3
   }, validate: true
 
-  accepts_nested_attributes_for :clays, :glazes
+  accepts_nested_attributes_for :clay_usages, :glaze_usages
 end

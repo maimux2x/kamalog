@@ -23,5 +23,3 @@ cup         = user.pieces.create!(title: 'マグカップ', form_method: :coil_b
 cup.clay_usages.create!(clay: black_clay, weight: 300)
 cup.glaze_usages.create!(glaze: black_matte)
 cup.glaze_usages.create!(glaze: perl)
-
-
