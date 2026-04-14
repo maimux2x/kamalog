@@ -15,6 +15,17 @@ class My::PiecesController < ApplicationController
     redirect_to my_in_progress_index_path, status: :see_other
   end
 
+  def edit
+    @piece = current_user.pieces.find(params[:id])
+  end
+
+  def update
+    @piece = current_user.pieces.find(params[:id])
+    @piece.update! piece_params
+
+    redirect_to my_piece_path(@piece), status: :see_other
+  end
+
   private
 
   def piece_params
@@ -25,11 +36,16 @@ class My::PiecesController < ApplicationController
 
       clay_usages_attributes: [[
         :clay_id,
-        :weight
+        :weight,
+        :id,
+        :_destroy
       ]],
 
       glaze_usages_attributes: [[
-        :glaze_id
+        :glaze_id,
+        :id,
+        :_destroy
+
       ]]
     ])
   end
