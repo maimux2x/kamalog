@@ -1,9 +1,27 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+user = User.create!(uid: 'test1@example.com', name: 'test1', email: 'test1@example.com')
+
+['白土', '赤土', '黒土'].each do |clay|
+  Clay.create!(name: clay)
+end
+
+['白マット', 'パールラスター', '黒マット'].each do |glaze|
+  Glaze.create!(name: glaze)
+end
+
+white_clay  = Clay.find_by(name: '白土')
+white_matte = Glaze.find_by(name: '白マット')
+rice_bowl   = user.pieces.create!(title: 'お茶碗', form_method: :electric_wheel)
+
+rice_bowl.clay_usages.create!(clay: white_clay, weight: 500)
+rice_bowl.glaze_usages.create!(glaze: white_matte)
+
+black_clay  = Clay.find_by(name: '黒土')
+black_matte = Glaze.find_by(name: '黒マット')
+perl        = Glaze.find_by(name: 'パールラスター')
+cup         = user.pieces.create!(title: 'マグカップ', form_method: :coil_building)
+
+cup.clay_usages.create!(clay: black_clay, weight: 300)
+cup.glaze_usages.create!(glaze: black_matte)
+cup.glaze_usages.create!(glaze: perl)
+
+
