@@ -1,0 +1,14 @@
+<h1 class="mb-3">製作中一覧</h1>
+<%= link_to '制作する作品を登録', new_my_piece_path, class: 'btn btn-primary mb-3' %>
+<div class="row row-cols-2">
+  <% @pieces.each do |piece| %>
+    <div class="col">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to piece.title, my_piece_path(piece), class: 'stretched-link text-decoration-none' %></h5>
+          <time datetime="<%= piece.created_at.iso8601 %>"><%= l piece.created_at.to_date %></time>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

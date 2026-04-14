@@ -3,9 +3,12 @@ source 'https://rubygems.org'
 gem 'rails', '~> 8.1.3'
 
 gem 'bootsnap', require: false
+gem 'bootstrap_form', '~> 5.6'
 gem 'cssbundling-rails'
+gem 'enum_help'
 gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
+gem 'rails-i18n', '~> 8.1.0'
 gem 'jbuilder'
 gem 'kamal', require: false
 gem 'omniauth-google-oauth2'

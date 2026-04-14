@@ -1,0 +1,13 @@
+<h1 class="mb-3">制作する作品を登録</h1>
+
+<div class="mb-3">
+  <%= bootstrap_form_with model: [:my, @piece], method: :post do |f| %>
+    <%= f.text_field :title, label: 'タイトル' %>
+    <%= f.collection_radio_buttons :status, Piece.statuses_i18n, :first, :last, label: '進捗' %>
+    <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last, label: '成形方法' %>
+    <%= f.primary %>
+  <% end %>
+</div>
+<hr/>
+
+<%= link_to 'キャンセル', my_in_progress_index_path, class: 'btn btn-outline-primary' %>

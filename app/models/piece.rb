@@ -20,4 +20,6 @@ class Piece < ApplicationRecord
     slab_building:  2,
     electric_wheel: 3
   }, validate: true
+
+  accepts_nested_attributes_for :clays, :glazes
 end
