@@ -12,7 +12,7 @@ class My::PiecesController < ApplicationController
   def create
     @piece = current_user.pieces.create!(piece_params)
 
-    redirect_to my_in_progress_index_path, status: :see_other
+    redirect_to my_piece_path(@piece), status: :see_other
   end
 
   def edit
