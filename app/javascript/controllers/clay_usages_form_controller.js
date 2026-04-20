@@ -53,7 +53,7 @@ export default class extends Controller {
       })
     } else {
       this.itemTargets.forEach((item) => {
-        item.querySelector('button').style.display = '';
+        item.querySelector('button').removeAttribute('style');
       })
     }
   }

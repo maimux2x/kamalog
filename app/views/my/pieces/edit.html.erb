@@ -4,31 +4,38 @@
   <%= f.text_field :title, label: 'タイトル' %>
   <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last, label: '成形方法' %>
 
+  <p>土の種類と使用量</p>
   <div data-clay-usages-form-target="usages">
     <%= f.fields_for :clay_usages do |clay_usage_form| %>
-      <div class="d-flex gap-3" data-clay-usages-form-target="item">
-        <%= clay_usage_form.select :clay_id, Clay.all.map { [it.name, it.id] }, {include_blank: true, label: '土の種類'} %>
-        <%= clay_usage_form.number_field :weight, label: '使用量' %>
-        <button type="button" class="btn btn-outline-danger align-self-center" data-action="click->clay-usages-form#remove">削除</button>
-        <%= clay_usage_form.hidden_field :_destroy %>
+      <%= clay_usage_form.hidden_field :_destroy %>
+      <div class="hstack gap-3 mb-3" data-clay-usages-form-target="item">
+        <%= clay_usage_form.select :clay_id, Clay.all.map { [it.name, it.id] }, include_blank: true, hide_label: true, wrapper: {class: false} %>
+        <%= clay_usage_form.number_field :weight, hide_label: true, wrapper: {class: false} %>
+        <span>g</span>
+        <div>
+          <button type="button" class="btn btn-outline-danger" data-action="click->clay-usages-form#remove">削除</button>
+        </div>
       </div>
     <% end %>
   </div>
 
-  <button type="button" class="btn btn-secondary d-block mb-5" data-action="click->clay-usages-form#add">土を追加する</button>
+  <button type="button" class="btn btn-secondary d-block mb-3" data-action="click->clay-usages-form#add">土を追加する</button>
+  <hr/>
 
   <template data-clay-usages-form-target="template">
     <%= f.fields_for :clay_usages, @piece.clay_usages.new, child_index: 'NEW_INDEX' do |clay_usage_form| %>
       <div class="d-flex gap-3" data-clay-usages-form-target="item">
-        <%= clay_usage_form.select :clay_id, Clay.all.map { [it.name, it.id] }, include_blank: true, label: '土の種類' %>
-        <%= clay_usage_form.number_field :weight, label: '使用量' %>
+        <%= clay_usage_form.select :clay_id, Clay.all.map { [it.name, it.id] }, include_blank: true, hide_label: true %>
+        <%= clay_usage_form.number_field :weight, hide_label: true %>
+        <span class="align-self-center">g</span>
         <button type="button" class="btn btn-outline-danger align-self-center" data-action="click->clay-usages-form#remove">削除</button>
       </div>
     <% end %>
   </template>
 
-  <%= f.primary %>
+  <div class="hstack gap-3">
+    <%= f.primary %>
+    <%= link_to 'キャンセル', my_in_progress_index_path, class: 'btn btn-outline-primary' %>
+  </div>
 <% end %>
-<hr/>
 
-<%= link_to 'キャンセル', my_in_progress_index_path, class: 'btn btn-outline-primary' %>
