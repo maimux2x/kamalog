@@ -26,11 +26,11 @@ export default class extends Controller {
 
   remove(event) {
     const usages = this.usagesTarget;
-    const item = event.target.closest("div[class='d-flex gap-3']");
+    const item = event.target.closest("div[class='hstack gap-3 mb-3']");
 
     if (item.querySelector("input[name*='_destroy']")) {
       item.querySelector("input[name*='_destroy']").value = 1;
-      item.classList.replace('d-flex', 'd-none');
+      item.classList.replace('hstack', 'd-none');
     } else {
       usages.removeChild(item);
     }
@@ -42,7 +42,7 @@ export default class extends Controller {
     let hideItemsCount = 0;
 
     this.itemTargets.forEach((item) => {
-      if (item.className === 'd-none gap-3') {
+      if (item.className === 'd-none gap-3 mb-3') {
         hideItemsCount++;
       }
     })
@@ -53,7 +53,7 @@ export default class extends Controller {
       })
     } else {
       this.itemTargets.forEach((item) => {
-        item.querySelector('button').removeAttribute('style');
+        item.querySelector('div button').removeAttribute('style');
       })
     }
   }
