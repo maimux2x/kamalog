@@ -18,6 +18,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
   end
 
   test 'create (First login)' do
+    Piece.destroy_all
     User.destroy_all
 
     assert_difference 'User.count', 1 do

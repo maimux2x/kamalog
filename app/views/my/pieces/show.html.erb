@@ -1,0 +1,26 @@
+<div class="card mb-3">
+  <div class="card-body">
+    <h1><%= @piece.title %></h1>
+    <dl>
+      <dt>進捗</dt>
+      <dd><%= @piece.status_i18n %></dd>
+
+      <dt>成形方法</dt>
+      <dd><%= @piece.form_method_i18n %></dd>
+
+      <dt>使用した土</dt>
+      <% @piece.clay_usages.each do |usage| %>
+        <dd><%= usage.clay.name %> <%= usage.weight %>g</dd>
+      <% end %>
+
+      <dt>使用した釉薬</dt>
+      <dd><%= @piece.glazes.pluck(:name).join(' / ') %></dd>
+    </dl>
+  </div>
+</div>
+
+<%= link_to '編集', edit_my_piece_path(@piece), class: 'btn btn-outline-primary' %>
+
+<hr/>
+
+<%= link_to '戻る', my_in_progress_index_path, class: 'btn btn-primary' %>

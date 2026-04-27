@@ -1,0 +1,45 @@
+<%= bootstrap_form_with model: [:my, @piece] do |f| %>
+  <%= f.text_field :title, label: 'タイトル' %>
+  <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last, label: '成形方法' %>
+
+  <div data-controller="nested-form" data-nested-form-min-items-value="1">
+    <p>土の種類と使用量</p>
+    <div data-nested-form-target="container">
+      <%= f.fields_for :clay_usages do |clay_usage| %>
+        <%= render 'clay_usage', form: clay_usage %>
+      <% end %>
+    </div>
+
+    <button type="button" class="btn btn-secondary d-block mb-3" data-action="click->nested-form#add">土を追加する</button>
+
+    <template data-nested-form-target="template">
+      <%= f.fields_for :clay_usages, @piece.clay_usages.new, child_index: '__INDEX__' do |clay_usage| %>
+        <%= render 'clay_usage', form: clay_usage %>
+      <% end %>
+    </template>
+  </div>
+
+  <div data-controller="nested-form">
+    <p>釉薬の種類</p>
+    <div data-nested-form-target="container">
+      <%= f.fields_for :glaze_usages do |glaze_usage| %>
+        <%= render 'glaze_usage', form: glaze_usage %>
+      <% end %>
+    </div>
+
+    <button type="button" class="btn btn-secondary d-block mb-3" data-action="click->nested-form#add">釉薬を追加する</button>
+
+    <template data-nested-form-target="template">
+      <%= f.fields_for :glaze_usages, @piece.glaze_usages.new, child_index: '__INDEX__' do |glaze_usage| %>
+        <%= render 'glaze_usage', form: glaze_usage %>
+      <% end %>
+    </template>
+  </div>
+  <hr/>
+
+  <div class="hstack gap-3">
+    <%= f.primary %>
+    <%= link_to 'キャンセル', my_in_progress_index_path, class: 'btn btn-outline-primary' %>
+  </div>
+<% end %>
+
