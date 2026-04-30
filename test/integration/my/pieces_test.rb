@@ -37,6 +37,7 @@ class My::PiecesTest < ActionDispatch::IntegrationTest
     get new_my_piece_path
 
     assert_response :ok
+
     assert_dom 'input[type="submit"][value="登録する"]'
   end
 
@@ -101,5 +102,7 @@ class My::PiecesTest < ActionDispatch::IntegrationTest
 
     assert_equal '白土', cup.clays.first.name
     assert_equal 500,    cup.clay_usages.first.weight
+    assert_equal '黒土', cup.clays.last.name
+    assert_equal 50,    cup.clay_usages.last.weight
   end
 end

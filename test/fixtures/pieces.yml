@@ -4,4 +4,8 @@ cup:
   status: in_progress
   form_method: coil_building
 
-
+base:
+  user: alice
+  title: 花瓶
+  status: in_progress
+  form_method: coil_building

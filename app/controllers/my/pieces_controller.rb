@@ -7,13 +7,12 @@ class My::PiecesController < ApplicationController
     @piece = current_user.pieces.new
 
     @piece.clay_usages.build
-    @piece.glaze_usages.build
   end
 
   def create
     @piece = current_user.pieces.create!(piece_params)
 
-    redirect_to my_piece_path(@piece), status: :see_other
+    redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を登録しました。'
   end
 
   def edit
@@ -24,7 +23,7 @@ class My::PiecesController < ApplicationController
     @piece = current_user.pieces.find(params[:id])
     @piece.update! piece_params
 
-    redirect_to my_piece_path(@piece), status: :see_other
+    redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を更新しました。'
   end
 
   private

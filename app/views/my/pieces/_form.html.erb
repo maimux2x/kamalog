@@ -2,7 +2,7 @@
   <%= f.text_field :title, label: 'タイトル' %>
   <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last, label: '成形方法' %>
 
-  <div data-controller="nested-form" data-nested-form-min-items-value="1">
+  <div class="clays" data-controller="nested-form" data-nested-form-min-items-value="1">
     <p>土の種類と使用量</p>
     <div data-nested-form-target="container">
       <%= f.fields_for :clay_usages do |clay_usage| %>
@@ -19,7 +19,7 @@
     </template>
   </div>
 
-  <div data-controller="nested-form">
+  <div class="glazes" data-controller="nested-form">
     <p>釉薬の種類</p>
     <div data-nested-form-target="container">
       <%= f.fields_for :glaze_usages do |glaze_usage| %>

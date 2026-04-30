@@ -1,0 +1,11 @@
+cup_usages:
+  piece: cup
+  glaze: white_matte
+
+base_usages1:
+  piece: base
+  glaze: white_matte
+
+base_usages2:
+  piece: base
+  glaze: black_matte
