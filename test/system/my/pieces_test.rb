@@ -16,8 +16,8 @@ class PiecesTest < ApplicationSystemTestCase
     within '[data-nested-form-target="item"]' do
       assert_selector 'button[disabled]', text: '削除'
 
-      select '白土',      from: '土'
-      fill_in '使用量',   with: '500'
+      select '白土',    from: '土'
+      fill_in '使用量', with: '500'
     end
 
     click_on '釉薬を追加する'
@@ -38,8 +38,8 @@ class PiecesTest < ApplicationSystemTestCase
 
     assert_field 'タイトル', with: 'マグカップ'
     assert_checked_field '紐作り'
-    assert_select '土',    selected: '白土'
-    assert_select '釉薬',   selected: '白マット'
+    assert_select '土',      selected: '白土'
+    assert_select '釉薬',    selected: '白マット'
 
     fill_in 'タイトル', with: '大きいマグカップ'
 
