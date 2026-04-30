@@ -9,12 +9,12 @@
       <dd><%= @piece.form_method_i18n %></dd>
 
       <dt>使用した土</dt>
-      <% @piece.clay_usages.each do |usage| %>
+      <% @piece.clay_usages.order(:id).each do |usage| %>
         <dd><%= usage.clay.name %> <%= usage.weight %>g</dd>
       <% end %>
 
       <dt>使用した釉薬</dt>
-      <dd><%= @piece.glazes.pluck(:name).join(' / ') %></dd>
+      <dd><%= @piece.glazes.order(:id).pluck(:name).join(' / ') %></dd>
     </dl>
   </div>
 </div>

@@ -34,7 +34,7 @@ export default class NestedFormController extends Controller {
   }
 
   remove(e) {
-    const item    = e.target.closest('[data-nested-form-target="item"]');
+    const item         = e.target.closest('[data-nested-form-target="item"]');
     const maybeIdInput = item.nextElementSibling;
 
     if (maybeIdInput instanceof HTMLInputElement && maybeIdInput.name.endsWith('[id]')) {

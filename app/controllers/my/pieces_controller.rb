@@ -1,6 +1,6 @@
 class My::PiecesController < ApplicationController
   def show
-    @piece = current_user.pieces.find(params[:id])
+    @piece = current_user.pieces.includes(clay_usages: :clay, glaze_usages: :glaze).find(params[:id])
   end
 
   def new
@@ -10,9 +10,13 @@ class My::PiecesController < ApplicationController
   end
 
   def create
-    @piece = current_user.pieces.create!(piece_params)
+    @piece = current_user.pieces.new(piece_params)
 
-    redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を登録しました。'
+    if @piece.save
+      redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を登録しました。'
+    else
+      render :new, status: :unprocessable_content
+    end
   end
 
   def edit
@@ -21,9 +25,12 @@ class My::PiecesController < ApplicationController
 
   def update
     @piece = current_user.pieces.find(params[:id])
-    @piece.update! piece_params
 
-    redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を更新しました。'
+    if @piece.update piece_params
+      redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を更新しました。'
+    else
+      render :edit, status: :unprocessable_content
+    end
   end
 
   def destroy
