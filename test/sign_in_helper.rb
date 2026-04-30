@@ -13,10 +13,7 @@ module SignInHelper
     visit root_path
 
     click_on 'Google アカウントでログイン'
-    @current_user = user
-  end
 
-  def current_user
-    @current_user
+    assert_current_path home_path
   end
 end

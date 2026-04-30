@@ -58,7 +58,6 @@ class My::PiecesController < ApplicationController
         :glaze_id,
         :id,
         :_destroy
-
       ]]
     ])
   end
