@@ -26,6 +26,12 @@ class My::PiecesController < ApplicationController
     redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を更新しました。'
   end
 
+  def destroy
+    current_user.pieces.find(params[:id]).destroy!
+
+    redirect_to my_in_progress_index_path, status: :see_other, notice: '製作中の作品を削除しました。'
+  end
+
   private
 
   def piece_params

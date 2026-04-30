@@ -105,4 +105,13 @@ class My::PiecesTest < ActionDispatch::IntegrationTest
     assert_equal '黒土', cup.clays.last.name
     assert_equal 50,    cup.clay_usages.last.weight
   end
+
+  test 'destroy' do
+    assert_difference 'Piece.count', -1 do
+      delete my_piece_path(pieces(:cup))
+    end
+
+    assert_response :see_other
+    assert_redirected_to my_in_progress_index_path
+  end
 end
