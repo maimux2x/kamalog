@@ -1,6 +1,6 @@
 <%= bootstrap_form_with model: [:my, @piece] do |f| %>
-  <%= f.text_field :title, label: 'タイトル' %>
-  <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last, label: '成形方法' %>
+  <%= f.text_field :title %>
+  <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last %>
 
   <div class="clays" data-controller="nested-form" data-nested-form-min-items-value="1">
     <p>土の種類と使用量</p>

@@ -1,4 +1,9 @@
 ja:
+  activerecord:
+    attributes:
+      piece:
+        title: タイトル
+        form_method: 成形方法
   enums:
     piece:
       status:
