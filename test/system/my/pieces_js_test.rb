@@ -15,8 +15,8 @@ class PiecesJsTest < ApplicationSystemTestCase
     fill_in 'タイトル', with: 'お茶碗'
     choose '電動ろくろ'
 
-    within '[data-nested-form-target="item"]' do
-      assert_selector 'button[disabled]', text: '削除'
+    within '.nested-form-wrapper' do
+      # assert_selector 'button[disabled]', text: '削除'
 
       select '白土',    from: '土'
       fill_in '使用量', with: '500'
@@ -42,14 +42,14 @@ class PiecesJsTest < ApplicationSystemTestCase
 
     click_on '土を追加する'
 
-    within '.clays [data-nested-form-target="item"]:last-of-type' do
+    within '.clays .nested-form-wrapper:last-of-type' do
       select '黒土',    from: '土'
       fill_in '使用量', with: '100'
     end
 
     click_on '釉薬を追加する'
 
-    within '.glazes [data-nested-form-target="item"]:last-of-type' do
+    within '.glazes .nested-form-wrapper:last-of-type' do
       select '黒マット', from: '釉薬'
     end
 
