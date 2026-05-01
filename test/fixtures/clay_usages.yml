@@ -1,0 +1,15 @@
+cup_usages:
+  piece: cup
+  clay: white
+  weight: 500
+
+base_usages1:
+  piece: base
+  clay: white
+  weight: 250
+
+base_usages2:
+  piece: base
+  clay: black
+  weight: 300
+

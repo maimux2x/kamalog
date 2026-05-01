@@ -1,0 +1,6 @@
+ja:
+  activerecord:
+    attributes:
+      clay_usage:
+        clay_id: 土
+        weight: 使用量

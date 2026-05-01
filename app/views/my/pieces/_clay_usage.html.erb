@@ -1,0 +1,8 @@
+<div class="hstack gap-3 mb-3" data-nested-form-target="item">
+  <%= form.collection_select :clay_id, Clay.order(:id), :id, :name, include_blank: true, hide_label: true, required: true, wrapper: {class: false} %>
+  <%= form.number_field :weight, hide_label: true, wrapper: {class: false} %>
+  <span>g</span>
+  <div>
+    <button type="button" class="btn btn-outline-danger" data-nested-form-target="removeButton" data-action="click->nested-form#remove">削除</button>
+  </div>
+</div>
