@@ -2,36 +2,35 @@
   <%= f.text_field :title %>
   <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last %>
 
-  <div class="clays" data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+  <div class="clays" data-controller="nested-form" data-nested-form-min-items-value="1">
     <p>土の種類と使用量</p>
-    <%= f.fields_for :clay_usages do |clay_usage| %>
-      <%= render 'clay_usage', form: clay_usage %>
-    <% end %>
-    <div data-nested-form-target="target">
+    <div data-nested-form-target="container">
+      <%= f.fields_for :clay_usages do |clay_usage| %>
+        <%= render 'clay_usage', form: clay_usage %>
+      <% end %>
     </div>
 
-    <button type="button" class="btn btn-secondary d-block mb-3" data-action="nested-form#add">土を追加する</button>
+    <button type="button" class="btn btn-secondary d-block mb-3" data-action="click->nested-form#add">土を追加する</button>
 
     <template data-nested-form-target="template">
-      <%= f.fields_for :clay_usages, @piece.clay_usages.new, child_index: 'NEW_RECORD' do |clay_usage| %>
+      <%= f.fields_for :clay_usages, @piece.clay_usages.new, child_index: '__INDEX__' do |clay_usage| %>
         <%= render 'clay_usage', form: clay_usage %>
       <% end %>
     </template>
   </div>
 
-  <div class="glazes" data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+  <div class="glazes" data-controller="nested-form">
     <p>釉薬の種類</p>
-
-    <%= f.fields_for :glaze_usages do |glaze_usage| %>
-      <%= render 'glaze_usage', form: glaze_usage %>
-    <% end %>
-    <div data-nested-form-target="target">
+    <div data-nested-form-target="container">
+      <%= f.fields_for :glaze_usages do |glaze_usage| %>
+        <%= render 'glaze_usage', form: glaze_usage %>
+      <% end %>
     </div>
 
-    <button type="button" class="btn btn-secondary d-block mb-3" data-action="nested-form#add">釉薬を追加する</button>
+    <button type="button" class="btn btn-secondary d-block mb-3" data-action="click->nested-form#add">釉薬を追加する</button>
 
     <template data-nested-form-target="template">
-      <%= f.fields_for :glaze_usages, @piece.glaze_usages.new, child_index: 'NEW_RECORD' do |glaze_usage| %>
+      <%= f.fields_for :glaze_usages, @piece.glaze_usages.new, child_index: '__INDEX__' do |glaze_usage| %>
         <%= render 'glaze_usage', form: glaze_usage %>
       <% end %>
     </template>
