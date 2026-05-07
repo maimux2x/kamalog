@@ -76,8 +76,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_083512) do
   create_table "logs", force: :cascade do |t|
     t.string "body"
     t.datetime "created_at", null: false
+    t.date "date", null: false
     t.bigint "piece_id", null: false
-    t.datetime "timestamp", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["piece_id"], name: "index_logs_on_piece_id"

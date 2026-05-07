@@ -3,9 +3,9 @@ class CreateLogs < ActiveRecord::Migration[8.1]
     create_table :logs do |t|
       t.references :piece, foreign_key: true, null: false
 
-      t.string   :title,     null: false
-      t.datetime :timestamp, null: false
-      t.string   :body
+      t.date   :date,  null: false
+      t.string :title, null: false
+      t.string :body
 
       t.timestamps
     end

@@ -1,0 +1,16 @@
+<%= render 'my/piece_tab', piece: @piece %>
+
+<%= link_to '作業記録を追加する', new_my_piece_log_path(@piece), class: 'btn btn-primary mb-3' %>
+
+<% @piece.logs.each do |log| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h2><%= link_to log.title, my_piece_log_path(@piece, log), class: 'text-decoration-none stretched-link' %></h2>
+      <time datetime="<%= log.date %>" class="d-block mb-3"><%= log.date %></time>
+
+      <p><%= log.body %></p>
+    </div>
+  </div>
+<% end %>
+
+<%= link_to '戻る', my_in_progress_index_path, class: 'btn btn-primary' %>

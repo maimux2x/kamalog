@@ -1,0 +1,7 @@
+<%= bootstrap_form_with model: [:my, log.piece, log] do |form| %>
+  <%= form.date_field :date %>
+  <%= form.text_field :title %>
+  <%= form.text_area :body, style: 'field-sizing: content; min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2)' %>
+
+  <%= form.primary %>
+<% end %>
