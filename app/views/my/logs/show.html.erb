@@ -6,6 +6,12 @@
     <dl>
       <dt>作業内容</dt>
       <dd><%= @log.body %></dd>
+
+      <dt>ギャラリー</dt>
+      <dd>
+        <%= image_tag @log.photos.first.file.variant(:small) %>
+      </dd>
+
     </dl>
   </div>
 </div>
