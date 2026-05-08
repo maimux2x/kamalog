@@ -1,25 +1,38 @@
-user = User.create!(uid: 'test1@example.com', name: 'test1', email: 'test1@example.com')
+user = User.find_or_initialize_by(email: 'test1@example.com').tap {
+  it.update! uid: 'test1@example.com', name: 'test1'
+}
 
-['白土', '赤土', '黒土'].each do |clay|
-  Clay.create!(name: clay)
-end
+white_clay, _, black_clay = ['白土', '赤土', '黒土'].map {|clay|
+  Clay.find_or_create_by! name: clay
+}
 
-['白マット', 'パールラスター', '黒マット'].each do |glaze|
-  Glaze.create!(name: glaze)
-end
+white_matte, perl, black_matte = ['白マット', 'パールラスター', '黒マット'].map {|glaze|
+  Glaze.find_or_create_by! name: glaze
+}
 
-white_clay  = Clay.find_by(name: '白土')
-white_matte = Glaze.find_by(name: '白マット')
-rice_bowl   = user.pieces.create!(title: 'お茶碗', form_method: :electric_wheel)
+rice_bowl = user.pieces.find_or_initialize_by(title: 'お茶碗').tap {
+  it.update! form_method: :electric_wheel
+}
 
-rice_bowl.clay_usages.create!(clay: white_clay, weight: 500)
-rice_bowl.glaze_usages.create!(glaze: white_matte)
+rice_bowl.clay_usages.find_or_initialize_by(clay: white_clay).tap { it.update! weight: 500 }
+rice_bowl.glaze_usages.find_or_create_by! glaze: white_matte
 
-black_clay  = Clay.find_by(name: '黒土')
-black_matte = Glaze.find_by(name: '黒マット')
-perl        = Glaze.find_by(name: 'パールラスター')
-cup         = user.pieces.create!(title: 'マグカップ', form_method: :coil_building)
+rice_bowl.logs.find_or_initialize_by(title: '電動ロクロでお茶碗を作る').tap {
+  it.update! date: Date.new(2026, 5, 1), body: 'プレゼント用に小さなお茶碗を作り始めた。'
+}
 
-cup.clay_usages.create!(clay: black_clay, weight: 300)
-cup.glaze_usages.create!(glaze: black_matte)
-cup.glaze_usages.create!(glaze: perl)
+cup = user.pieces.find_or_initialize_by(title: 'マグカップ').tap {
+  it.update! form_method: :coil_building
+}
+
+cup.clay_usages.find_or_initialize_by(clay: black_clay).tap { it.update! weight: 300 }
+cup.glaze_usages.find_or_create_by! glaze: black_matte
+cup.glaze_usages.find_or_create_by! glaze: perl
+
+cup.logs.find_or_initialize_by(title: '紐作りでマグカップ作り').tap {
+  it.update! date: Date.new(2026, 4, 5), body: '好きな作家さんの作風を参考に作ってみる。'
+}
+
+cup.logs.find_or_initialize_by(title: '削りで形を整える').tap {
+  it.update! date: Date.new(2026, 4, 12), body: '削りを入れて凹凸や底の厚みを削って形を整えた。'
+}
