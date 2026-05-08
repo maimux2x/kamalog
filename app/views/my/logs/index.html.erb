@@ -1,6 +1,8 @@
 <%= render 'my/piece_tab', piece: @piece %>
 
-<%= link_to '作業記録を追加する', new_my_piece_log_path(@piece), class: 'btn btn-primary mb-3' %>
+<div>
+  <%= link_to '作業記録を追加する', new_my_piece_log_path(@piece), class: 'btn btn-primary mb-3' %>
+</div>
 
 <% @piece.logs.each do |log| %>
   <div class="card mb-3">
