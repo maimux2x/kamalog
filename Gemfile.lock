@@ -463,6 +463,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   enum_help
+  herb
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
