@@ -9,7 +9,7 @@
 
       <dt>ギャラリー</dt>
       <dd>
-        <%= image_tag @log.photos.first.file.variant(:small) %>
+        <%= image_tag @log.photos.first.file.variant(:small), alt: '' %>
       </dd>
 
     </dl>
@@ -20,5 +20,5 @@
   <%= link_to '編集', edit_my_piece_log_path(@log.piece, @log), class: 'btn btn-primary me-2' %>
   <%= button_to '削除', my_piece_log_path(@log.piece, @log), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-outline-danger' %>
 </div>
-<hr/>
+<hr>
 <%= link_to '戻る', my_piece_logs_path(@log.piece), class: 'btn btn-primary' %>
