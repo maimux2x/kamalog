@@ -6,6 +6,7 @@ gem 'bootsnap', require: false
 gem 'bootstrap_form', '~> 5.6'
 gem 'cssbundling-rails'
 gem 'enum_help'
+gem 'herb'
 gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
 gem 'rails-i18n', '~> 8.1.0'
