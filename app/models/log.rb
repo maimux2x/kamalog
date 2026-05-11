@@ -3,5 +3,5 @@ class Log < ApplicationRecord
 
   has_many :photos
 
-  accepts_nested_attributes_for :photos
+  accepts_nested_attributes_for :photos, allow_destroy: true
 end

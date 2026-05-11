@@ -3,9 +3,43 @@
   <%= form.text_field :title %>
   <%= form.text_area :body, style: 'field-sizing: content; min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2)' %>
 
-  <%= form.fields_for :photos, log.photos.new do |photo_form| %>
-    <%= photo_form.file_field :file %>
-  <% end %>
+  <div data-controller="nested-form">
+    <div data-nested-form-target="container">
+      <%= form.fields_for :photos do |photo_form| %>
+        <div data-nested-form-target="item">
+          <% if photo_form.object.persisted? %>
+            <%= image_tag photo_form.object.file.variant(:small), alt: '' %>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-nested-form-target="removeButton"
+              data-action="click->nested-form#remove"
+            >
+              削除
+            </button>
+          <% else %>
+            <%= photo_form.file_field :file %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <button
+      type="button"
+      data-action="nested-form#add"
+      class="btn btn-primary d-block mb-3"
+    >
+      画像を追加する
+    </button>
+
+    <template data-nested-form-target="template">
+      <%= form.fields_for :photos, log.photos.new, child_index: '__INDEX__' do |photo_form| %>
+        <div data-nested-form-target="item">
+          <%= photo_form.file_field :file %>
+        </div>
+      <% end %>
+    </template>
+  </div>
 
   <%= form.primary %>
 <% end %>

@@ -4,11 +4,11 @@ class My::LogsController < ApplicationController
   end
 
   def show
-    @log  = find_piece.logs.find(params[:id])
+    @log = find_piece.logs.find(params[:id])
   end
 
   def new
-    @log  = find_piece.logs.new(date: Date.current)
+    @log = find_piece.logs.new(date: Date.current)
   end
 
   def create
@@ -51,7 +51,9 @@ class My::LogsController < ApplicationController
       :body,
 
       photos_attributes: [[
-        :file
+        :id,
+        :file,
+        :_destroy
       ]]
     ])
   end
