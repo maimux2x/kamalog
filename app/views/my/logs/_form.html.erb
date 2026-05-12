@@ -1,45 +1,49 @@
-<%= bootstrap_form_with model: [:my, log.piece, log] do |form| %>
-  <%= form.date_field :date %>
-  <%= form.text_field :title %>
-  <%= form.text_area :body, style: 'field-sizing: content; min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2)' %>
+<%= bootstrap_form_with model: [:my, log.piece, log], multipart: true do |f| %>
+  <%= f.date_field :date %>
+  <%= f.text_field :title %>
+  <%= f.text_area :body, style: 'field-sizing: content; min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2)' %>
 
-  <div data-controller="nested-form">
-    <div data-nested-form-target="container">
-      <%= form.fields_for :photos do |photo_form| %>
-        <div data-nested-form-target="item">
-          <% if photo_form.object.persisted? %>
-            <%= image_tag photo_form.object.file.variant(:small), alt: '' %>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-nested-form-target="removeButton"
-              data-action="click->nested-form#remove"
-            >
-              削除
-            </button>
-          <% else %>
-            <%= photo_form.file_field :file %>
-          <% end %>
-        </div>
-      <% end %>
+  <div data-controller="attach-images" class="mb-3">
+    <div class="mb-3">
+      <label class="btn btn-primary">
+        画像を追加
+        <input type="file" multiple data-action="attach-images#add" hidden>
+      </label>
     </div>
 
-    <button
-      type="button"
-      data-action="nested-form#add"
-      class="btn btn-primary d-block mb-3"
-    >
-      画像を追加する
-    </button>
+    <%= f.fields_for :photos do |photo| %>
+      <div data-attach-images-target="item">
+        <%= image_tag photo.object.file.variant(:small), alt: '' %>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          data-attach-images-target="removeButton"
+          data-action="attach-images#remove"
+        >
+          削除
+        </button>
+      </div>
+    <% end %>
 
-    <template data-nested-form-target="template">
-      <%= form.fields_for :photos, log.photos.new, child_index: '__INDEX__' do |photo_form| %>
-        <div data-nested-form-target="item">
-          <%= photo_form.file_field :file %>
-        </div>
-      <% end %>
+    <template data-attach-images-target="template">
+      <div data-attach-images-target="item">
+        <%= f.fields_for :photos, Photo.new, child_index: '__INDEX__' do |photo| %>
+          <%= photo.file_field :file, hidden: true, wrapper: false %>
+        <% end %>
+
+        <%= image_tag '', alt: '', style: 'width: 100px;' %>
+
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          data-attach-images-target="removeButton"
+          data-action="attach-images#remove"
+        >
+          削除
+        </button>
+      </div>
     </template>
   </div>
 
-  <%= form.primary %>
+  <%= f.primary %>
 <% end %>

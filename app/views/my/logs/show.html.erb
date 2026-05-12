@@ -10,7 +10,7 @@
       <dt>ギャラリー</dt>
 
       <dd>
-        <% @log.photos.each do |photo| %>
+        <% @log.photos.with_attached_file.each do |photo| %>
           <%= image_tag photo.file.variant(:small), alt: '' %>
         <% end %>
       </dd>
