@@ -12,7 +12,11 @@ class My::LogsController < ApplicationController
   end
 
   def create
-    @log = find_piece.logs.new(log_params)
+    @log = find_piece.logs.new(log_params.except(:files))
+
+    log_params[:files][1..].each do |file|
+      @log.photos.new file:
+    end
 
     if @log.save!
       redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
@@ -28,7 +32,11 @@ class My::LogsController < ApplicationController
   def update
     @log = find_piece.logs.find(params[:id])
 
-    if @log.update!(log_params)
+    log_params[:files][1..].each do |file|
+      @log.photos.new file:
+    end
+
+    if @log.update!(log_params.except(:files))
       redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
     else
       render :edit, status: :unprocessable_content
@@ -50,11 +58,7 @@ class My::LogsController < ApplicationController
       :title,
       :body,
 
-      photos_attributes: [[
-        :id,
-        :file,
-        :_destroy
-      ]]
+      files: []
     ])
   end
 

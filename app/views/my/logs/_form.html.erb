@@ -7,50 +7,15 @@
     <div class="mb-3">
       <label class="btn btn-primary">
         画像を追加
-        <input
-          type="file"
-          multiple
-          data-action="attach-images#add"
-          hidden
-        >
+        <%= f.file_field :files, multiple: true, hidden: true, wrapper: false, data: {action: 'attach-images#preview'} %>
       </label>
     </div>
 
     <div class="d-flex d-flex-row" data-attach-images-target="container">
-      <%= f.fields_for :photos do |photo| %>
-        <div data-attach-images-target="item" class="imageContainer me-3">
-          <%= image_tag photo.object.file.variant(:small), alt: '' %>
-
-          <button
-            type="button"
-            data-attach-images-target="removeButton"
-            data-action="attach-images#remove"
-          >
-            ×
-          </button>
-        </div>
-      <% end %>
+      <template data-attach-images-target="template">
+        <%= image_tag '', alt: '', style: 'width: 100px;' %>
+      </template>
     </div>
-
-    <template data-attach-images-target="template">
-      <div data-attach-images-target="item">
-        <%= f.fields_for :photos, Photo.new, child_index: '__INDEX__' do |photo| %>
-          <%= photo.file_field :file, hidden: true, wrapper: false %>
-        <% end %>
-
-        <div class="imageContainer">
-          <%= image_tag '', alt: '', style: 'width: 100px;' %>
-
-          <button
-            type="button"
-            data-attach-images-target="removeButton"
-            data-action="attach-images#remove"
-          >
-            ×
-          </button>
-        </div>
-      </div>
-    </template>
   </div>
 
   <%= f.primary %>
