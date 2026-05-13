@@ -11,19 +11,20 @@
       </label>
     </div>
 
-    <%= f.fields_for :photos do |photo| %>
-      <div data-attach-images-target="item">
-        <%= image_tag photo.object.file.variant(:small), alt: '' %>
-        <button
-          type="button"
-          class="btn btn-outline-danger"
-          data-attach-images-target="removeButton"
-          data-action="attach-images#remove"
-        >
-          削除
-        </button>
-      </div>
-    <% end %>
+    <div class="d-flex d-flex-row" data-attach-images-target="container">
+      <%= f.fields_for :photos do |photo| %>
+        <div data-attach-images-target="item" class="imageContainer me-3">
+          <%= image_tag photo.object.file.variant(:small), alt: '' %>
+          <button
+            type="button"
+            data-attach-images-target="removeButton"
+            data-action="attach-images#remove"
+          >
+            ×
+          </button>
+        </div>
+      <% end %>
+    </div>
 
     <template data-attach-images-target="template">
       <div data-attach-images-target="item">
@@ -31,16 +32,17 @@
           <%= photo.file_field :file, hidden: true, wrapper: false %>
         <% end %>
 
-        <%= image_tag '', alt: '', style: 'width: 100px;' %>
+        <div class="imageContainer">
+          <%= image_tag '', alt: '', style: 'width: 100px;' %>
 
-        <button
-          type="button"
-          class="btn btn-outline-danger"
-          data-attach-images-target="removeButton"
-          data-action="attach-images#remove"
-        >
-          削除
-        </button>
+          <button
+            type="button"
+            data-attach-images-target="removeButton"
+            data-action="attach-images#remove"
+          >
+            ×
+          </button>
+        </div>
       </div>
     </template>
   </div>

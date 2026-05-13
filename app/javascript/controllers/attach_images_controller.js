@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class AttachImagesController extends Controller {
-  static targets = ['template']
+  static targets = ['template', 'container', 'item']
 
   add(e) {
     let i = 0;
@@ -15,15 +15,14 @@ export default class AttachImagesController extends Controller {
 
       const input = photo.querySelector('input');
 
-      input.id = input.id.replace('__INDEX__', index);
-      input.name = input.name.replace('__INDEX__', index);
-
+      input.id    = input.id.replace('__INDEX__', index);
+      input.name  = input.name.replace('__INDEX__', index);
       input.files = dt.files;
 
       const img = photo.querySelector('img');
       img.src   = URL.createObjectURL(file);
 
-      this.element.appendChild(photo);
+      this.containerTarget.appendChild(photo);
     }
   }
 
