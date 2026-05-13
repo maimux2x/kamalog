@@ -12,10 +12,10 @@ class My::LogsController < ApplicationController
   end
 
   def create
-    @log = find_piece.logs.new(log_params.except(:files))
+    @log = find_piece.logs.new(log_params.except(:photos))
 
-    log_params[:files][1..].each do |file|
-      @log.photos.new file:
+    Array(log_params.dig(:photos, :new_files)).each do |file|
+      @log.photos.new file: file
     end
 
     if @log.save!
@@ -32,11 +32,13 @@ class My::LogsController < ApplicationController
   def update
     @log = find_piece.logs.find(params[:id])
 
-    log_params[:files][1..].each do |file|
-      @log.photos.new file:
+    Array(log_params.dig(:photos, :new_files)).each do |file|
+      @log.photos.new file: file
     end
 
-    if @log.update!(log_params.except(:files))
+    @log.photos.where.not(id: Array(log_params.dig(:photos, :keep_ids))).destroy_all
+
+    if @log.update!(log_params.except(:photos))
       redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
     else
       render :edit, status: :unprocessable_content
@@ -58,7 +60,10 @@ class My::LogsController < ApplicationController
       :title,
       :body,
 
-      files: []
+      photos: [
+        new_files: [],
+        keep_ids: []
+      ]
     ])
   end
 

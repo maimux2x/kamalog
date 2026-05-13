@@ -15,21 +15,8 @@ export default class AttachImagesController extends Controller {
   }
 
   remove(e) {
-    const item = e.target.closest('[data-attach-images-target="item"]');
-    const maybeIdInput = item.nextElementSibling;
+    const item = e.target.closest('div[data-attach-images-target="item"]');
 
-    if (maybeIdInput instanceof HTMLInputElement && maybeIdInput.name.endsWith('[id]')) {
-      item.hidden = true;
-
-      const destroyInput = document.createElement('input');
-
-      destroyInput.type  = 'hidden';
-      destroyInput.name  = maybeIdInput.name.replace('[id]', '[_destroy]');
-      destroyInput.value = 'true';
-
-      item.appendChild(destroyInput);
-    } else {
-      item.remove();
-    }
+    item.remove();
   }
 }

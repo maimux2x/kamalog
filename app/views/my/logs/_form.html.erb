@@ -7,15 +7,39 @@
     <div class="mb-3">
       <label class="btn btn-primary">
         画像を追加
-        <%= f.file_field :files, multiple: true, hidden: true, wrapper: false, data: {action: 'attach-images#preview'} %>
+        <%= file_field_tag 'log[photos][new_files][]', multiple: true, include_hidden: false, hidden: true, wrapper: false, data: {action: 'attach-images#preview'} %>
       </label>
     </div>
 
     <div class="d-flex d-flex-row" data-attach-images-target="container">
-      <template data-attach-images-target="template">
-        <%= image_tag '', alt: '', style: 'width: 100px;' %>
-      </template>
+      <% f.object.photos.each do |photo| %>
+        <div class="imageContainer me-3" data-attach-images-target="item">
+          <%= image_tag photo.file, alt: '', style: 'width: 100px;' %>
+          <button
+            type="button"
+            data-attach-images-target="removeButton"
+            data-action="attach-images#remove"
+          >
+            ×
+          </button>
+
+          <%= hidden_field_tag 'log[photos][keep_ids][]', photo.id %>
+        </div>
+      <% end %>
     </div>
+
+    <template data-attach-images-target="template">
+      <div class="imageContainer me-3" data-attach-images-target="item">
+        <%= image_tag '', alt: '', style: 'width: 100px;' %>
+        <button
+          type="button"
+          data-attach-images-target="removeButton"
+          data-action="attach-images#remove"
+        >
+          ×
+        </button>
+      </div>
+    </template>
   </div>
 
   <%= f.primary %>
