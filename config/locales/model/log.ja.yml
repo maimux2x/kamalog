@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    attributes:
+      log:
+        date: 作業日
+        title: タイトル
+        body: 作業内容

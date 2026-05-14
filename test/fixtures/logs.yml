@@ -1,0 +1,17 @@
+cup_log_day1:
+  piece: cup
+  date: 2026-04-05
+  title: 紐作りでマグカップ作り
+  body: 好きな作家さんの作風を参考に作ってみる。
+
+cup_log_day2:
+  piece: cup
+  date: 2026-04-12
+  title: 削りで形を整える
+  body: 削りを入れて凹凸や底の厚みを削って形を整えた。
+
+base_log_day1:
+  piece: base
+  date: 2026-05-01
+  title: 小さな花瓶を作る
+  body: 紐作りで初めて花瓶を作ることにした。

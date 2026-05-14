@@ -3,6 +3,7 @@ class Piece < ApplicationRecord
 
   has_many :clay_usages,  dependent: :destroy
   has_many :glaze_usages, dependent: :destroy
+  has_many :logs,         dependent: :destroy
 
   has_many :clays,  through: :clay_usages
   has_many :glazes, through: :glaze_usages

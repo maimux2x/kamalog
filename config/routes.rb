@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       collection do
         resources :in_progress, only: %i[index]
       end
+
+      resources :logs, only: %i[index show new create edit update destroy]
     end
   end
 
