@@ -4,18 +4,18 @@ class My::LogsController < ApplicationController
   end
 
   def show
-    @log  = find_piece.logs.find(params[:id])
+    @log = find_piece.logs.find(params[:id])
   end
 
   def new
-    @log  = find_piece.logs.new(date: Date.current)
+    @log = find_piece.logs.new(date: Date.current)
   end
 
   def create
     @log = find_piece.logs.new(log_params)
 
     if @log.save!
-      redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を保存しました。'
+      redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
     else
       render :new, status: :unprocessable_content
     end
@@ -48,7 +48,13 @@ class My::LogsController < ApplicationController
     params.expect(log: [
       :date,
       :title,
-      :body
+      :body,
+
+      photos_attributes: [[
+        :id,
+        :file,
+        :_destroy
+      ]]
     ])
   end
 

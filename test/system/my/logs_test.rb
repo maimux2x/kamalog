@@ -29,10 +29,10 @@ class LogsTest < ApplicationSystemTestCase
     assert_text '好きな作家さんの作風を参考に作ってみる。'
   end
 
-  test '作業記録を追加する' do
+  test '作業記録を登録する' do
     visit my_piece_logs_path(pieces(:cup))
 
-    click_on '作業記録を追加する'
+    click_on '作業記録を登録する'
 
     fill_in '作業日',   with: Date.new(2026, 4, 23)
     fill_in 'タイトル', with: '釉がけをして仕上げる'
@@ -40,7 +40,7 @@ class LogsTest < ApplicationSystemTestCase
 
     click_on '登録する'
 
-    assert_text '作業記録を保存しました。'
+    assert_text '作業記録を登録しました。'
     assert_text '2026-04-23'
     assert_text '釉がけをして仕上げる'
     assert_text '素焼きが終わったマグカップをやすりで削って、白マットの釉薬をかけた。'

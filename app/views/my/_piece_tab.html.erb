@@ -1,8 +1,10 @@
 <h1><%= piece.title %></h1>
+
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
     <%= link_to '作品詳細', my_piece_path(piece), class: ['nav-link', active: current_page?(my_piece_path(piece))] %>
   </li>
+
   <li class="nav-item">
     <%= link_to my_piece_logs_path(piece), class: [
       'nav-link',
@@ -12,6 +14,6 @@
     ] do %>
       作業記録
       <span class="ms-2 badge text-bg-secondary"><%= piece.logs.size %></span>
-      <% end %>
+    <% end %>
   </li>
 </ul>

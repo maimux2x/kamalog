@@ -6,6 +6,14 @@
     <dl>
       <dt>作業内容</dt>
       <dd><%= @log.body %></dd>
+
+      <dt>ギャラリー</dt>
+
+      <dd>
+        <% @log.photos.with_attached_file.each do |photo| %>
+          <%= image_tag photo.file.variant(:small), alt: '' %>
+        <% end %>
+      </dd>
     </dl>
   </div>
 </div>
@@ -14,5 +22,6 @@
   <%= link_to '編集', edit_my_piece_log_path(@log.piece, @log), class: 'btn btn-primary me-2' %>
   <%= button_to '削除', my_piece_log_path(@log.piece, @log), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-outline-danger' %>
 </div>
-<hr/>
+
+<hr>
 <%= link_to '戻る', my_piece_logs_path(@log.piece), class: 'btn btn-primary' %>
