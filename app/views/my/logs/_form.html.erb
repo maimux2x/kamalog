@@ -15,6 +15,7 @@
       <% f.object.photos.each do |photo| %>
         <div class="imageContainer me-3" data-attach-images-target="item">
           <%= image_tag photo.file, alt: '', style: 'width: 100px;' %>
+
           <button
             type="button"
             data-attach-images-target="removeButton"
@@ -31,6 +32,7 @@
     <template data-attach-images-target="template">
       <div class="imageContainer me-3" data-attach-images-target="item">
         <%= image_tag '', alt: '', style: 'width: 100px;' %>
+
         <button
           type="button"
           data-attach-images-target="removeButton"
