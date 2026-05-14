@@ -13,11 +13,18 @@ export default class AttachImagesController extends Controller {
 
       dt.items.add(file);
 
-      const input = photo.querySelector('input');
+      const fileInput = photo.querySelector('input');
 
-      input.id    = input.id.replace('__INDEX__', index);
-      input.name  = input.name.replace('__INDEX__', index);
-      input.files = dt.files;
+      fileInput.files = dt.files;
+
+      for (const input of photo.querySelectorAll('input')) {
+        input.id    = input.id.replace('__INDEX__', index);
+        input.name  = input.name.replace('__INDEX__', index);
+      }
+
+      const label = photo.querySelector('label');
+
+      label.htmlFor = label.htmlFor.replace('__INDEX__', index);
 
       const img = photo.querySelector('img');
       img.src   = URL.createObjectURL(file);

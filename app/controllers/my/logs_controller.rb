@@ -1,6 +1,6 @@
 class My::LogsController < ApplicationController
   def index
-    @piece = current_user.pieces.find(params[:piece_id])
+    @piece = current_user.pieces.includes(:logs).find(params[:piece_id])
   end
 
   def show
@@ -53,7 +53,8 @@ class My::LogsController < ApplicationController
       photos_attributes: [[
         :id,
         :file,
-        :_destroy
+        :_destroy,
+        :caption
       ]]
     ])
   end
