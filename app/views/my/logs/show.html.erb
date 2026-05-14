@@ -10,9 +10,19 @@
       <dt>ギャラリー</dt>
 
       <dd>
-        <% @log.photos.with_attached_file.each do |photo| %>
-          <%= image_tag photo.file.variant(:small), alt: '' %>
-        <% end %>
+        <div class="d-flex">
+          <% @log.photos.with_attached_file.each do |photo| %>
+            <div class="flex-column">
+              <div style="height: 100px;">
+                <%= image_tag photo.file.variant(:small), alt: '' %>
+              </div>
+
+              <p>
+                <%= photo.caption %>
+              </p>
+            </div>
+          <% end %>
+        </div>
       </dd>
     </dl>
   </div>
