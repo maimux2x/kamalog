@@ -27,7 +27,7 @@ class LogsTest < ApplicationSystemTestCase
     assert_text '2026-04-05'
     assert_text '紐作りでマグカップ作り'
     assert_text '好きな作家さんの作風を参考に作ってみる。'
-    assert_selector 'img'
+    assert_selector "img[src$='/dish_cup.png']"
   end
 
   test '作業記録を削除する' do
