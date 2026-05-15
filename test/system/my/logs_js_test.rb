@@ -39,6 +39,10 @@ class LogsJsTest < ApplicationSystemTestCase
     fill_in '作業内容', with: '更新後の作業内容'
     attach_file '画像を追加', file_fixture('syokki_mug_cup.png'), make_visible: true
 
+    within '[data-attach-images-target="container"] :nth-child(1 of [data-attach-images-target="item"])' do
+      click_on '×'
+    end
+
     click_on '更新する'
 
     assert_text '作業記録を更新しました。'
