@@ -1,0 +1,9 @@
+cup_photo_file:
+  name: file
+  record: cup_photo (Photo)
+  blob: cup_photo_blob
+
+dish_photo_file:
+  name: file
+  record: dish_photo (Photo)
+  blob: dish_photo_blob
