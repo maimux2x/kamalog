@@ -27,9 +27,16 @@ export default class AttachImagesController extends Controller {
       label.htmlFor = label.htmlFor.replace('__INDEX__', index);
 
       const img = photo.querySelector('img');
-      img.src   = URL.createObjectURL(file);
-
       this.containerTarget.appendChild(photo);
+
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        img.src = e.target.result;
+
+      };
+
+      reader.readAsDataURL(file);
     }
   }
 
