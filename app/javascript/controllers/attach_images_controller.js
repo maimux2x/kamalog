@@ -8,9 +8,15 @@ export default class AttachImagesController extends Controller {
       const photo = this.templateTarget.content.cloneNode(true);
 
       const img = photo.querySelector('img');
-      img.src   = URL.createObjectURL(file);
-
       this.containerTarget.appendChild(photo);
+
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        img.src = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
     }
   }
 
