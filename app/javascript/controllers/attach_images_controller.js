@@ -4,11 +4,15 @@ export default class AttachImagesController extends Controller {
   static targets = ['template', 'container', 'item']
 
   preview(e) {
+    this.fileInput = e.target;
+
     for (const file of e.target.files) {
       const photo = this.templateTarget.content.cloneNode(true);
+      const item = photo.querySelector('[data-attach-images-target="item"]')
 
       const img = photo.querySelector('img');
       this.containerTarget.appendChild(photo);
+      item._file = file;
 
       const reader = new FileReader();
 
@@ -21,8 +25,19 @@ export default class AttachImagesController extends Controller {
   }
 
   remove(e) {
-    const item = e.target.closest('div[data-attach-images-target="item"]');
+    e.target.closest('div[data-attach-images-target="item"]').remove();
+    this.rebulidFileList();
+  }
 
-    item.remove();
+  rebulidFileList() {
+    if (!this.fileInput) return;
+
+    const dt = new DataTransfer();
+
+    this.itemTargets.forEach(item => {
+      if (item._file) dt.items.add(item._file);
+    });
+
+    this.fileInput.files = dt.files;
   }
 }

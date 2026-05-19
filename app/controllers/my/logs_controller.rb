@@ -12,17 +12,9 @@ class My::LogsController < ApplicationController
   end
 
   def create
-    @log = find_piece.logs.new(log_params.except(:photos))
+    @log = find_piece.logs.new
 
-    Array(log_params.dig(:photos, :new_files)).each do |file|
-      @log.photos.new file: file
-    end
-
-    Array(log_params.dig(:photos, :attrs)).compact.each do |attr|
-      @log.photos.update! caption: attr[:caption]
-    end
-
-    if @log.save!
+    if create_or_update_log(@log)
       redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
     else
       render :new, status: :unprocessable_content
@@ -36,23 +28,7 @@ class My::LogsController < ApplicationController
   def update
     @log = find_piece.logs.find(params[:id])
 
-    attrs_with_id, attrs_without_id = Array(log_params.dig(:photos, :attrs)).partition { it[:id] }
-    files                           = Array(log_params.dig(:photos, :new_files))
-    keep_ids                        = []
-
-    attrs_with_id.each do |attr|
-      keep_ids << attr[:id]
-
-      @log.photos.find(attr[:id]).update! caption: attr[:caption]
-    end
-
-    files.each_with_index do |file, i|
-      @log.photos.new file: file, caption: attrs_without_id[i][:caption]
-    end
-
-    @log.photos.where.not(id: keep_ids).destroy_all
-
-    if @log.update!(log_params.except(:photos))
+    if create_or_update_log(@log)
       redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
     else
       render :edit, status: :unprocessable_content
@@ -87,5 +63,29 @@ class My::LogsController < ApplicationController
 
   def find_piece
     current_user.pieces.find(params[:piece_id])
+  end
+
+  def create_or_update_log(log)
+    files                           = Array(log_params.dig(:photos, :new_files))
+    attrs_with_id, attrs_without_id = Array(log_params.dig(:photos, :attrs)).partition { it[:id] }
+    keep_ids                        = []
+
+    ActiveRecord::Base.transaction do
+      attrs_with_id.each do |attr|
+        keep_ids << attr[:id]
+
+        log.photos.find(attr[:id]).update! caption: attr[:caption]
+      end
+
+      log.photos.where.not(id: keep_ids).destroy_all
+
+      photo_attrs = files.zip(attrs_without_id)
+
+      photo_attrs.each do |file, attr|
+        log.photos.new file: file, caption: attr[:caption]
+      end
+
+      log.update(log_params.except(:photos))
+    end
   end
 end

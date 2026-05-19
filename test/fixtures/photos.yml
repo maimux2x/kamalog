@@ -1,0 +1,7 @@
+cup_photo:
+  log: cup_log_day1
+  caption: 'マグカップの説明'
+
+dish_photo:
+  log: cup_log_day1
+  caption: 'お皿の説明'
