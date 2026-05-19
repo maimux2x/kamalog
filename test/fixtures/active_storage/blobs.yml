@@ -1,0 +1,2 @@
+cup_photo_blob: <%= ActiveStorage::FixtureSet.blob filename: "dish_cup.png", service_name: "test_fixtures" %>
+dish_photo_blob: <%= ActiveStorage::FixtureSet.blob filename: "dish.png", service_name: "test_fixtures" %>

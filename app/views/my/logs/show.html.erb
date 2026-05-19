@@ -12,6 +12,7 @@
       <dd>
         <% @log.photos.with_attached_file.each do |photo| %>
           <%= image_tag photo.file.variant(:small), alt: '' %>
+          <p><%= photo.caption %></p>
         <% end %>
       </dd>
     </dl>

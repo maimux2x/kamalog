@@ -11,10 +11,35 @@
       </label>
     </div>
 
-    <div class="d-flex d-flex-row" data-attach-images-target="container">
+    <div data-attach-images-target="container">
       <% f.object.photos.each do |photo| %>
-        <div class="imageContainer me-3" data-attach-images-target="item">
-          <%= image_tag photo.file, alt: '', style: 'width: 100px;' %>
+        <div class="d-flex" data-attach-images-target="item">
+          <div class="imageContainer me-3">
+            <%= image_tag photo.file, alt: '', style: 'width: 100px;' %>
+
+            <button
+              type="button"
+              data-attach-images-target="removeButton"
+              data-action="attach-images#remove"
+            >
+              ×
+            </button>
+
+            <%= hidden_field_tag 'log[photos][attrs][][id]', photo.id %>
+          </div>
+
+          <label class="d-flex flex-column">
+            説明
+            <%= text_field_tag 'log[photos][attrs][][caption]', photo.caption %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+
+    <template data-attach-images-target="template">
+      <div class="d-flex" data-attach-images-target="item">
+        <div class="imageContainer me-3">
+          <%= image_tag '', alt: '', style: 'width: 100px;' %>
 
           <button
             type="button"
@@ -23,23 +48,12 @@
           >
             ×
           </button>
-
-          <%= hidden_field_tag 'log[photos][keep_ids][]', photo.id %>
         </div>
-      <% end %>
-    </div>
 
-    <template data-attach-images-target="template">
-      <div class="imageContainer me-3" data-attach-images-target="item">
-        <%= image_tag '', alt: '', style: 'width: 100px;' %>
-
-        <button
-          type="button"
-          data-attach-images-target="removeButton"
-          data-action="attach-images#remove"
-        >
-          ×
-        </button>
+        <label class="d-flex flex-column">
+          説明
+          <%= text_field_tag 'log[photos][attrs][][caption]' %>
+        </label>
       </div>
     </template>
   </div>
