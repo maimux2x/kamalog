@@ -7,7 +7,12 @@
     <div class="mb-3">
       <label class="btn btn-primary">
         画像を追加
-        <input type="file" multiple data-action="attach-images#add" hidden>
+        <input
+          type="file"
+          multiple
+          data-action="attach-images#add"
+          hidden
+        >
       </label>
     </div>
 
@@ -17,6 +22,7 @@
           <div class="d-flex">
             <div class="imageContainer me-3">
               <%= image_tag photo.object.file.variant(:small), alt: '' %>
+
               <button
                 type="button"
                 data-attach-images-target="removeButton"
