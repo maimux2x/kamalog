@@ -13,16 +13,28 @@ export default class AttachImagesController extends Controller {
 
       dt.items.add(file);
 
-      const input = photo.querySelector('input');
+      const fileInput = photo.querySelector('input');
+      fileInput.files = dt.files;
 
-      input.id    = input.id.replace('__INDEX__', index);
-      input.name  = input.name.replace('__INDEX__', index);
-      input.files = dt.files;
+      for (const input of photo.querySelectorAll('input')) {
+        input.id    = input.id.replace('__INDEX__', index);
+        input.name  = input.name.replace('__INDEX__', index);
+      }
+
+      const label   = photo.querySelector('label');
+      label.htmlFor = label.htmlFor.replace('__INDEX__', index);
 
       const img = photo.querySelector('img');
-      img.src   = URL.createObjectURL(file);
-
       this.containerTarget.appendChild(photo);
+
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        img.src = e.target.result;
+
+      };
+
+      reader.readAsDataURL(file);
     }
   }
 
@@ -34,7 +46,6 @@ export default class AttachImagesController extends Controller {
       item.hidden = true;
 
       const destroyInput = document.createElement('input');
-
       destroyInput.type  = 'hidden';
       destroyInput.name  = maybeIdInput.name.replace('[id]', '[_destroy]');
       destroyInput.value = 'true';

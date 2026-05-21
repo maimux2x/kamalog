@@ -1,6 +1,6 @@
 class My::LogsController < ApplicationController
   def index
-    @piece = current_user.pieces.find(params[:piece_id])
+    @piece = current_user.pieces.includes(:logs).find(params[:piece_id])
   end
 
   def show
@@ -12,13 +12,9 @@ class My::LogsController < ApplicationController
   end
 
   def create
-    @log = find_piece.logs.new(log_params)
+    log = find_piece.logs.create!(log_params)
 
-    if @log.save!
-      redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
-    else
-      render :new, status: :unprocessable_content
-    end
+    redirect_to my_piece_log_path(log.piece, log), status: :see_other, notice: '作業記録を登録しました。'
   end
 
   def edit
@@ -26,13 +22,10 @@ class My::LogsController < ApplicationController
   end
 
   def update
-    @log = find_piece.logs.find(params[:id])
+    log = find_piece.logs.find(params[:id])
 
-    if @log.update!(log_params)
-      redirect_to my_piece_log_path(@log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
-    else
-      render :edit, status: :unprocessable_content
-    end
+    log.update! log_params
+    redirect_to my_piece_log_path(log.piece, log), status: :see_other, notice: '作業記録を更新しました。'
   end
 
   def destroy
@@ -53,7 +46,8 @@ class My::LogsController < ApplicationController
       photos_attributes: [[
         :id,
         :file,
-        :_destroy
+        :_destroy,
+        :caption
       ]]
     ])
   end

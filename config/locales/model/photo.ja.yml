@@ -1,0 +1,5 @@
+ja:
+  activerecord:
+    attributes:
+      photo:
+        caption: 説明
