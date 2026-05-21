@@ -12,10 +12,8 @@
       <dd>
         <div class="d-flex">
           <% @log.photos.with_attached_file.each do |photo| %>
-            <div class="flex-column">
-              <div style="height: 100px;">
-                <%= image_tag photo.file.variant(:small), alt: '' %>
-              </div>
+            <div>
+              <%= image_tag photo.file.variant(:small), alt: '' %>
 
               <p>
                 <%= photo.caption %>
