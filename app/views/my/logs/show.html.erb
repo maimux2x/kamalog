@@ -1,29 +1,18 @@
 <h1><%= @log.title %></h1>
 <time datetime="<%= @log.date %>" class="d-block mb-3"><%= @log.date %></time>
 
-<div class="card mb-3">
-  <div class="card-body">
-    <dl>
-      <dt>作業内容</dt>
-      <dd><%= @log.body %></dd>
+<p style="white-space: pre-wrap;"><%= @log.body %></p>
 
-      <dt>ギャラリー</dt>
+<div class="row">
+  <% @log.photos.with_attached_file.each do |photo| %>
+    <div class="col-6 text-center">
+      <%= link_to image_tag(photo.file, alt: '', height: 200), photo.file %>
 
-      <dd>
-        <div class="d-flex">
-          <% @log.photos.with_attached_file.each do |photo| %>
-            <div>
-              <%= image_tag photo.file.variant(:small), alt: '' %>
-
-              <p>
-                <%= photo.caption %>
-              </p>
-            </div>
-          <% end %>
-        </div>
-      </dd>
-    </dl>
-  </div>
+      <p>
+        <%= photo.caption %>
+      </p>
+    </div>
+  <% end %>
 </div>
 
 <div class="d-flex">
