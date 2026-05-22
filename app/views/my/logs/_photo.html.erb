@@ -1,0 +1,22 @@
+<div class="list-group-item position-relative" data-attach-images-target="item">
+  <%= photo.hidden_field :id %>
+  <div>
+    <% if photo.object.file.attached? %>
+      <%= image_tag photo.object.file, height: 100, alt: '' %>
+    <% else %>
+      <%= image_tag '', height: 100, alt: '' %>
+    <% end %>
+
+    <button
+      class="btn-close position-absolute"
+      aria-label="削除"
+      type="button"
+      data-attach-images-target="removeButton"
+      data-action="attach-images#remove"
+      style="top: 10px; right: 10px;"
+    >
+    </button>
+  </div>
+
+  <%= photo.text_field :caption %>
+</div>

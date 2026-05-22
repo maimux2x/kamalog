@@ -16,50 +16,16 @@
       </label>
     </div>
 
-    <div data-attach-images-target="container">
-      <%= f.fields_for :photos, log.photos.order(:id) do |photo| %>
-        <div data-attach-images-target="item">
-          <div class="d-flex">
-            <div class="imageContainer me-3">
-              <%= image_tag photo.object.file, height: 100, alt: '' %>
-
-              <button
-                type="button"
-                data-attach-images-target="removeButton"
-                data-action="attach-images#remove"
-              >
-                ×
-              </button>
-            </div>
-
-            <%= photo.text_field :caption %>
-          </div>
-        </div>
+    <div class="list-group" data-attach-images-target="container">
+      <%= f.fields_for :photos, log.photos.order(:id), include_id: false do |photo| %>
+        <%= render 'photo', photo: %>
       <% end %>
     </div>
 
     <template data-attach-images-target="template">
-      <div data-attach-images-target="item">
-        <%= f.fields_for :photos, Photo.new, child_index: '__INDEX__' do |photo| %>
-          <%= photo.file_field :file, hidden: true, wrapper: false %>
-
-          <div class="d-flex">
-            <div class="imageContainer me-3">
-              <%= image_tag '', alt: '', style: 'width: 100px;' %>
-
-              <button
-                type="button"
-                data-attach-images-target="removeButton"
-                data-action="attach-images#remove"
-              >
-                ×
-              </button>
-            </div>
-
-            <%= photo.text_field :caption %>
-          </div>
-        <% end %>
-      </div>
+      <%= f.fields_for :photos, Photo.new, child_index: '__INDEX__' do |photo| %>
+        <%= render 'photo', photo: %>
+      <% end %>
     </template>
   </div>
 

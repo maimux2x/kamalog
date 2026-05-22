@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 8.1.3'
 
+gem 'active_storage_validations'
 gem 'bootsnap', require: false
 gem 'bootstrap_form', '~> 5.6'
 gem 'cssbundling-rails'
