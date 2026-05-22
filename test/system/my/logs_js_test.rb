@@ -22,7 +22,7 @@ class LogsJsTest < ApplicationSystemTestCase
     end
 
     within '[data-attach-images-target="container"] :nth-child(2 of [data-attach-images-target="item"])' do
-      click_on '×'
+      click_on '削除'
     end
 
     click_on '登録する'
@@ -57,7 +57,7 @@ class LogsJsTest < ApplicationSystemTestCase
     attach_file '画像を追加', file_fixture('syokki_mug_cup.png'), make_visible: true
 
     within '[data-attach-images-target="container"] :nth-child(1 of [data-attach-images-target="item"])' do
-      click_on '×'
+      click_on '削除'
     end
 
     within '[data-attach-images-target="container"] :nth-child(2 of [data-attach-images-target="item"])' do
