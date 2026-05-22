@@ -39,8 +39,8 @@ export default class AttachImagesController extends Controller {
   }
 
   remove(e) {
-    const item = e.target.closest('[data-attach-images-target="item"]');
-    const maybeIdInput =  item.querySelector('input[type="hidden"][name$="[id]"]')
+    const item         = e.target.closest('[data-attach-images-target="item"]');
+    const maybeIdInput = item.querySelector('input[type="hidden"][name$="[id]"]')
 
     if (maybeIdInput instanceof HTMLInputElement && maybeIdInput.name.endsWith('[id]')) {
       item.hidden = true;
