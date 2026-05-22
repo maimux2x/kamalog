@@ -1,5 +1,9 @@
 require 'test_helper'
 
+Capybara.configure do |config|
+  config.enable_aria_label = true
+end
+
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :rack_test
 
