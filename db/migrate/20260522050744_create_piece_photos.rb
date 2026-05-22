@@ -3,7 +3,7 @@ class CreatePiecePhotos < ActiveRecord::Migration[8.1]
     rename_table :photos, :log_photos
 
     create_table :piece_photos do |t|
-      t.references :pieces, null: false, foreign_key: true
+      t.references :piece, null: false, foreign_key: true
 
       t.string :caption
 

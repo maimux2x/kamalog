@@ -10,7 +10,10 @@ Rails.application.routes.draw do
     resources :pieces, only: %i[show new create edit update destroy] do
       collection do
         resources :in_progress, only: %i[index]
+        resources :complete, only: %i[index]
       end
+
+      resource :complete, only: %i[new create]
 
       resources :logs, only: %i[index show new create edit update destroy]
     end

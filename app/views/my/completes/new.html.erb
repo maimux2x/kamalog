@@ -1,0 +1,7 @@
+<h1>完成品として登録する</h1>
+
+<%= bootstrap_form_with model: @piece, url: my_piece_path(@piece) do |f| %>
+  <%= f.collection_select :status, Piece.statuses_i18n, :first, :last %>
+<% end %>
+
+<%= link_to 'キャンセル', my_piece_path(@piece), class: 'btn btn-outline-primary' %>

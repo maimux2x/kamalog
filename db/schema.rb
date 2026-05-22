@@ -94,9 +94,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_050744) do
   create_table "piece_photos", force: :cascade do |t|
     t.string "caption"
     t.datetime "created_at", null: false
-    t.bigint "pieces_id", null: false
+    t.bigint "piece_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["pieces_id"], name: "index_piece_photos_on_pieces_id"
+    t.index ["piece_id"], name: "index_piece_photos_on_piece_id"
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -126,6 +126,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_050744) do
   add_foreign_key "glaze_usages", "pieces"
   add_foreign_key "log_photos", "logs"
   add_foreign_key "logs", "pieces"
-  add_foreign_key "piece_photos", "pieces", column: "pieces_id"
+  add_foreign_key "piece_photos", "pieces"
   add_foreign_key "pieces", "users"
 end

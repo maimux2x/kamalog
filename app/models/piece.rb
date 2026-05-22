@@ -4,6 +4,7 @@ class Piece < ApplicationRecord
   has_many :clay_usages,  dependent: :destroy
   has_many :glaze_usages, dependent: :destroy
   has_many :logs,         dependent: :destroy
+  has_many :piece_photos, dependent: :destroy
 
   has_many :clays,  through: :clay_usages
   has_many :glazes, through: :glaze_usages
@@ -23,4 +24,5 @@ class Piece < ApplicationRecord
   }, validate: true
 
   accepts_nested_attributes_for :clay_usages, :glaze_usages, allow_destroy: true
+  accepts_nested_attributes_for :piece_photos, allow_destroy: true
 end
