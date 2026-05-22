@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_14_044319) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_22_050744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -73,6 +73,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_14_044319) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "log_photos", force: :cascade do |t|
+    t.string "caption"
+    t.datetime "created_at", null: false
+    t.bigint "log_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["log_id"], name: "index_log_photos_on_log_id"
+  end
+
   create_table "logs", force: :cascade do |t|
     t.string "body"
     t.datetime "created_at", null: false
@@ -83,12 +91,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_14_044319) do
     t.index ["piece_id"], name: "index_logs_on_piece_id"
   end
 
-  create_table "photos", force: :cascade do |t|
+  create_table "piece_photos", force: :cascade do |t|
     t.string "caption"
     t.datetime "created_at", null: false
-    t.bigint "log_id", null: false
+    t.bigint "pieces_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["log_id"], name: "index_photos_on_log_id"
+    t.index ["pieces_id"], name: "index_piece_photos_on_pieces_id"
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -116,7 +124,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_14_044319) do
   add_foreign_key "clay_usages", "pieces"
   add_foreign_key "glaze_usages", "glazes"
   add_foreign_key "glaze_usages", "pieces"
+  add_foreign_key "log_photos", "logs"
   add_foreign_key "logs", "pieces"
-  add_foreign_key "photos", "logs"
+  add_foreign_key "piece_photos", "pieces", column: "pieces_id"
   add_foreign_key "pieces", "users"
 end

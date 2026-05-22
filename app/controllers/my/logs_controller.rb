@@ -43,7 +43,7 @@ class My::LogsController < ApplicationController
       :title,
       :body,
 
-      photos_attributes: [[
+      log_photos_attributes: [[
         :id,
         :file,
         :_destroy,

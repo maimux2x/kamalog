@@ -2,6 +2,7 @@ ja:
   activerecord:
     attributes:
       piece:
+        status: ステータス
         title: タイトル
         form_method: 成形方法
   enums:

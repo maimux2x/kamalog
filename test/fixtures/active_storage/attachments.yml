@@ -1,9 +1,9 @@
 cup_photo_file:
   name: file
-  record: cup_photo (Photo)
+  record: cup_photo (LogPhoto)
   blob: cup_photo_blob
 
 dish_photo_file:
   name: file
-  record: dish_photo (Photo)
+  record: dish_photo (LogPhoto)
   blob: dish_photo_blob
