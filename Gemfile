@@ -4,8 +4,9 @@ gem 'rails', '~> 8.1.3'
 
 gem 'active_storage_validations'
 gem 'bootsnap', require: false
+gem 'bootstrap', '~>5.3.8'
 gem 'bootstrap_form', '~> 5.6'
-gem 'cssbundling-rails'
+gem 'dartsass-rails'
 gem 'enum_help'
 gem 'herb'
 gem 'image_processing', '~> 2.0'
@@ -25,7 +26,6 @@ gem 'pg', '~> 1.1'
 gem 'stimulus-rails'
 gem 'thruster', require: false
 gem 'turbo-rails'
-gem 'tzinfo-data', platforms: %i[ windows jruby ]
 
 group :development, :test do
   gem 'brakeman', require: false
