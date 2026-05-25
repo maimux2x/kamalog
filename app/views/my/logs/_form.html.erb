@@ -17,13 +17,13 @@
     </div>
 
     <div class="list-group" data-attach-images-target="container">
-      <%= f.fields_for :log_photos, log.log_photos.order(:id), include_id: false do |photo| %>
+      <%= f.fields_for :photos, log.photos.order(:id), include_id: false do |photo| %>
         <%= render 'photo', photo: %>
       <% end %>
     </div>
 
     <template data-attach-images-target="template">
-      <%= f.fields_for :log_photos, LogPhoto.new, child_index: '__INDEX__' do |photo| %>
+      <%= f.fields_for :photos, LogPhoto.new, child_index: '__INDEX__' do |photo| %>
         <%= photo.file_field :file, hidden: true, wrapper: false %>
         <%= render 'photo', photo: %>
       <% end %>

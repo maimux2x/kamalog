@@ -1,3 +1,8 @@
 html [hidden] {
   display: none !important;
 }
+
+.field-sizing {
+  field-sizing: content;
+  min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2);
+}

@@ -5,6 +5,7 @@ ja:
         status: ステータス
         title: タイトル
         form_method: 成形方法
+        description: 作品説明
   enums:
     piece:
       status:

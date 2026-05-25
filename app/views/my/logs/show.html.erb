@@ -4,7 +4,7 @@
 <p style="white-space: pre-wrap;"><%= @log.body %></p>
 
 <div class="row">
-  <% @log.log_photos.with_attached_file.each do |photo| %>
+  <% @log.photos.with_attached_file.each do |photo| %>
     <div class="col-6 text-center">
       <%= link_to image_tag(photo.file, alt: '', height: 200), photo.file %>
 
