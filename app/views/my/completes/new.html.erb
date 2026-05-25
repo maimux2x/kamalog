@@ -1,7 +1,7 @@
 <h1 class="mb-3">完成品として登録する</h1>
 
 <%= bootstrap_form_with model: @piece, url: my_piece_path(@piece) do |f| %>
-  <%= f.text_area :description %>
+  <%= f.text_area :description, class: 'resize-field' %>
 
   <div data-controller="attach-images" class="mb-3">
     <div class="mb-3">
