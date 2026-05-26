@@ -1,0 +1,5 @@
+ja:
+  activerecord:
+    attributes:
+      piece_photo:
+        caption: 説明
