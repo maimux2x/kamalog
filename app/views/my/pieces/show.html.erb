@@ -6,10 +6,12 @@
       <div class="col-6">
         <% @piece.photos.each do |photo| %>
           <%= image_tag photo.file, height: 100, alt: '' %>
+
           <p><%= photo.caption %></p>
         <% end %>
       </div>
     </div>
+
     <p><%= @piece.description %></p>
 
     <dl>

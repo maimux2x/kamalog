@@ -61,7 +61,12 @@
     <div class="mb-3">
       <label class="btn btn-primary">
         画像を追加
-        <input type="file" hidden multiple data-action="attach-images#add">
+        <input
+          type="file"
+          hidden
+          multiple
+          data-action="attach-images#add"
+        >
       </label>
     </div>
 
@@ -78,6 +83,7 @@
       <% end %>
     </template>
   </div>
+
   <hr>
 
   <%= f.primary %>
