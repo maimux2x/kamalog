@@ -8,3 +8,9 @@ textarea.auto-resize {
   field-sizing: content;
   min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2);
 }
+
+.card-body {
+  & > *:last-child, & > dl dd:last-child {
+    margin-bottom: 0 !important;
+  }
+}
