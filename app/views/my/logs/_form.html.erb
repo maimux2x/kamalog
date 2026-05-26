@@ -1,7 +1,7 @@
 <%= bootstrap_form_with model: [:my, log.piece, log], multipart: true do |f| %>
   <%= f.date_field :date %>
   <%= f.text_field :title %>
-  <%= f.text_area :body, class: 'resize-field' %>
+  <%= f.text_area :body, class: 'auto-resize' %>
 
   <div data-controller="attach-images" class="mb-3">
     <div class="mb-3">

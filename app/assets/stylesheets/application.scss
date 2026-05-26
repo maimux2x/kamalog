@@ -4,7 +4,7 @@ html [hidden] {
   display: none !important;
 }
 
-textarea.resize-field {
+textarea.auto-resize {
   field-sizing: content;
   min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2);
 }
