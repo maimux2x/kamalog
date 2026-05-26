@@ -4,17 +4,15 @@
   <%= f.text_area :body, class: 'auto-resize' %>
 
   <div data-controller="attach-images" class="mb-3">
-    <div class="mb-3">
-      <label class="btn btn-primary">
-        画像を追加
-        <input
-          type="file"
-          multiple
-          data-action="attach-images#add"
-          hidden
-        >
-      </label>
-    </div>
+    <label class="btn btn-secondary mb-3">
+      画像を追加
+      <input
+        type="file"
+        multiple
+        data-action="attach-images#add"
+        hidden
+      >
+    </label>
 
     <div class="list-group" data-attach-images-target="container">
       <%= f.fields_for :photos, log.photos.order(:id), include_id: false do |photo| %>

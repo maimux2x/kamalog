@@ -14,3 +14,7 @@ textarea.auto-resize {
     margin-bottom: 0 !important;
   }
 }
+
+.list-group:empty {
+  display: none;
+}
