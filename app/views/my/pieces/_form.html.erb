@@ -78,7 +78,6 @@
 
     <template data-attach-images-target="template">
       <%= f.fields_for :photos, PiecePhoto.new, child_index: '__INDEX__' do |photo| %>
-        <%= photo.file_field :file, hidden: true %>
         <%= render 'photo', photo: photo %>
       <% end %>
     </template>
