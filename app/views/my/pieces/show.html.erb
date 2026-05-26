@@ -17,7 +17,7 @@
     <dl>
       <dt>進捗</dt>
 
-      <dd><%= @piece.status_i18n %></dd>
+      <dd><span class="badge <%= status_badge_class(@piece.status) %>"><%= @piece.status_i18n %></span></dd>
 
       <dt>成形方法</dt>
 
