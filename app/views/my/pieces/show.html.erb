@@ -3,18 +3,20 @@
 <div class="card mb-3">
   <div class="card-body">
     <div class="row">
-      <div class="col-6">
-        <% @piece.photos.each do |photo| %>
-          <%= image_tag photo.file, height: 100, alt: '' %>
+      <% @piece.photos.each do |photo| %>
+        <div class="col-6 text-center">
+          <%= image_tag photo.file, height: 200, alt: '' %>
 
           <p><%= photo.caption %></p>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
 
-    <p><%= @piece.description %></p>
-
     <dl>
+      <dt>作品説明</dt>
+
+      <dd><%= @piece.description %></dd>
+
       <dt>進捗</dt>
 
       <dd>

@@ -12,6 +12,7 @@ ja:
         in_progress: 製作中
         complete: 完成
       form_method:
+        hand_building: 手びねり
         coil_building: 紐作り
         ball_method: 玉作り
         slab_building: たたら作り
