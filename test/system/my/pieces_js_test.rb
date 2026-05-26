@@ -8,12 +8,13 @@ class PiecesJsTest < ApplicationSystemTestCase
   end
 
   test '作品を登録する' do
-    visit my_in_progress_index_path
+    visit my_pieces_path
 
-    click_on '制作する作品を登録'
+    click_on '作品を登録'
 
     fill_in 'タイトル', with: 'お茶碗'
-    choose '電動ろくろ'
+    choose '製作中'
+    select '電動ろくろ', from: '成形方法'
 
     within '[data-nested-form-target="item"]' do
       assert_selector 'button[disabled]', text: '削除'
@@ -26,11 +27,20 @@ class PiecesJsTest < ApplicationSystemTestCase
 
     select '白マット', from: '釉薬'
 
+    fill_in '作品説明', with: '自分用のお茶碗を作った'
+
+    attach_file file_fixture('dish.png'), make_visible: true
+
     click_on '登録する'
 
     assert_text '製作中の作品を登録しました。'
+    assert_text 'お茶碗'
+    assert_text '製作中'
+    assert_text '電動ろくろ'
     assert_text '白土 500g'
     assert_text '白マット'
+    assert_text '自分用のお茶碗を作った'
+    assert_selector 'img[src$="/dish.png"]'
   end
 
   test '作品を更新する' do

@@ -5,8 +5,8 @@ class PiecesTest < ApplicationSystemTestCase
     sign_in_as users(:alice)
   end
 
-  test '製作中一覧を表示する' do
-    visit my_in_progress_index_path
+  test '作品一覧を表示する' do
+    visit my_pieces_path
 
     assert_link 'マグカップ'
     assert_link '花瓶'
