@@ -1,0 +1,33 @@
+<h1 class="mb-3">作品詳細</h1>
+<div class="row">
+  <% @piece.photos.each do |photo| %>
+    <div class="col-6 text-center">
+      <%= image_tag photo.file, height: 200, alt: '' %>
+
+      <p><%= photo.caption %></p>
+    </div>
+  <% end %>
+</div>
+
+<dl>
+  <dt>作者</dt>
+  <dd><%= @piece.user.name %></dd>
+
+  <dt>作品説明</dt>
+  <dd><%= @piece.description %></dd>
+
+  <dt>成形方法</dt>
+
+  <dd><%= @piece.form_method_i18n %></dd>
+
+  <dt>使用した土</dt>
+
+  <% @piece.clay_usages.order(:id).each do |usage| %>
+    <dd><%= usage.clay.name %> <%= usage.weight %>g</dd>
+  <% end %>
+
+  <dt>使用した釉薬</dt>
+  <dd><%= @piece.glazes.order(:id).pluck(:name).join(' / ') %></dd>
+</dl>
+
+<%= link_to '戻る', pieces_path, class: 'btn btn-outline-primary' %>

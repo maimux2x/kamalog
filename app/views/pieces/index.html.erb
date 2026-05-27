@@ -1,0 +1,20 @@
+<h1 class="mb-3">みんなの作品一覧</h1>
+
+<div class="row mb-3">
+  <% @pieces.each do |piece| %>
+    <div class="col-4">
+      <div class="card">
+        <div class="text-center" style="height: 300;">
+          <%= image_tag piece.photos.first.file, alt: '', height: 300, class: 'pt-3' %>
+        </div>
+        <hr class="mb-0">
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to piece.title, piece_path(piece), class: 'text-decoration-none stretched-link' %></h5>
+          <p><%= piece.user.name %>さんの作品</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to '戻る', home_path, class: 'btn btn-outline-primary' %>
