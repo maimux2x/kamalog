@@ -1,4 +1,8 @@
 class My::PiecesController < ApplicationController
+  def index
+    @pieces = current_user.pieces.order(:id)
+  end
+
   def show
     @piece = current_user.pieces.includes(clay_usages: :clay, glaze_usages: :glaze).find(params[:id])
   end
@@ -36,7 +40,7 @@ class My::PiecesController < ApplicationController
   def destroy
     current_user.pieces.find(params[:id]).destroy!
 
-    redirect_to my_in_progress_index_path, status: :see_other, notice: '製作中の作品を削除しました。'
+    redirect_to my_pieces_path, status: :see_other, notice: '製作中の作品を削除しました。'
   end
 
   private
@@ -46,6 +50,7 @@ class My::PiecesController < ApplicationController
       :title,
       :status,
       :form_method,
+      :description,
 
       clay_usages_attributes: [[
         :clay_id,
@@ -57,6 +62,13 @@ class My::PiecesController < ApplicationController
       glaze_usages_attributes: [[
         :glaze_id,
         :id,
+        :_destroy
+      ]],
+
+      photos_attributes: [[
+        :id,
+        :file,
+        :caption,
         :_destroy
       ]]
     ])

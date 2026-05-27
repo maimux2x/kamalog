@@ -1,20 +1,18 @@
 <%= bootstrap_form_with model: [:my, log.piece, log], multipart: true do |f| %>
   <%= f.date_field :date %>
   <%= f.text_field :title %>
-  <%= f.text_area :body, style: 'field-sizing: content; min-height: calc(2lh + (0.375rem + var(--bs-border-width)) * 2)' %>
+  <%= f.text_area :body, class: 'auto-resize' %>
 
   <div data-controller="attach-images" class="mb-3">
-    <div class="mb-3">
-      <label class="btn btn-primary">
-        画像を追加
-        <input
-          type="file"
-          multiple
-          data-action="attach-images#add"
-          hidden
-        >
-      </label>
-    </div>
+    <label class="btn btn-secondary mb-3">
+      画像を追加
+      <input
+        type="file"
+        multiple
+        data-action="attach-images#add"
+        hidden
+      >
+    </label>
 
     <div class="list-group" data-attach-images-target="container">
       <%= f.fields_for :photos, log.photos.order(:id), include_id: false do |photo| %>
@@ -23,12 +21,14 @@
     </div>
 
     <template data-attach-images-target="template">
-      <%= f.fields_for :photos, Photo.new, child_index: '__INDEX__' do |photo| %>
-        <%= photo.file_field :file, hidden: true, wrapper: false %>
+      <%= f.fields_for :photos, LogPhoto.new, child_index: '__INDEX__' do |photo| %>
         <%= render 'photo', photo: %>
       <% end %>
     </template>
   </div>
 
-  <%= f.primary %>
+  <div class="hstack gap-3">
+    <%= f.primary %>
+    <%= link_to 'キャンセル', my_piece_logs_path(log.piece), class: 'btn btn-outline-primary' %>
+  </div>
 <% end %>

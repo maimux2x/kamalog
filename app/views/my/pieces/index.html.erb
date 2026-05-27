@@ -1,5 +1,5 @@
-<h1 class="mb-3">製作中一覧</h1>
-<%= link_to '制作する作品を登録', new_my_piece_path, class: 'btn btn-primary mb-3' %>
+<h1 class="mb-3">作品一覧</h1>
+<%= link_to '作品を登録', new_my_piece_path, class: 'btn btn-outline-primary mb-3' %>
 
 <div class="row row-cols-2">
   <% @pieces.each do |piece| %>
@@ -13,6 +13,10 @@
           <time datetime="<%= piece.created_at.iso8601 %>">
             <%= l piece.created_at.to_date %>
           </time>
+
+          <span class="badge <%= status_badge_class(piece.status) %>">
+            <%= piece.status_i18n %>
+          </span>
         </div>
       </div>
     </div>

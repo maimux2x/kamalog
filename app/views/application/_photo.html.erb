@@ -1,10 +1,10 @@
 <div class="list-group-item position-relative" data-attach-images-target="item">
-  <%= photo.hidden_field :id %>
-
-  <% if photo.object.file.attached? %>
+  <% if photo.object.persisted? %>
     <%= image_tag photo.object.file, height: 100, alt: '' %>
+    <%= photo.hidden_field :id %>
   <% else %>
     <%= image_tag '', height: 100, alt: '' %>
+    <%= photo.file_field :file, hidden: true, wrapper: false %>
   <% end %>
 
   <%= photo.text_field :caption %>

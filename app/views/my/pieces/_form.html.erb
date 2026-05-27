@@ -1,6 +1,7 @@
 <%= bootstrap_form_with model: [:my, piece] do |f| %>
   <%= f.text_field :title %>
-  <%= f.collection_radio_buttons :form_method, Piece.form_methods_i18n, :first, :last %>
+  <%= f.collection_radio_buttons :status, Piece.statuses_i18n, :first, :last %>
+  <%= f.collection_select :form_method, Piece.form_methods_i18n, :first, :last, prompt: true %>
 
   <div
     class="clays"
@@ -20,7 +21,7 @@
       class="btn btn-secondary d-block mb-3"
       data-action="click->nested-form#add"
     >
-      土を追加する
+      土を追加
     </button>
 
     <template data-nested-form-target="template">
@@ -44,7 +45,7 @@
       class="btn btn-secondary d-block mb-3"
       data-action="click->nested-form#add"
     >
-      釉薬を追加する
+      釉薬を追加
     </button>
 
     <template data-nested-form-target="template">
@@ -54,10 +55,32 @@
     </template>
   </div>
 
+  <%= f.text_area :description, class: 'auto-resize' %>
+
+  <div data-controller="attach-images">
+    <label class="btn btn-secondary mb-3">
+      画像を追加
+      <input
+        type="file"
+        hidden
+        multiple
+        data-action="attach-images#add"
+      >
+    </label>
+
+    <div class="list-group" data-attach-images-target="container"><%= f.fields_for :photos, piece.photos.order(:id), include_id: false do |photo| %>
+      <%= render 'photo', photo: photo %>
+    <% end %></div>
+
+    <template data-attach-images-target="template">
+      <%= f.fields_for :photos, PiecePhoto.new, child_index: '__INDEX__' do |photo| %>
+        <%= render 'photo', photo: photo %>
+      <% end %>
+    </template>
+  </div>
+
   <hr>
 
-  <div class="hstack gap-3">
-    <%= f.primary %>
-    <%= link_to 'キャンセル', my_in_progress_index_path, class: 'btn btn-outline-primary' %>
-  </div>
+  <%= f.primary %>
+  <%= link_to 'キャンセル', piece.persisted? ? my_piece_path(piece) : my_pieces_path, class: 'btn btn-outline-primary' %>
 <% end %>

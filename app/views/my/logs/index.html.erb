@@ -1,7 +1,7 @@
 <%= render 'my/piece_tab', piece: @piece %>
 
 <div>
-  <%= link_to '作業記録を登録する', new_my_piece_log_path(@piece), class: 'btn btn-primary mb-3' %>
+  <%= link_to '作業記録を登録する', new_my_piece_log_path(@piece), class: 'btn btn-outline-primary mb-3' %>
 </div>
 
 <% @piece.logs.each do |log| %>
@@ -15,9 +15,11 @@
         <%= log.date %>
       </time>
 
-      <p><%= log.body %></p>
+      <% if log.body.present? %>
+        <p><%= log.body %></p>
+      <% end %>
     </div>
   </div>
 <% end %>
 
-<%= link_to '戻る', my_in_progress_index_path, class: 'btn btn-primary' %>
+<%= link_to '戻る', my_pieces_path, class: 'btn btn-outline-primary' %>
