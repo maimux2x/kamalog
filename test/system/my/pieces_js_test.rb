@@ -7,7 +7,7 @@ class PiecesJsTest < ApplicationSystemTestCase
     sign_in_as users(:alice)
   end
 
-  test '作品を登録する' do
+  test '製作中の作品を登録する' do
     visit my_pieces_path
 
     click_on '作品を登録'
@@ -27,9 +27,8 @@ class PiecesJsTest < ApplicationSystemTestCase
 
     select '白マット', from: '釉薬'
 
-    fill_in '作品説明', with: '自分用のお茶碗を作った'
-
-    attach_file file_fixture('dish.png'), make_visible: true
+    assert_no_text '作品説明'
+    assert_no_text '画像を追加'
 
     click_on '登録する'
 
@@ -39,16 +38,16 @@ class PiecesJsTest < ApplicationSystemTestCase
     assert_text '電動ろくろ'
     assert_text '白土 500g'
     assert_text '白マット'
-    assert_text '自分用のお茶碗を作った'
-    assert_selector 'img[src$="/dish.png"]'
   end
 
-  test '作品を更新する' do
+  test '作品を完成に更新する' do
     visit my_piece_path(pieces(:cup))
 
     click_on '編集'
 
     fill_in 'タイトル', with: '大きいマグカップ'
+
+    choose '完成'
 
     click_on '土を追加'
 
@@ -63,6 +62,12 @@ class PiecesJsTest < ApplicationSystemTestCase
       select '黒マット', from: '釉薬'
     end
 
+    fill_in '作品説明', with: 'たくさん量が入るマグカップを作った'
+
+    attach_file file_fixture('dish_cup.png'), make_visible: true
+
+    fill_in '説明', with: '持ち手を工夫した'
+
     click_on '更新する'
 
     assert_text '製作中の作品を更新しました。'
@@ -71,6 +76,9 @@ class PiecesJsTest < ApplicationSystemTestCase
     assert_text '黒土 100g'
     assert_text '白マット'
     assert_text '黒マット'
+    assert_text 'たくさん量が入るマグカップを作った'
+    assert_selector 'img[src$="/dish_cup.png"]'
+    assert_text '持ち手を工夫した'
   end
 
   test '作品から土と釉薬を削除する' do
