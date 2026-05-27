@@ -1,17 +1,6 @@
 <%= bootstrap_form_with model: [:my, piece], data: {controller: 'toggle-element'} do |f| %>
   <%= f.text_field :title %>
 
-  <div class="mb-3">
-    <%= f.label :status, class: 'form-label', for: nil %>
-
-    <%= collection_radio_buttons :piece, :status, Piece.statuses_i18n, :first, :last do |b| %>
-      <div class="form-check">
-        <%= b.radio_button class: 'form-check-input', data: {action: b.value == 'complete' ? 'toggle-element#show' : 'toggle-element#hide'} %>
-        <%= b.label(class: 'form-check-label') { b.text } %>
-      </div>
-    <% end %>
-  </div>
-
   <%= f.collection_select :form_method, Piece.form_methods_i18n, :first, :last, prompt: true %>
 
   <div
@@ -64,6 +53,17 @@
         <%= render 'glaze_usage', form: glaze_usage %>
       <% end %>
     </template>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :status, class: 'form-label', for: nil %>
+
+    <%= collection_radio_buttons :piece, :status, Piece.statuses_i18n, :first, :last do |b| %>
+      <div class="form-check">
+        <%= b.radio_button class: 'form-check-input', data: {action: b.value == 'complete' ? 'toggle-element#show' : 'toggle-element#hide'} %>
+        <%= b.label(class: 'form-check-label') { b.text } %>
+      </div>
+    <% end %>
   </div>
 
   <%= tag.div data: {toggle_element_target: 'target'}, hidden: !f.object.complete? do %>
