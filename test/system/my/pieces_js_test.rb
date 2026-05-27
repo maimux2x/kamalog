@@ -23,7 +23,7 @@ class PiecesJsTest < ApplicationSystemTestCase
       fill_in '使用量', with: '500'
     end
 
-    click_on '釉薬を追加する'
+    click_on '釉薬を追加'
 
     select '白マット', from: '釉薬'
 
@@ -50,14 +50,14 @@ class PiecesJsTest < ApplicationSystemTestCase
 
     fill_in 'タイトル', with: '大きいマグカップ'
 
-    click_on '土を追加する'
+    click_on '土を追加'
 
     within '.clays :nth-last-child(1 of [data-nested-form-target="item"])' do
       select '黒土',    from: '土'
       fill_in '使用量', with: '100'
     end
 
-    click_on '釉薬を追加する'
+    click_on '釉薬を追加'
 
     within '.glazes :nth-last-child(1 of [data-nested-form-target="item"])' do
       select '黒マット', from: '釉薬'
