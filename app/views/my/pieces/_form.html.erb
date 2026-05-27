@@ -1,6 +1,17 @@
-<%= bootstrap_form_with model: [:my, piece] do |f| %>
+<%= bootstrap_form_with model: [:my, piece], data: {controller: 'toggle-element'} do |f| %>
   <%= f.text_field :title %>
-  <%= f.collection_radio_buttons :status, Piece.statuses_i18n, :first, :last %>
+
+  <div class="mb-3">
+    <%= f.label :status, class: 'form-label', for: nil %>
+
+    <%= collection_radio_buttons :piece, :status, Piece.statuses_i18n, :first, :last do |b| %>
+      <div class="form-check">
+        <%= b.radio_button class: 'form-check-input', data: {action: b.value == 'complete' ? 'toggle-element#show' : 'toggle-element#hide'} %>
+        <%= b.label(class: 'form-check-label') { b.text } %>
+      </div>
+    <% end %>
+  </div>
+
   <%= f.collection_select :form_method, Piece.form_methods_i18n, :first, :last, prompt: true %>
 
   <div
@@ -55,29 +66,33 @@
     </template>
   </div>
 
-  <%= f.text_area :description, class: 'auto-resize' %>
+  <%= tag.div data: {toggle_element_target: 'target'}, hidden: !f.object.complete? do %>
+    <%= f.text_area :description, class: 'auto-resize' %>
 
-  <div data-controller="attach-images">
-    <label class="btn btn-secondary mb-3">
-      画像を追加
-      <input
-        type="file"
-        hidden
-        multiple
-        data-action="attach-images#add"
-      >
-    </label>
+    <div data-controller="attach-images">
+      <label class="btn btn-secondary mb-3">
+        画像を追加
+        <input
+          type="file"
+          hidden
+          multiple
+          data-action="attach-images#add"
+        >
+      </label>
 
-    <div class="list-group" data-attach-images-target="container"><%= f.fields_for :photos, piece.photos.order(:id), include_id: false do |photo| %>
-      <%= render 'photo', photo: photo %>
-    <% end %></div>
+      <div class="list-group" data-attach-images-target="container">
+        <%= f.fields_for :photos, piece.photos.order(:id), include_id: false do |photo| %>
+          <%= render 'photo', photo: photo %>
+        <% end %>
+      </div>
 
-    <template data-attach-images-target="template">
-      <%= f.fields_for :photos, PiecePhoto.new, child_index: '__INDEX__' do |photo| %>
-        <%= render 'photo', photo: photo %>
-      <% end %>
-    </template>
-  </div>
+      <template data-attach-images-target="template">
+        <%= f.fields_for :photos, PiecePhoto.new, child_index: '__INDEX__' do |photo| %>
+          <%= render 'photo', photo: photo %>
+        <% end %>
+      </template>
+    </div>
+  <% end %>
 
   <hr>
 
