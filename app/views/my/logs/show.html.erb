@@ -3,14 +3,14 @@
 
 <p style="white-space: pre-wrap;"><%= @log.body %></p>
 
-<div class="row">
+<div class="grid mb-3">
   <% @log.photos.with_attached_file.each do |photo| %>
-    <div class="col-6 text-center">
-      <%= link_to image_tag(photo.file, alt: '', height: 200), photo.file %>
+    <div class="g-col-12 g-col-md-6 d-grid row-gap-0 border" style="grid-row: span 2; grid-template-rows: subgrid;">
+      <div class="d-flex align-items-center bg-dark">
+        <%= link_to image_tag(photo.file, alt: '', class: 'w-100'), photo.file %>
+      </div>
 
-      <p>
-        <small><%= photo.caption %></small>
-      </p>
+      <small class="p-2"><%= photo.caption %></small>
     </div>
   <% end %>
 </div>
