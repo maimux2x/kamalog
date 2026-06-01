@@ -3,8 +3,14 @@
 
 <div class="grid">
   <% @pieces.each do |piece| %>
-    <div class="g-col-6 card mb-3 d-grid row-gap-0" style="grid-row: span 2; grid-template-rows: subgrid;">
-      <div class="card-body d-grid" style="grid-row: span 2; grid-template-rows: subgrid;">
+    <div
+      class="g-col-6 card mb-3 d-grid row-gap-0"
+      style="grid-row: span 2; grid-template-rows: subgrid;"
+    >
+      <div
+        class="card-body d-grid"
+        style="grid-row: span 2; grid-template-rows: subgrid;"
+      >
         <h5 class="card-title">
           <%= link_to piece.title, my_piece_path(piece), class: 'stretched-link text-decoration-none' %>
         </h5>
