@@ -1,17 +1,14 @@
 <h1 class="mb-3">みんなの作品一覧</h1>
 
-<div class="row mb-3">
+<div class="grid mb-3">
   <% @pieces.each do |piece| %>
-    <div class="col-4">
-      <div class="card">
-        <div class="text-center" style="height: 300;">
-          <%= image_tag piece.photos.first.file, alt: '', height: 300, class: 'pt-3' %>
-        </div>
-        <hr class="mb-0">
-        <div class="card-body">
-          <h5 class="card-title"><%= link_to piece.title, piece_path(piece), class: 'text-decoration-none stretched-link' %></h5>
-          <p><%= piece.user.name %>さんの作品</p>
-        </div>
+    <div class="g-col-6 g-col-md-4 d-grid row-gap-0 card" style="grid-row: span 3; grid-template-rows: subgrid;">
+      <div class="d-flex align-items-center bg-light">
+        <%= image_tag piece.photos.first.file, class: 'w-100', alt: '' %>
+      </div>
+      <div class="card-body d-grid" style="grid-row: span 2; grid-template-rows: subgrid;">
+        <h5 class="card-title"><%= link_to piece.title, piece_path(piece), class: 'text-decoration-none stretched-link' %></h5>
+        <p><%= piece.user.name %>さんの作品</p>
       </div>
     </div>
   <% end %>

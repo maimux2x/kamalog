@@ -1,10 +1,12 @@
 <h1 class="mb-3">作品詳細</h1>
-<div class="row">
+<div class="grid mb-3">
   <% @piece.photos.each do |photo| %>
-    <div class="col-6 text-center">
-      <%= image_tag photo.file, height: 200, alt: '' %>
+    <div class="g-col-12 g-col-md-6 d-grid row-gap-0 border" style="grid-row: span 2; grid-template-rows: subgrid;">
+      <div class="d-flex align-items-center bg-light">
+        <%= image_tag photo.file, class: 'w-100', alt: '' %>
+      </div>
 
-      <p><%= photo.caption %></p>
+      <small class="p-2"><%= photo.caption %></small>
     </div>
   <% end %>
 </div>
