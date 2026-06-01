@@ -13,3 +13,7 @@ base_usages2:
   clay: black
   weight: 300
 
+teacup_usages:
+  piece: teacup
+  clay: white
+  weight: 300

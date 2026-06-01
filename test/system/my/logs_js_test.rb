@@ -1,6 +1,6 @@
 require 'application_system_test_case'
 
-class LogsJsTest < ApplicationSystemTestCase
+class My::LogsJsTest < ApplicationSystemTestCase
   driven_by_selenium
 
   setup do

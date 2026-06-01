@@ -9,3 +9,7 @@ base_usages1:
 base_usages2:
   piece: base
   glaze: black_matte
+
+teacup_usages:
+  piece: teacup
+  glaze: white_matte

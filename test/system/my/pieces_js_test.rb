@@ -1,6 +1,6 @@
 require 'application_system_test_case'
 
-class PiecesJsTest < ApplicationSystemTestCase
+class My::PiecesJsTest < ApplicationSystemTestCase
   driven_by_selenium
 
   setup do
