@@ -1,6 +1,6 @@
 require 'application_system_test_case'
 
-class PiecesTest < ApplicationSystemTestCase
+class My::PiecesTest < ApplicationSystemTestCase
   setup do
     sign_in_as users(:alice)
   end

@@ -2,3 +2,8 @@ alice:
   uid: 12345
   name: Alice
   email: alice@example.com
+
+bob:
+  uid: 67890
+  name: Bob
+  email: bob@example.com
