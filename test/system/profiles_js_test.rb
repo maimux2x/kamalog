@@ -1,0 +1,37 @@
+require 'application_system_test_case'
+
+class ProfilesJsTest < ApplicationSystemTestCase
+  driven_by_selenium
+
+  setup do
+    sign_in_as users(:alice)
+  end
+
+  test 'ユーザー名を更新できること' do
+    visit profile_path
+
+    fill_in '名前', with: 'ありす'
+
+    click_on '更新する'
+
+    assert_selector 'input[value="ありす"]'
+  end
+
+  test 'アバター画像を設定できること' do
+    visit profile_path
+
+    attach_file file_fixture('dish_cup.png'), make_visible: true
+
+    assert_selector 'img[src$="/dish_cup.png"]'
+  end
+
+  test 'アバター画像を削除できること' do
+    visit profile_path
+
+    attach_file file_fixture('dish_cup.png'), make_visible: true
+
+    click_on 'プロフィール画像を削除'
+
+    assert_no_selector 'img[src$="/dish_cup.png"]'
+  end
+end
