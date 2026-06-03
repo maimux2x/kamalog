@@ -24,7 +24,12 @@
           <%= link_to piece.title, piece_path(piece), class: 'text-decoration-none stretched-link' %>
         </h5>
 
-        <p><%= piece.user.name %>さんの作品</p>
+        <div class="hstack gap-1">
+          <% if piece.user.avatar.attached? %>
+            <%= image_tag piece.user.avatar.variant(:icon), alt: '' %>
+          <% end %>
+          <p class="mb-0"><%= piece.user.name %>さんの作品</p>
+        </div>
       </div>
     </div>
   <% end %>

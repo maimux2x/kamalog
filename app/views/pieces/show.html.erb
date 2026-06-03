@@ -1,12 +1,12 @@
 <h1 class="mb-3"><%= @piece.title %></h1>
 
 <div class="grid mb-3">
-  <% @piece.photos.each do |photo| %>
+  <% @piece.photos.order(:id).each do |photo| %>
     <div
       class="g-col-12 g-col-md-6 d-grid row-gap-0 border"
       style="grid-row: span 2; grid-template-rows: subgrid;"
     >
-      <div class="d-flex align-items-center bg-light">
+      <div class="d-flex justify-content-center align-items-center bg-light">
         <%= image_tag photo.file, class: 'w-100', alt: '' %>
       </div>
 

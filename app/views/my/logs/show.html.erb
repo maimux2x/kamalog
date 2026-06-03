@@ -4,12 +4,12 @@
 <p style="white-space: pre-wrap;"><%= @log.body %></p>
 
 <div class="grid mb-3">
-  <% @log.photos.with_attached_file.each do |photo| %>
+  <% @log.photos.order(:id).with_attached_file.each do |photo| %>
     <div
       class="g-col-12 g-col-md-6 d-grid row-gap-0 border"
       style="grid-row: span 2; grid-template-rows: subgrid;"
     >
-      <div class="d-flex align-items-center bg-light">
+      <div class="d-flex justify-content-center align-items-center bg-light">
         <%= link_to image_tag(photo.file, alt: '', class: 'w-100'), photo.file %>
       </div>
 

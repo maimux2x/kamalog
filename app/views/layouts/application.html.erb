@@ -55,7 +55,7 @@
                   <%= current_user.name %>
                 </div>
 
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="min-width: 0;">
                   <li>
                     <%= link_to 'アカウント', profile_path, class: 'dropdown-item' %>
                   </li>
@@ -71,7 +71,7 @@
       </div>
     </nav>
 
-    <div class="container mb-3">
+    <div class="container mb-3 h-100">
       <% if flash[:notice] %>
         <div class="alert alert-success alert-dismissible fade show">
           <%= flash[:notice] %>
