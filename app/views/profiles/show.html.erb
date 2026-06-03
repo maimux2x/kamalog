@@ -14,7 +14,7 @@
 
 <% if @profile.avatar.attached? %>
   <%= image_tag @profile.avatar.variant(:small), alt: '', class: 'mb-3' %>
-  <%= button_to 'プロフィール画像を削除', profile_path, method: :patch, class: 'btn btn-primary mb-3', name: 'user[avatar]', value: nil %>
+  <%= button_to 'プロフィール画像を削除', profile_path, method: :patch, class: 'btn btn-primary', name: 'user[avatar]', value: nil %>
 <% end %>
 
 <hr>
