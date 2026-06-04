@@ -1,4 +1,10 @@
-<h1 class="mb-3">作品一覧</h1>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
+    <li class="breadcrumb-item active" aria-current="page">自分の作品一覧</li>
+  </ol>
+</nav>
+
 <%= link_to '作品を登録', new_my_piece_path, class: 'btn btn-outline-primary mb-3' %>
 
 <div class="grid">

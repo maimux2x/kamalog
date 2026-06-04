@@ -1,3 +1,11 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'みんなの作品一覧', pieces_path %></li>
+    <li class="breadcrumb-item active" aria-current="page"><%= @piece.title %></li>
+  </ol>
+</nav>
+
 <h1 class="mb-3"><%= @piece.title %></h1>
 
 <div class="grid mb-3">

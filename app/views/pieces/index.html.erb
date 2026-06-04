@@ -1,9 +1,14 @@
-<h1 class="mb-3">みんなの作品一覧</h1>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
+    <li class="breadcrumb-item active" aria-current="page">みんなの作品一覧</li>
+  </ol>
+</nav>
 
 <div class="grid mb-3">
   <% @pieces.each do |piece| %>
     <div
-      class="g-col-6 g-col-md-4 d-grid row-gap-0 card"
+      class="g-col-12 g-col-md-4 d-grid row-gap-0 card"
       style="grid-row: span 3; grid-template-rows: subgrid;"
     >
       <% if piece.photos.present? %>
@@ -26,7 +31,7 @@
 
         <div class="hstack gap-1">
           <% if piece.user.avatar.attached? %>
-            <%= image_tag piece.user.avatar.variant(:icon), alt: '' %>
+            <%= image_tag piece.user.avatar.variant(:icon), alt: '', style: 'width: 15%; border-radius: 12px;' %>
           <% end %>
           <p class="mb-0"><%= piece.user.name %>さんの作品</p>
         </div>
