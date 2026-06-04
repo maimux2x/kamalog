@@ -30,7 +30,7 @@ class ProfilesJsTest < ApplicationSystemTestCase
 
     attach_file file_fixture('dish_cup.png'), make_visible: true
 
-    click_on 'プロフィール画像を削除'
+    click_on '画像を削除'
 
     assert_no_selector 'img[src$="/dish_cup.png"]'
   end
