@@ -1,8 +1,11 @@
 white_matte:
+  studio: wonderland
   name: 白マット
 
 black_matte:
+  studio: wonderland
   name: 黒マット
 
 perl:
+  studio: wonderland
   name: パールラスター
