@@ -1,29 +1,28 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
+    <li class="breadcrumb-item"><%= link_to '教室のホーム', studio_path(current_user.studios.first) %></li>
     <li class="breadcrumb-item active" aria-current="page">アカウント情報の更新</li>
   </ol>
 </nav>
 
 <%= bootstrap_form_with model: @profile, url: profile_path, method: :patch, class: 'mb-3' do |f| %>
   <%= f.text_field :name %>
+
   <%= f.primary %>
 <% end %>
 
-<label>
-  プロフィール画像
-  <%= bootstrap_form_with model: @profile, url: profile_path, method: :patch, data: {controller: 'upload-image', upload_image_target: 'form'}, class: 'mb-3' do |f| %>
-    <label type="button" class="mt-2 btn btn-primary">
-      画像を選択
-      <%= f.file_field :avatar, hidden: true, wrapper: false, data: {action: 'upload-image#upload'} %>
-    </label>
-  <% end %>
+<label>プロフィール画像</label>
+<%= bootstrap_form_with model: @profile, url: profile_path, method: :patch, data: {controller: 'upload-image', upload_image_target: 'form'}, class: 'mb-3' do |f| %>
+  <label type="button" class="mt-2 btn btn-primary">
+    画像を選択
+    <%= f.file_field :avatar, hidden: true, wrapper: false, data: {action: 'upload-image#upload'} %>
+  </label>
+<% end %>
 
-  <% if @profile.avatar.attached? %>
-    <%= image_tag @profile.avatar.variant(:small), alt: '', class: 'mb-3' %>
-    <%= button_to '画像を削除', profile_path, method: :patch, class: 'btn btn-primary', name: 'user[avatar]', value: nil %>
-  <% end %>
-</label>
+<% if @profile.avatar.attached? %>
+  <%= image_tag @profile.avatar.variant(:small), alt: '', class: 'mb-3' %>
+  <%= button_to '画像を削除', profile_path, method: :patch, class: 'btn btn-primary', name: 'user[avatar]', value: nil %>
+<% end %>
 
 <hr>
 

@@ -1,4 +1,4 @@
-class HomesController < ApplicationController
+class StudiosController < ApplicationController
   def show
     @studio = current_user.memberships.first.studio
   end

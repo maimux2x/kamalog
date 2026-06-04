@@ -1,5 +1,4 @@
-studio = Studio.find_or_initialize_by name: 'ワンダーランド教室'
-studio.save!
+studio = Studio.first
 
 user = User.find_or_initialize_by(email: 'test1@example.com').tap {
   it.update! uid: 'test1@example.com', name: 'test1'

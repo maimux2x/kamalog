@@ -1,6 +1,6 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'ホーム', studio_path(current_user.studios.first) %></li>
     <li class="breadcrumb-item active" aria-current="page">みんなの作品一覧</li>
   </ol>
 </nav>
@@ -41,4 +41,4 @@
   <% end %>
 </div>
 
-<%= link_to '戻る', home_path, class: 'btn btn-outline-primary' %>
+<%= link_to '戻る', studio_path(current_user.studios.first), class: 'btn btn-outline-primary' %>

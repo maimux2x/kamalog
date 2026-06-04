@@ -4,19 +4,17 @@ Rails.application.routes.draw do
   root to: 'welcome#index'
 
   resource :session, only: %i[destroy]
-  resource :home,    only: %i[show]
   resource :profile, only: %i[show update destroy]
 
-  resources :studios, only: %i[] do
+  resources :studios, only: %i[show] do
+    resources :pieces, only: %i[index show]
+
     namespace :my do
       resources :pieces, only: %i[index show new create edit update destroy] do
         resources :logs, only: %i[index show new create edit update destroy]
       end
     end
   end
-
-
-  resources :pieces, only: %i[index show]
 
   get 'up' => 'rails/health#show', as: :rails_health_check
 end
