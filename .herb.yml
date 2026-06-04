@@ -1,0 +1,6 @@
+linter:
+  enabled: true
+
+  rules:
+    html-aria-label-is-well-formatted:
+      enabled: false
