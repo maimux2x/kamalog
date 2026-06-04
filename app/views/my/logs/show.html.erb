@@ -2,7 +2,11 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
     <li class="breadcrumb-item"><%= link_to '自分の作品一覧', my_pieces_path %></li>
-    <li class="breadcrumb-item"><%= link_to '作業記録一覧', my_piece_logs_path(@log.piece) %></li>
+
+    <li class="breadcrumb-item">
+      <%= link_to '作業記録一覧', my_piece_logs_path(@log.piece) %>
+    </li>
+
     <li class="breadcrumb-item active" aria-current="page">作業記録</li>
   </ol>
 </nav>

@@ -4,3 +4,6 @@ linter:
   rules:
     html-aria-label-is-well-formatted:
       enabled: false
+
+formatter:
+  enabled: true
