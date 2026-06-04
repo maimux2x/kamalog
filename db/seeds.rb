@@ -1,13 +1,20 @@
+studio = Studio.find_or_initialize_by name: 'ワンダーランド教室'
+studio.save!
+
 user = User.find_or_initialize_by(email: 'test1@example.com').tap {
   it.update! uid: 'test1@example.com', name: 'test1'
 }
 
+Membership.find_or_initialize_by(user_id: user.id).tap {
+  it.update! studio_id: studio.id
+}
+
 white_clay, _, black_clay = ['白土', '赤土', '黒土'].map {|clay|
-  Clay.find_or_create_by! name: clay
+  studio.clays.find_or_create_by! name: clay
 }
 
 white_matte, perl, black_matte = ['白マット', 'パールラスター', '黒マット'].map {|glaze|
-  Glaze.find_or_create_by! name: glaze
+  studio.glazes.find_or_create_by! name: glaze
 }
 
 rice_bowl = user.pieces.find_or_initialize_by(title: 'お茶碗').tap {
