@@ -1,22 +1,22 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
-    <li class="breadcrumb-item"><%= link_to '自分の作品一覧', my_pieces_path %></li>
+    <li class="breadcrumb-item"><%= link_to '自分の作品一覧', studio_my_pieces_path(@studio) %></li>
     <li class="breadcrumb-item active" aria-current="page">作業記録一覧</li>
   </ol>
 </nav>
 
-<%= render 'my/piece_tab', piece: @piece %>
+<%= render 'my/piece_tab', studio: @studio, piece: @piece %>
 
 <div>
-  <%= link_to '作業記録を登録する', new_my_piece_log_path(@piece), class: 'btn btn-outline-primary mb-3' %>
+  <%= link_to '作業記録を登録する', new_studio_my_piece_log_path(@studio, @piece), class: 'btn btn-outline-primary mb-3' %>
 </div>
 
 <% @piece.logs.each do |log| %>
   <div class="card mb-3">
     <div class="card-body">
       <h2>
-        <%= link_to log.title, my_piece_log_path(@piece, log), class: 'text-decoration-none stretched-link' %>
+        <%= link_to log.title, studio_my_piece_log_path(@studio, @piece, log), class: 'text-decoration-none stretched-link' %>
       </h2>
 
       <time datetime="<%= log.date %>" class="d-block mb-3">
@@ -30,4 +30,4 @@
   </div>
 <% end %>
 
-<%= link_to '戻る', my_pieces_path, class: 'btn btn-outline-primary' %>
+<%= link_to '戻る', studio_my_pieces_path(@studio), class: 'btn btn-outline-primary' %>

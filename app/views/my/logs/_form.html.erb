@@ -1,4 +1,4 @@
-<%= bootstrap_form_with model: [:my, log.piece, log], multipart: true do |f| %>
+<%= bootstrap_form_with model: [studio, :my, log.piece, log], multipart: true do |f| %>
   <%= f.date_field :date %>
   <%= f.text_field :title %>
   <%= f.text_area :body, class: 'auto-resize' %>
@@ -29,6 +29,6 @@
 
   <div class="hstack gap-3">
     <%= f.primary %>
-    <%= link_to 'キャンセル', my_piece_logs_path(log.piece), class: 'btn btn-outline-primary' %>
+    <%= link_to 'キャンセル', studio_my_piece_logs_path(studio, log.piece), class: 'btn btn-outline-primary' %>
   </div>
 <% end %>

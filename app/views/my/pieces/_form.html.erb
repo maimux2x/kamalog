@@ -1,4 +1,4 @@
-<%= bootstrap_form_with model: [:my, piece], data: {controller: 'toggle-element'} do |f| %>
+<%= bootstrap_form_with model: [studio, :my, piece], data: {controller: 'toggle-element'} do |f| %>
   <%= f.text_field :title %>
 
   <%= f.collection_select :form_method, Piece.form_methods_i18n, :first, :last, prompt: true %>
@@ -97,5 +97,5 @@
   <hr>
 
   <%= f.primary %>
-  <%= link_to 'キャンセル', piece.persisted? ? my_piece_path(piece) : my_pieces_path, class: 'btn btn-outline-primary' %>
+  <%= link_to 'キャンセル', piece.persisted? ? studio_my_piece_path(studio, piece) : studio_my_pieces_path(studio), class: 'btn btn-outline-primary' %>
 <% end %>

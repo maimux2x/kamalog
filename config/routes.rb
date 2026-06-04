@@ -7,11 +7,14 @@ Rails.application.routes.draw do
   resource :home,    only: %i[show]
   resource :profile, only: %i[show update destroy]
 
-  namespace :my do
-    resources :pieces, only: %i[index show new create edit update destroy] do
-      resources :logs, only: %i[index show new create edit update destroy]
+  resources :studios, only: %i[] do
+    namespace :my do
+      resources :pieces, only: %i[index show new create edit update destroy] do
+        resources :logs, only: %i[index show new create edit update destroy]
+      end
     end
   end
+
 
   resources :pieces, only: %i[index show]
 

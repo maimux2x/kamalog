@@ -2,15 +2,15 @@
 
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
-    <%= link_to '作品詳細', my_piece_path(piece), class: ['nav-link', active: current_page?(my_piece_path(piece))] %>
+    <%= link_to '作品詳細', studio_my_piece_path(studio, piece), class: ['nav-link', active: current_page?(studio_my_piece_path(studio, piece))] %>
   </li>
 
   <li class="nav-item">
-    <%= link_to my_piece_logs_path(piece), class: [
+    <%= link_to studio_my_piece_logs_path(studio, piece), class: [
       'nav-link',
       'd-flex',
       'align-items-center',
-      active: current_page?(my_piece_logs_path(piece))
+      active: current_page?(studio_my_piece_logs_path(studio, piece))
     ] do %>
       作業記録
       <span class="ms-2 badge text-bg-secondary"><%= piece.logs.size %></span>

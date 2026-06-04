@@ -8,7 +8,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
   end
 
   test '製作中の作品を登録する' do
-    visit my_pieces_path
+    visit studio_my_pieces_path(studios(:wonderland))
 
     click_on '作品を登録'
 
@@ -41,7 +41,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
   end
 
   test '作品を完成に更新する' do
-    visit my_piece_path(pieces(:cup))
+    visit studio_my_piece_path(studios(:wonderland), pieces(:cup))
 
     click_on '編集'
 
@@ -82,7 +82,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
   end
 
   test '作品から土と釉薬を削除する' do
-    visit my_piece_path(pieces(:base))
+    visit studio_my_piece_path(studios(:wonderland), pieces(:base))
 
     click_on '編集'
 

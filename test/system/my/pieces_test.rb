@@ -6,20 +6,20 @@ class My::PiecesTest < ApplicationSystemTestCase
   end
 
   test '作品一覧を表示する' do
-    visit my_pieces_path
+    visit studio_my_pieces_path(studios(:wonderland))
 
     assert_link 'マグカップ'
     assert_link '花瓶'
   end
 
   test '詳細を表示する' do
-    visit my_piece_path(pieces(:cup))
+    visit studio_my_piece_path(studios(:wonderland), pieces(:cup))
 
     assert_text 'マグカップ'
   end
 
   test '作品を削除する' do
-    visit my_piece_path(pieces(:cup))
+    visit studio_my_piece_path(studios(:wonderland), pieces(:cup))
 
     click_on '削除'
 
