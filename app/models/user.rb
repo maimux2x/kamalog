@@ -4,5 +4,6 @@ class User < ApplicationRecord
     attachable.variant :icon, resize_to_limit: [100, 100]
   end
 
-  has_many :pieces, dependent: :destroy
+  has_many :pieces,      dependent: :destroy
+  has_many :memberships, dependent: :destroy
 end
