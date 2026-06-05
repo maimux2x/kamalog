@@ -44,10 +44,6 @@ class My::LogsController < ApplicationController
 
   private
 
-  def find_studio
-    Studio.find(params[:studio_id])
-  end
-
   def log_params
     params.expect(log: [
       :date,
@@ -65,5 +61,9 @@ class My::LogsController < ApplicationController
 
   def find_piece
     current_user.pieces.find(params[:piece_id])
+  end
+
+  def find_studio
+    current_user.studios.first
   end
 end

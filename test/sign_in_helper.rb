@@ -14,6 +14,6 @@ module SignInHelper
 
     click_on 'Google アカウントでログイン'
 
-    assert_current_path studio_path(studios(:wonderland))
+    assert_current_path studio_path(user.studios.first)
   end
 end

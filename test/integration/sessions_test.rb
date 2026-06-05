@@ -27,7 +27,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
       assert_response :see_other
     end
 
-    assert_redirected_to studio_path(studios(:wonderland))
+    assert_redirected_to studios_path
     assert_equal 'ログインしました。', flash[:notice]
 
     user = User.last
@@ -44,7 +44,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
       assert_response :see_other
     end
 
-    assert_redirected_to studio_path(studios(:wonderland))
+    assert_redirected_to studios_path
   end
 
   test 'destroy' do

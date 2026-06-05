@@ -53,7 +53,7 @@ class My::PiecesController < ApplicationController
   private
 
   def find_studio
-    Studio.find(params[:studio_id])
+    current_user.studios.first
   end
 
   def piece_params

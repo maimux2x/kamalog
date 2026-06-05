@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resource :session, only: %i[destroy]
   resource :profile, only: %i[show update destroy]
 
-  resources :studios, only: %i[show] do
+  resources :studios, only: %i[index show] do
     resources :pieces, only: %i[index show]
 
     namespace :my do
