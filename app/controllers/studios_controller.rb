@@ -1,9 +1,9 @@
 class StudiosController < ApplicationController
   def index
-    redirect_to studio_path(current_user.studios.first), status: :see_other
+    redirect_to studio_path(current_studio), status: :see_other
   end
 
   def show
-    @studio = current_user.studios.first
+    @studio = current_studio
   end
 end
