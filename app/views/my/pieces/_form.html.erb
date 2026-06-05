@@ -1,4 +1,5 @@
 <%= bootstrap_form_with model: [studio, :my, piece], data: {controller: 'toggle-element'} do |f| %>
+  <input type="hidden" name="piece[studio_id]" value="<%= piece.user.studios.first.id %>">
   <%= f.text_field :title %>
 
   <%= f.collection_select :form_method, Piece.form_methods_i18n, :first, :last, prompt: true %>

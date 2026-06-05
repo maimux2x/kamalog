@@ -1,9 +1,9 @@
 class PiecesController < ApplicationController
   def index
-    @pieces = Piece.where(status: :complete).includes(:photos).order(:id)
+    @pieces = current_user.studios.first.pieces.where(status: :complete).includes(:photos).order(:id)
   end
 
   def show
-    @piece = Piece.includes(:photos).find(params[:id])
+    @piece = current_user.studios.first.pieces.includes(:photos).find(params[:id])
   end
 end

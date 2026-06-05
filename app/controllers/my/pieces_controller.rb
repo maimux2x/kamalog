@@ -58,6 +58,7 @@ class My::PiecesController < ApplicationController
 
   def piece_params
     params.expect(piece: [
+      :studio_id,
       :title,
       :status,
       :form_method,

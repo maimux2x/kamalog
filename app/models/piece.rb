@@ -1,4 +1,5 @@
 class Piece < ApplicationRecord
+  belongs_to :studio
   belongs_to :user
 
   has_many :clay_usages,  dependent: :destroy

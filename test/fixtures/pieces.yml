@@ -1,17 +1,20 @@
 cup:
   user: alice
+  studio: wonderland
   title: マグカップ
   status: in_progress
   form_method: coil_building
 
 base:
   user: alice
+  studio: wonderland
   title: 花瓶
   status: in_progress
   form_method: coil_building
 
 teacup:
   user: alice
+  studio: wonderland
   title: 湯呑み
   status: complete
   form_method: hand_building
@@ -19,6 +22,7 @@ teacup:
 
 small_bowl:
   user: bob
+  studio: wonderland
   title: 小鉢
   status: complete
   form_method: hand_building
