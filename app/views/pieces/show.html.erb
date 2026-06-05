@@ -1,7 +1,12 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to 'ホーム', studio_path(@piece.studio) %></li>
-    <li class="breadcrumb-item"><%= link_to 'みんなの作品一覧', studio_pieces_path(@piece.studio) %></li>
+    <li class="breadcrumb-item">
+      <%= link_to 'ホーム', studio_path(@piece.studio) %>
+    </li>
+
+    <li class="breadcrumb-item">
+      <%= link_to 'みんなの作品一覧', studio_pieces_path(@piece.studio) %>
+    </li>
 
     <li class="breadcrumb-item active" aria-current="page">
       <%= @piece.title %>
