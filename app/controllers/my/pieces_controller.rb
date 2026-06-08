@@ -1,6 +1,6 @@
 class My::PiecesController < ApplicationController
   def index
-    @pieces = current_user.pieces.order(:id)
+    @pieces = current_user.memberships.find_by!(studio: current_studio).pieces.order(:id)
   end
 
   def show
@@ -14,7 +14,7 @@ class My::PiecesController < ApplicationController
   end
 
   def create
-    @piece = current_user.pieces.new(studio: current_studio, **piece_params)
+    @piece = current_user.pieces.new(**piece_params, studio: current_studio)
 
     if @piece.save
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を登録しました。'

@@ -1,28 +1,24 @@
 cup:
-  user: alice
-  studio: wonderland
+  membership: alice_membership
   title: マグカップ
   status: in_progress
   form_method: coil_building
 
 base:
-  user: alice
-  studio: wonderland
+  membership: alice_membership
   title: 花瓶
   status: in_progress
   form_method: coil_building
 
 teacup:
-  user: alice
-  studio: wonderland
+  membership: alice_membership
   title: 湯呑み
   status: complete
   form_method: hand_building
   description: 自宅用の小さな湯呑みを作った
 
 small_bowl:
-  user: bob
-  studio: wonderland
+  membership: bob_membership
   title: 小鉢
   status: complete
   form_method: hand_building

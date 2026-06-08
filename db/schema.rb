@@ -114,13 +114,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_050241) do
     t.datetime "created_at", null: false
     t.string "description"
     t.integer "form_method", null: false
+    t.bigint "membership_id", null: false
     t.integer "status", default: 0, null: false
-    t.bigint "studio_id", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["studio_id"], name: "index_pieces_on_studio_id"
-    t.index ["user_id"], name: "index_pieces_on_user_id"
+    t.index ["membership_id"], name: "index_pieces_on_membership_id"
   end
 
   create_table "studios", force: :cascade do |t|
@@ -151,6 +149,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_050241) do
   add_foreign_key "memberships", "studios"
   add_foreign_key "memberships", "users"
   add_foreign_key "piece_photos", "pieces"
-  add_foreign_key "pieces", "studios"
-  add_foreign_key "pieces", "users"
+  add_foreign_key "pieces", "memberships"
 end
