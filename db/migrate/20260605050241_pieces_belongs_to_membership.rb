@@ -5,7 +5,10 @@ class PiecesBelongsToMembership < ActiveRecord::Migration[8.1]
     reversible do |dir|
       dir.up do
         execute <<~SQL
-          UPDATE pieces SET membership_id = 1;
+          UPDATE pieces
+          SET membership_id = memberships.id
+          FROM memberships
+          WHERE memberships.user_id = pieces.user_id;
         SQL
       end
     end

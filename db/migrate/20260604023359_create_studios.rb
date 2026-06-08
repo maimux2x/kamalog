@@ -13,20 +13,5 @@ class CreateStudios < ActiveRecord::Migration[8.1]
 
     add_reference :clays,  :studio, foreign_key: true
     add_reference :glazes, :studio, foreign_key: true
-
-    reversible do |dir|
-      dir.up do
-        execute <<~SQL
-          INSERT INTO studios VALUES (1, '陶芸教室 Cactus', NOW(), NOW());
-
-          UPDATE clays SET studio_id = 1;
-
-          UPDATE glazes SET studio_id = 1;
-        SQL
-
-        change_column_null :clays,  :studio_id, false
-        change_column_null :glazes, :studio_id, false
-      end
-    end
   end
 end

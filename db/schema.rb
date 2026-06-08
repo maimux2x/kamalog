@@ -55,7 +55,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_050241) do
   create_table "clays", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
-    t.bigint "studio_id", null: false
+    t.bigint "studio_id"
     t.datetime "updated_at", null: false
     t.index ["studio_id"], name: "index_clays_on_studio_id"
   end
@@ -72,7 +72,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_050241) do
   create_table "glazes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
-    t.bigint "studio_id", null: false
+    t.bigint "studio_id"
     t.datetime "updated_at", null: false
     t.index ["studio_id"], name: "index_glazes_on_studio_id"
   end
