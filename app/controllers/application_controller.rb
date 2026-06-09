@@ -19,17 +19,9 @@ class ApplicationController < ActionController::Base
     @current_user = (id = session[:current_user_id]) ? User.find_by(id:) : nil
   end
 
-  def current_membership
-    current_user.memberships.find_by!(studio_id: params[:studio_id] || params[:id])
-  end
-
-  def current_studio
-    current_membership.studio
-  end
-
   def authenticated?
     !!current_user
   end
 
-  helper_method :current_user, :current_studio, :authenticated?
+  helper_method :current_user, :authenticated?
 end

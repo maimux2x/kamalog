@@ -1,4 +1,6 @@
 class PiecesController < ApplicationController
+  include CurrentMembership
+
   def index
     @pieces = current_studio.pieces.where(status: :complete).includes(:photos).order(:id)
   end

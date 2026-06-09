@@ -1,4 +1,6 @@
 class My::LogsController < ApplicationController
+  include CurrentMembership
+
   def index
     @piece = current_membership.pieces.includes(:logs).find(params[:piece_id])
   end
