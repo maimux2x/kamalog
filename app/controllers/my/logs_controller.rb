@@ -1,6 +1,6 @@
 class My::LogsController < ApplicationController
   def index
-    @piece = current_user.pieces.includes(:logs).find(params[:piece_id])
+    @piece = current_membership.pieces.includes(:logs).find(params[:piece_id])
   end
 
   def show
@@ -53,6 +53,6 @@ class My::LogsController < ApplicationController
   end
 
   def find_piece
-    current_user.pieces.find(params[:piece_id])
+    current_membership.pieces.find(params[:piece_id])
   end
 end

@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       email: auth.dig('info', 'email')
     )
 
-    user.memberships.create!(studio: Studio.first)
+    user.memberships.find_or_create_by!(studio: Studio.first)
 
     reset_session
     session[:current_user_id] = user.id

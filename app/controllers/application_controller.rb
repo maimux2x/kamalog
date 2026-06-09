@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def require_authentication
-    redirect_to root_path unless current_user
+    redirect_to root_path unless authenticated?
   end
 
   def current_user
@@ -19,8 +19,12 @@ class ApplicationController < ActionController::Base
     @current_user = (id = session[:current_user_id]) ? User.find_by(id:) : nil
   end
 
+  def current_membership
+    current_user.memberships.find_by!(studio_id: params[:studio_id] || params[:id])
+  end
+
   def current_studio
-    current_user.studios.first
+    current_membership.studio
   end
 
   def authenticated?

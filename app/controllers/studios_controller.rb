@@ -1,6 +1,10 @@
 class StudiosController < ApplicationController
   def index
-    redirect_to studio_path(current_studio), status: :see_other
+    if current_user.studios.size == 1
+      redirect_to studio_path(current_user.studios.first)
+    else
+      @studios = current_user.studios.order(:id)
+    end
   end
 
   def show
