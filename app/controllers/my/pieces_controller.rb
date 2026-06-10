@@ -6,7 +6,7 @@ class My::PiecesController < ApplicationController
   end
 
   def show
-    @piece = current_membership.pieces.includes(clay_usages: :clay, glaze_usages: :glaze).find(params[:id])
+    @piece = current_membership.pieces.find(params[:id])
   end
 
   def new

@@ -14,9 +14,9 @@
       class="g-col-12 g-col-md-4 d-grid row-gap-0 card"
       style="grid-row: span 3; grid-template-rows: subgrid;"
     >
-      <% if piece.photos.present? %>
+      <% if photos = piece.photos.with_attached_file.presence %>
         <div class="d-flex align-items-center bg-light">
-          <%= image_tag piece.photos.first.file, class: 'w-100', alt: '' %>
+          <%= image_tag photos.first.file, class: 'w-100', alt: '' %>
         </div>
       <% else %>
         <div class="bg-light d-flex justify-content-center align-items-center">
