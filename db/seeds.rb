@@ -1,4 +1,4 @@
-studio = Studio.find_or_create_by! name: 'ワンダーランドスタジオ'
+studio = Studio.find_or_create_by!(name: 'ワンダーランドスタジオ')
 
 user = User.find_or_initialize_by(email: 'test1@example.com').tap {
   it.update! uid: 'test1@example.com', name: 'test1'

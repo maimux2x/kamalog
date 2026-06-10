@@ -34,7 +34,7 @@
 
         <div class="hstack gap-1">
           <% if piece.user.avatar.attached? %>
-            <%= image_tag piece.user.avatar.variant(:icon), alt: '', style: 'width: 15%; border-radius: 12px;' %>
+            <%= image_tag piece.user.avatar.variant(:icon), alt: '', style: 'height: 30px; border-radius: 5px;' %>
           <% end %>
 
           <p class="mb-0"><%= piece.user.name %>さんの作品</p>
