@@ -2,10 +2,10 @@ class StudiosController < ApplicationController
   include CurrentMembership
 
   def index
-    if current_user.studios.size == 1
-      redirect_to studio_path(current_user.studios.first)
-    else
-      @studios = current_user.studios.order(:id)
+    @studios = current_user.studios.order(:id).to_a
+
+    if @studios.size == 1
+      redirect_to studio_path(@studios.first)
     end
   end
 
