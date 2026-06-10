@@ -17,7 +17,7 @@
 <h1 class="mb-3"><%= @piece.title %></h1>
 
 <div class="grid mb-3">
-  <% @piece.photos.order(:id).each do |photo| %>
+  <% @piece.photos.with_attached_file.order(:id).each do |photo| %>
     <div
       class="g-col-12 g-col-md-6 d-grid row-gap-0 border"
       style="grid-row: span 2; grid-template-rows: subgrid;"
@@ -46,7 +46,7 @@
 
   <dt>使用した土</dt>
 
-  <% @piece.clay_usages.order(:id).each do |usage| %>
+  <% @piece.clay_usages.includes(:clay).order(:id).each do |usage| %>
     <dd><%= usage.clay.name %> <%= usage.weight %>g</dd>
   <% end %>
 
