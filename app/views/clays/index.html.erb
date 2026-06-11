@@ -3,6 +3,7 @@
     <li class="breadcrumb-item">
       <%= link_to current_studio.name, studio_path(current_studio) %>
     </li>
+
     <li class="breadcrumb-item">
       <%= link_to '設定', studio_settings_path(current_studio) %>
     </li>
@@ -12,6 +13,7 @@
 </nav>
 
 <%= link_to '新規登録', new_studio_clay_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
+
 <ul class="list-group">
   <% @clays.each do |clay| %>
     <li class="d-flex list-group-item align-items-center">
