@@ -8,7 +8,7 @@ class My::LogsTest < ApplicationSystemTestCase
     @piece  = pieces(:cup)
   end
 
-  test '作業記録一覧を表示できること' do
+  test '作業記録を表示できること' do
     visit studio_my_piece_path(@studio, @piece)
 
     click_on '作業記録'

@@ -8,7 +8,7 @@ class My::PiecesTest < ApplicationSystemTestCase
     @piece  = pieces(:cup)
   end
 
-  test '作品一覧を表示する' do
+  test '自分の作品を表示する' do
     visit studio_my_pieces_path(@studio)
 
     assert_link 'マグカップ'
