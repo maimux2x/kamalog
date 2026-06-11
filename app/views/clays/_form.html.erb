@@ -1,0 +1,6 @@
+<%= bootstrap_form_with model: clay, url: [clay.studio, clay] do |f| %>
+  <%= f.text_field :name, label: '名前' %>
+
+  <%= f.primary %>
+  <%= link_to 'キャンセル', studio_clays_path(current_studio), class: 'btn btn-outline-primary' %>
+<% end %>
