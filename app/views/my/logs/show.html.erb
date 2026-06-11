@@ -1,10 +1,15 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
-    <li class="breadcrumb-item"><%= link_to '自分の作品一覧', my_pieces_path %></li>
+    <li class="breadcrumb-item">
+      <%= link_to '教室のホーム', studio_path(current_studio) %>
+    </li>
 
     <li class="breadcrumb-item">
-      <%= link_to '作業記録一覧', my_piece_logs_path(@log.piece) %>
+      <%= link_to '自分の作品一覧', studio_my_pieces_path(current_studio) %>
+    </li>
+
+    <li class="breadcrumb-item">
+      <%= link_to '作業記録一覧', studio_my_piece_logs_path(current_studio, @log.piece) %>
     </li>
 
     <li class="breadcrumb-item active" aria-current="page">作業記録</li>
@@ -32,9 +37,9 @@
 </div>
 
 <div class="d-flex">
-  <%= link_to '編集', edit_my_piece_log_path(@log.piece, @log), class: 'btn btn-outline-primary me-2' %>
-  <%= button_to '削除', my_piece_log_path(@log.piece, @log), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger' %>
+  <%= link_to '編集', edit_studio_my_piece_log_path(current_studio, @log.piece, @log), class: 'btn btn-outline-primary me-2' %>
+  <%= button_to '削除', studio_my_piece_log_path(current_studio, @log.piece, @log), method: :delete, data: {turbo_confirm: '本当に削除しますか？'}, class: 'btn btn-danger' %>
 </div>
 
 <hr>
-<%= link_to '戻る', my_piece_logs_path(@log.piece), class: 'btn btn-outline-primary' %>
+<%= link_to '戻る', studio_my_piece_logs_path(current_studio, @log.piece), class: 'btn btn-outline-primary' %>

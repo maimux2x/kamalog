@@ -1,46 +1,48 @@
 class My::PiecesController < ApplicationController
+  include CurrentMembership
+
   def index
-    @pieces = current_user.pieces.order(:id)
+    @pieces = current_membership.pieces.order(:id)
   end
 
   def show
-    @piece = current_user.pieces.includes(clay_usages: :clay, glaze_usages: :glaze).find(params[:id])
+    @piece = current_membership.pieces.find(params[:id])
   end
 
   def new
-    @piece = current_user.pieces.new
+    @piece = current_membership.pieces.new
 
     @piece.clay_usages.build
   end
 
   def create
-    @piece = current_user.pieces.new(piece_params)
+    @piece = current_membership.pieces.new(piece_params)
 
     if @piece.save
-      redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を登録しました。'
+      redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を登録しました。'
     else
       render :new, status: :unprocessable_content
     end
   end
 
   def edit
-    @piece = current_user.pieces.find(params[:id])
+    @piece = current_membership.pieces.find(params[:id])
   end
 
   def update
-    @piece = current_user.pieces.find(params[:id])
+    @piece = current_membership.pieces.find(params[:id])
 
     if @piece.update piece_params
-      redirect_to my_piece_path(@piece), status: :see_other, notice: '製作中の作品を更新しました。'
+      redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
     else
       render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
-    current_user.pieces.find(params[:id]).destroy!
+    current_membership.pieces.find(params[:id]).destroy!
 
-    redirect_to my_pieces_path, status: :see_other, notice: '製作中の作品を削除しました。'
+    redirect_to studio_my_pieces_path(current_studio), status: :see_other, notice: '製作中の作品を削除しました。'
   end
 
   private

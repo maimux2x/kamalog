@@ -10,10 +10,12 @@ class SessionsController < ApplicationController
       email: auth.dig('info', 'email')
     )
 
+    user.memberships.find_or_create_by!(studio: Studio.first)
+
     reset_session
     session[:current_user_id] = user.id
 
-    redirect_to home_path, status: :see_other, notice: 'ログインしました。'
+    redirect_to studios_path, status: :see_other, notice: 'ログインしました。'
   end
 
   def destroy

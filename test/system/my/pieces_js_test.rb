@@ -5,10 +5,12 @@ class My::PiecesJsTest < ApplicationSystemTestCase
 
   setup do
     sign_in_as users(:alice)
+
+    @studio = users(:alice).studios.first
   end
 
   test '製作中の作品を登録する' do
-    visit my_pieces_path
+    visit studio_my_pieces_path(@studio)
 
     click_on '作品を登録'
 
@@ -41,7 +43,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
   end
 
   test '作品を完成に更新する' do
-    visit my_piece_path(pieces(:cup))
+    visit studio_my_piece_path(@studio, pieces(:cup))
 
     click_on '編集'
 
@@ -82,7 +84,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
   end
 
   test '作品から土と釉薬を削除する' do
-    visit my_piece_path(pieces(:base))
+    visit studio_my_piece_path(@studio, pieces(:base))
 
     click_on '編集'
 

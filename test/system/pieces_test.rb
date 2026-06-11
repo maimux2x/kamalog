@@ -6,7 +6,7 @@ class PiecesTest < ApplicationSystemTestCase
   end
 
   test 'みんなの作品一覧を表示できること' do
-    visit pieces_path
+    visit studio_pieces_path(users(:alice).studios.first)
 
     assert_text     '湯呑み'
     assert_text     '小鉢'
@@ -16,7 +16,7 @@ class PiecesTest < ApplicationSystemTestCase
   end
 
   test '作品詳細を表示する' do
-    visit piece_path(pieces(:teacup))
+    visit studio_piece_path(users(:alice).studios.first, pieces(:teacup))
 
     assert_text '湯呑み'
 
@@ -30,7 +30,7 @@ class PiecesTest < ApplicationSystemTestCase
   end
 
   test '自分以外のユーザーの作品詳細を表示する' do
-    visit piece_path(pieces(:small_bowl))
+    visit studio_piece_path(users(:bob).studios.first, pieces(:small_bowl))
 
     assert_text '小鉢'
 

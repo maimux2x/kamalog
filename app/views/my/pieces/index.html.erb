@@ -1,11 +1,14 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to 'ホーム', home_path %></li>
+    <li class="breadcrumb-item">
+      <%= link_to '教室のホーム', studio_path(current_studio) %>
+    </li>
+
     <li class="breadcrumb-item active" aria-current="page">自分の作品一覧</li>
   </ol>
 </nav>
 
-<%= link_to '作品を登録', new_my_piece_path, class: 'btn btn-outline-primary mb-3' %>
+<%= link_to '作品を登録', new_studio_my_piece_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 
 <div class="grid">
   <% @pieces.each do |piece| %>
@@ -18,7 +21,7 @@
         style="grid-row: span 2; grid-template-rows: subgrid;"
       >
         <h5 class="card-title">
-          <%= link_to piece.title, my_piece_path(piece), class: 'stretched-link text-decoration-none' %>
+          <%= link_to piece.title, studio_my_piece_path(current_studio, piece), class: 'stretched-link text-decoration-none' %>
         </h5>
 
         <div>

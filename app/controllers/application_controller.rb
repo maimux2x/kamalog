@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def require_authentication
-    redirect_to root_path unless current_user
+    redirect_to root_path unless authenticated?
   end
 
   def current_user

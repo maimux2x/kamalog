@@ -3,10 +3,13 @@ require 'application_system_test_case'
 class My::LogsTest < ApplicationSystemTestCase
   setup do
     sign_in_as users(:alice)
+
+    @studio = users(:alice).studios.first
+    @piece  = pieces(:cup)
   end
 
   test '作業記録一覧を表示できること' do
-    visit my_piece_path(pieces(:cup))
+    visit studio_my_piece_path(@studio, @piece)
 
     click_on '作業記録'
 
@@ -20,7 +23,7 @@ class My::LogsTest < ApplicationSystemTestCase
   end
 
   test '詳細を表示する' do
-    visit my_piece_logs_path(pieces(:cup))
+    visit studio_my_piece_logs_path(@studio, @piece)
 
     click_on '紐作りでマグカップ作り'
 
@@ -31,7 +34,7 @@ class My::LogsTest < ApplicationSystemTestCase
   end
 
   test '作業記録を削除する' do
-    visit my_piece_log_path(pieces(:cup), logs(:cup_log_day1))
+    visit studio_my_piece_log_path(@studio, @piece, logs(:cup_log_day1))
 
     click_on '削除'
 

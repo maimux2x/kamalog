@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_22_083736) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_050241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,7 +55,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_083736) do
   create_table "clays", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
+    t.bigint "studio_id"
     t.datetime "updated_at", null: false
+    t.index ["studio_id"], name: "index_clays_on_studio_id"
   end
 
   create_table "glaze_usages", force: :cascade do |t|
@@ -70,7 +72,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_083736) do
   create_table "glazes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
+    t.bigint "studio_id"
     t.datetime "updated_at", null: false
+    t.index ["studio_id"], name: "index_glazes_on_studio_id"
   end
 
   create_table "log_photos", force: :cascade do |t|
@@ -91,6 +95,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_083736) do
     t.index ["piece_id"], name: "index_logs_on_piece_id"
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "studio_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["studio_id"], name: "index_memberships_on_studio_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "piece_photos", force: :cascade do |t|
     t.string "caption"
     t.datetime "created_at", null: false
@@ -103,11 +114,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_083736) do
     t.datetime "created_at", null: false
     t.string "description"
     t.integer "form_method", null: false
+    t.bigint "membership_id", null: false
     t.integer "status", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_pieces_on_user_id"
+    t.index ["membership_id"], name: "index_pieces_on_membership_id"
+  end
+
+  create_table "studios", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -123,10 +140,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_083736) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clay_usages", "clays"
   add_foreign_key "clay_usages", "pieces"
+  add_foreign_key "clays", "studios"
   add_foreign_key "glaze_usages", "glazes"
   add_foreign_key "glaze_usages", "pieces"
+  add_foreign_key "glazes", "studios"
   add_foreign_key "log_photos", "logs"
   add_foreign_key "logs", "pieces"
+  add_foreign_key "memberships", "studios"
+  add_foreign_key "memberships", "users"
   add_foreign_key "piece_photos", "pieces"
-  add_foreign_key "pieces", "users"
+  add_foreign_key "pieces", "memberships"
 end

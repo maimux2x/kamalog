@@ -1,0 +1,7 @@
+alice_membership:
+  user: alice
+  studio: wonderland
+
+bob_membership:
+  user: bob
+  studio: wonderland

@@ -5,10 +5,13 @@ class My::LogsJsTest < ApplicationSystemTestCase
 
   setup do
     sign_in_as users(:alice)
+
+    @studio = users(:alice).studios.first
+    @piece  = pieces(:cup)
   end
 
   test '作業記録を登録する' do
-    visit my_piece_logs_path(pieces(:cup))
+    visit studio_my_piece_logs_path(@studio, @piece)
 
     click_on '作業記録を登録する'
 
@@ -37,7 +40,7 @@ class My::LogsJsTest < ApplicationSystemTestCase
   end
 
   test 'タイトルを入力しないと登録できない' do
-    visit my_piece_logs_path(pieces(:cup))
+    visit studio_my_piece_logs_path(@studio, @piece)
 
     click_on '作業記録を登録する'
 
@@ -45,11 +48,11 @@ class My::LogsJsTest < ApplicationSystemTestCase
 
     click_on '登録する'
 
-    assert_current_path new_my_piece_log_path(pieces(:cup))
+    assert_current_path new_studio_my_piece_log_path(@studio, @piece)
   end
 
   test '作業記録を更新する' do
-    visit my_piece_log_path(pieces(:cup), logs(:cup_log_day1))
+    visit studio_my_piece_log_path(@studio, @piece, logs(:cup_log_day1))
 
     click_on '編集'
 
