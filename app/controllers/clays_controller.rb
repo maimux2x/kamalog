@@ -20,16 +20,13 @@ class ClaysController < ApplicationController
   end
 
   def update
-    clay = current_studio.clays.find(params[:id])
-    clay.update!(clay_params)
+    current_studio.clays.find(params[:id]).update! clay_params
 
     redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
   end
 
   def destroy
-    clay = current_studio.clays.find(params[:id])
-
-    clay.destroy!
+    current_studio.clays.find(params[:id]).destroy!
 
     redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を削除しました。'
   end
