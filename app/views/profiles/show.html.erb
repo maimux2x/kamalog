@@ -1,12 +1,7 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <%= link_to 'ホーム', studios_path %>
-    </li>
-
-    <li class="breadcrumb-item active" aria-current="page">アカウント情報の更新</li>
-  </ol>
-</nav>
+<%= render 'breadcrumb', items: [
+  ['ホーム', studios_path],
+  'アカウント情報の更新'
+] %>
 
 <%= bootstrap_form_with model: @profile, url: profile_path, method: :patch, class: 'mb-3' do |f| %>
   <%= f.text_field :name %>

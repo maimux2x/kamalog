@@ -1,12 +1,7 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <%= link_to current_studio.name, studio_path(current_studio) %>
-    </li>
-
-    <li class="breadcrumb-item active" aria-current="page">自分の作品</li>
-  </ol>
-</nav>
+<%= render 'breadcrumb', items: [
+  [current_studio.name, studio_path(current_studio)],
+  '自分の作品'
+] %>
 
 <%= link_to '作品を登録', new_studio_my_piece_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 

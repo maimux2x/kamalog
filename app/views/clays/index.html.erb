@@ -1,16 +1,8 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <%= link_to current_studio.name, studio_path(current_studio) %>
-    </li>
-
-    <li class="breadcrumb-item">
-      <%= link_to '設定', studio_settings_path(current_studio) %>
-    </li>
-
-    <li class="breadcrumb-item active" aria-current="page">土</li>
-  </ol>
-</nav>
+<%= render 'breadcrumb', items: [
+  [current_studio.name, studio_path(current_studio)],
+  ['設定', studio_settings_path(current_studio)],
+  '土'
+] %>
 
 <%= link_to '新規登録', new_studio_clay_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 
