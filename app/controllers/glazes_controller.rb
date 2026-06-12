@@ -26,9 +26,11 @@ class GlazesController < ApplicationController
   end
 
   def destroy
-    current_studio.glazes.find(params[:id]).destroy!
-
-    redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を削除しました。'
+    if current_studio.glazes.find(params[:id]).destroy
+      redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を削除しました。'
+    else
+      redirect_to studio_glazes_path(current_studio), status: :see_other, alert: 'すでに作品で使用されているため削除できません。'
+    end
   end
 
   private

@@ -26,9 +26,11 @@ class ClaysController < ApplicationController
   end
 
   def destroy
-    current_studio.clays.find(params[:id]).destroy!
-
-    redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を削除しました。'
+    if current_studio.clays.find(params[:id]).destroy
+      redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を削除しました。'
+    else
+      redirect_to studio_clays_path(current_studio), status: :see_other, alert: 'すでに作品で使用されているため削除できません。'
+    end
   end
 
   private

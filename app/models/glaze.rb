@@ -1,5 +1,5 @@
 class Glaze < ApplicationRecord
-  has_many :glaze_usages, dependent: :destroy
+  has_many :glaze_usages, dependent: :restrict_with_error
 
   belongs_to :studio
 
