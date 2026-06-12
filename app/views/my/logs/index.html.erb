@@ -1,16 +1,9 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <%= link_to '教室のホーム', studio_path(current_studio) %>
-    </li>
-
-    <li class="breadcrumb-item">
-      <%= link_to '自分の作品一覧', studio_my_pieces_path(current_studio) %>
-    </li>
-
-    <li class="breadcrumb-item active" aria-current="page">作業記録一覧</li>
-  </ol>
-</nav>
+<%= render 'breadcrumb', items: [
+  [current_studio.name, studio_path(current_studio)],
+  ['自分の作品', studio_my_pieces_path(current_studio)],
+  [@piece.title, studio_my_piece_path(current_studio, @piece)],
+  '作業記録'
+] %>
 
 <%= render 'my/piece_tab', studio: current_studio, piece: @piece %>
 
