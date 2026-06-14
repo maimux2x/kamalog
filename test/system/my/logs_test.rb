@@ -33,6 +33,18 @@ class My::LogsTest < ApplicationSystemTestCase
     assert_selector "img[src$='/dish_cup.png']"
   end
 
+  test 'タイトルを入力しないと登録できない' do
+    visit studio_my_piece_logs_path(@studio, @piece)
+
+    click_on '作業記録を登録する'
+
+    fill_in '作業日', with: Date.new(2026, 4, 23)
+
+    click_on '登録する'
+
+    assert_current_path new_studio_my_piece_log_path(@studio, @piece)
+  end
+
   test '作業記録を削除する' do
     visit studio_my_piece_log_path(@studio, @piece, logs(:cup_log_day1))
 
