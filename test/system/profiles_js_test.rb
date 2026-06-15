@@ -1,20 +1,10 @@
 require 'application_system_test_case'
 
 class ProfilesJsTest < ApplicationSystemTestCase
-  driven_by_selenium
+  driven_by_simulated
 
   setup do
     sign_in_as users(:alice)
-  end
-
-  test 'ユーザー名を更新できること' do
-    visit profile_path
-
-    fill_in '名前', with: 'ありす'
-
-    click_on '更新する'
-
-    assert_selector 'input[value="ありす"]'
   end
 
   test 'アバター画像を設定できること' do

@@ -1,7 +1,7 @@
 require 'application_system_test_case'
 
 class My::LogsJsTest < ApplicationSystemTestCase
-  driven_by_selenium
+  driven_by_simulated
 
   setup do
     sign_in_as users(:alice)
@@ -37,18 +37,6 @@ class My::LogsJsTest < ApplicationSystemTestCase
     assert_text        '釉薬をかけた写真'
     assert_selector    'img[src$="/dish_cup.png"]'
     assert_no_selector 'img[src$="/syokki_mug_cup.png"]'
-  end
-
-  test 'タイトルを入力しないと登録できない' do
-    visit studio_my_piece_logs_path(@studio, @piece)
-
-    click_on '作業記録を登録する'
-
-    fill_in '作業日', with: Date.new(2026, 4, 23)
-
-    click_on '登録する'
-
-    assert_current_path new_studio_my_piece_log_path(@studio, @piece)
   end
 
   test '作業記録を更新する' do

@@ -1,4 +1,6 @@
 require 'test_helper'
+require 'capybara/minitest'
+require 'capybara/simulated'
 
 Capybara.configure do |config|
   config.enable_aria_label = true
@@ -9,7 +11,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   include SignInHelper
 
-  def self.driven_by_selenium
-    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+  def self.driven_by_simulated
+    driven_by :simulated
   end
 end

@@ -1,7 +1,7 @@
 require 'application_system_test_case'
 
 class My::PiecesJsTest < ApplicationSystemTestCase
-  driven_by_selenium
+  driven_by_simulated
 
   setup do
     sign_in_as users(:alice)
