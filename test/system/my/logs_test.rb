@@ -42,7 +42,7 @@ class My::LogsTest < ApplicationSystemTestCase
 
     click_on '登録する'
 
-    assert_current_path new_studio_my_piece_log_path(@studio, @piece)
+    assert_text 'を入力してください'
   end
 
   test '作業記録を削除する' do

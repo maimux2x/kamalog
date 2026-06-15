@@ -7,11 +7,11 @@ Capybara.configure do |config|
 end
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :simulated
+  driven_by :rack_test
 
   include SignInHelper
 
-  def self.driven_by_selenium
-    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+  def self.driven_by_simulated
+    driven_by :simulated
   end
 end

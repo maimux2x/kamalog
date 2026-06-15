@@ -14,9 +14,13 @@ class My::LogsController < ApplicationController
   end
 
   def create
-    log = find_piece.logs.create!(log_params)
+    @log = find_piece.logs.new(log_params)
 
-    redirect_to studio_my_piece_log_path(current_studio, log.piece, log), status: :see_other, notice: '作業記録を登録しました。'
+    if @log.save
+      redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
+    else
+      render :new, status: :unprocessable_content
+    end
   end
 
   def edit
@@ -24,10 +28,13 @@ class My::LogsController < ApplicationController
   end
 
   def update
-    log = find_piece.logs.find(params[:id])
+    @log = find_piece.logs.find(params[:id])
 
-    log.update! log_params
-    redirect_to studio_my_piece_log_path(current_studio, log.piece, log), status: :see_other, notice: '作業記録を更新しました。'
+    if @log.update(log_params)
+      redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
+    else
+      render :edit, status: :unprocessable_content
+    end
   end
 
   def destroy
