@@ -24,6 +24,15 @@ class ClaysTest < ApplicationSystemTestCase
     assert_text '大島耐火'
   end
 
+  test '同じ名前の土は登録できないこと' do
+    visit new_studio_clay_path(@studio)
+
+    fill_in '名前', with: '白土'
+    click_on '登録する'
+
+    assert_text 'はすでに存在します'
+  end
+
   test '土の更新ができること' do
     visit edit_studio_clay_path(@studio, clays(:white))
 
