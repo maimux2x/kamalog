@@ -5,7 +5,7 @@ class PiecesTest < ApplicationSystemTestCase
     sign_in_as users(:alice)
   end
 
-  test 'みんなの作品一覧を表示できること' do
+  test 'みんなの作品を表示できること' do
     visit studio_pieces_path(users(:alice).studios.first)
 
     assert_text     '湯呑み'
@@ -15,7 +15,7 @@ class PiecesTest < ApplicationSystemTestCase
     assert_selector 'img[src$="/dish_cup.png"]'
   end
 
-  test '作品詳細を表示する' do
+  test '自分の作品詳細を表示する' do
     visit studio_piece_path(users(:alice).studios.first, pieces(:teacup))
 
     assert_text '湯呑み'

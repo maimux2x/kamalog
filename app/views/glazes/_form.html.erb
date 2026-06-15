@@ -1,0 +1,6 @@
+<%= bootstrap_form_with model: glaze, url: [glaze.studio, glaze] do |f| %>
+  <%= f.text_field :name, label: '名前' %>
+
+  <%= f.primary %>
+  <%= link_to 'キャンセル', studio_settings_path(current_studio), class: 'btn btn-outline-primary' %>
+<% end %>

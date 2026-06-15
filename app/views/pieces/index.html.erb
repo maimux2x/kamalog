@@ -1,10 +1,10 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <%= link_to '教室のホーム', studio_path(current_studio) %>
+      <%= link_to current_studio.name, studio_path(current_studio) %>
     </li>
 
-    <li class="breadcrumb-item active" aria-current="page">みんなの作品一覧</li>
+    <li class="breadcrumb-item active" aria-current="page">みんなの作品</li>
   </ol>
 </nav>
 

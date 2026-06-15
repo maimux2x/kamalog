@@ -1,0 +1,17 @@
+<%= render 'breadcrumb', items: [
+  [current_studio.name, studio_path(current_studio)],
+  ['設定', studio_settings_path(current_studio)],
+  '釉薬'
+] %>
+
+<%= link_to '新規作成', new_studio_glaze_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
+
+<ul class="list-group">
+  <% @glazes.each do |glaze| %>
+    <li class="list-group-item d-flex align-items-center">
+      <span class="me-auto"><%= glaze.name %></span>
+      <%= link_to '編集', edit_studio_glaze_path(current_studio, glaze), class: 'btn btn-outline-primary me-2' %>
+      <%= button_to '削除', [current_studio, glaze], method: :delete, form: {data: {turbo_confirm: '本当に削除しますか?'}}, class: 'btn btn-danger' %>
+    </li>
+  <% end %>
+</ul>

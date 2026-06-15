@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   resource :profile, only: %i[show update destroy]
 
   resources :studios, only: %i[index show] do
-    resources :pieces, only: %i[index show]
+    resources :settings, only: %i[index]
+    resources :pieces,   only: %i[index show]
+    resources :clays,    only: %i[index new create edit update destroy]
+    resources :glazes,   only: %i[index new create edit update destroy]
 
     namespace :my do
       resources :pieces, only: %i[index show new create edit update destroy] do
