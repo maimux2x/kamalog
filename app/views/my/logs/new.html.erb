@@ -1,3 +1,9 @@
-<h1>作業記録を追加する</h1>
+<%= render 'breadcrumb', items: [
+  [current_studio.name, studio_path(current_studio)],
+  ['自分の作品', studio_my_pieces_path(current_studio)],
+  [@log.piece.title, studio_my_piece_path(current_studio, @log.piece)],
+  ['作業記録', studio_my_piece_logs_path(current_studio, @log.piece)],
+  '新規登録'
+] %>
 
 <%= render 'form', studio: current_studio, log: @log %>
