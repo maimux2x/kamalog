@@ -6,7 +6,6 @@
 ] %>
 
 <%= bootstrap_form_with url: [current_studio, :clays, :bulk] do |f| %>
-  <%= f.text_area :names, label: '名前', class: 'auto-resize', help: safe_join(['改行を入れて複数個一括登録できます', '登録済みや入力が重複している名前はスキップされます'], tag.br), required: true %>
-  <%= f.primary '一括登録' %>
+  <%= render 'bulk_form', f: f %>
   <%= link_to 'キャンセル', studio_clays_path(current_studio), class: 'btn btn-outline-primary' %>
 <% end %>
