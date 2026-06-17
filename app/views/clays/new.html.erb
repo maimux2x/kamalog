@@ -1,1 +1,8 @@
+<%= render 'breadcrumb', items: [
+  [current_studio.name, studio_path(current_studio)],
+  ['設定', studio_settings_path(current_studio)],
+  ['土', studio_clays_path(current_studio)],
+  '新規登録'
+] %>
+
 <%= render 'form', clay: @clay %>
