@@ -10,9 +10,13 @@ class GlazesController < ApplicationController
   end
 
   def create
-    current_studio.glazes.create! glaze_params
+    @glaze = current_studio.glazes.new(glaze_params)
 
-    redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を登録しました。'
+    if @glaze.save
+      redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を登録しました。'
+    else
+      render :new, status: :unprocessable_content
+    end
   end
 
   def edit
@@ -20,9 +24,13 @@ class GlazesController < ApplicationController
   end
 
   def update
-    current_studio.glazes.find(params[:id]).update! glaze_params
+    @glaze = current_studio.glazes.find(params[:id])
 
-    redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を更新しました。'
+    if @glaze.update(glaze_params)
+      redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を更新しました。'
+    else
+      render :edit, status: :unprocessable_content
+    end
   end
 
   def destroy

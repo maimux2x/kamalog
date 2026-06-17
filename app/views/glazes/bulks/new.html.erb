@@ -1,0 +1,11 @@
+<%= render 'breadcrumb', items: [
+  [current_studio.name, studio_path(current_studio)],
+  ['設定', studio_settings_path(current_studio)],
+  ['釉薬', studio_glazes_path(current_studio)],
+  '一括登録'
+] %>
+
+<%= bootstrap_form_with url: [current_studio, :glazes, :bulk] do |f| %>
+  <%= render 'bulk_form', f: f %>
+  <%= link_to 'キャンセル', studio_glazes_path(current_studio), class: 'btn btn-outline-primary' %>
+<% end %>

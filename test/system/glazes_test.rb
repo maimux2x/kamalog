@@ -25,6 +25,15 @@ class GlazesTest < ApplicationSystemTestCase
     assert_text '透明釉'
   end
 
+  test '同じ名前の釉薬は登録できないこと' do
+    visit new_studio_glaze_path(@studio)
+
+    fill_in '名前', with: '白マット'
+    click_on '登録する'
+
+    assert_text 'はすでに存在します'
+  end
+
   test '釉薬を更新できること' do
     visit edit_studio_glaze_path(@studio, glazes(:white_matte))
 

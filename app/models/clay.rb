@@ -3,5 +3,5 @@ class Clay < ApplicationRecord
 
   belongs_to :studio
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end

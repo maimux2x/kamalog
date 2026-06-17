@@ -10,9 +10,13 @@ class ClaysController < ApplicationController
   end
 
   def create
-    current_studio.clays.create! clay_params
+    @clay = current_studio.clays.new(clay_params)
 
-    redirect_to studio_clays_path, status: :see_other, notice: '土を登録しました。'
+    if @clay.save
+      redirect_to studio_clays_path, status: :see_other, notice: '土を登録しました。'
+    else
+      render :new, status: :unprocessable_content
+    end
   end
 
   def edit
@@ -20,9 +24,13 @@ class ClaysController < ApplicationController
   end
 
   def update
-    current_studio.clays.find(params[:id]).update! clay_params
+    @clay = current_studio.clays.find(params[:id])
 
-    redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
+    if @clay.update(clay_params)
+      redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
+    else
+      render :edit, status: :unprocessable_content
+    end
   end
 
   def destroy
