@@ -18,6 +18,10 @@ Rails.application.routes.draw do
 
     resources :glazes, only: %i[index new create edit update destroy]
 
+    namespace :glazes do
+      resource :bulk, only: %i[new create]
+    end
+
     namespace :my do
       resources :pieces, only: %i[index show new create edit update destroy] do
         resources :logs, only: %i[index show new create edit update destroy]

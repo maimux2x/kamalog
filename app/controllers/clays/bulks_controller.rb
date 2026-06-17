@@ -8,6 +8,6 @@ class Clays::BulksController < ApplicationController
       {name:}
     }, unique_by: :name)
 
-    redirect_to studio_clays_path(current_studio), status: :see_other, notice: "#{result.rows.length}件の土を一括登録しました。"
+    redirect_to studio_clays_path(current_studio), status: :see_other, notice: "#{result.length}件の土を一括登録しました。"
   end
 end
