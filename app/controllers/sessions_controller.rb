@@ -14,8 +14,7 @@ class SessionsController < ApplicationController
 
     reset_session
     session[:current_user_id] = user.id
-
-    redirect_to studios_path, status: :see_other, notice: 'ログインしました。'
+    redirect_to request.env['omniauth.origin'] || studios_path, status: :see_other, notice: 'ログインしました。'
   end
 
   def destroy
