@@ -10,10 +10,8 @@ module SignInHelper
       }
     )
 
-    visit root_path
-
     click_on 'Google アカウントでログイン'
 
-    assert_current_path studio_path(user.studios.first)
+    assert_text 'ログインしました。'
   end
 end

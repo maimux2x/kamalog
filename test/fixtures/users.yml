@@ -7,3 +7,8 @@ bob:
   uid: 67890
   name: Bob
   email: bob@example.com
+
+ben:
+  uid: 54321
+  name: Ben
+  email: ben@example.com
