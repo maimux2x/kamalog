@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :studios, only: %i[index show] do
     resources :settings, only: %i[index]
     resources :pieces,   only: %i[index show]
+    resources :members,  only: %i[index destroy]
 
     resources :clays,  only: %i[index new create edit update destroy]
 

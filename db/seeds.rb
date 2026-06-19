@@ -1,10 +1,14 @@
 studio = Studio.find_or_create_by!(name: 'ワンダーランドスタジオ')
 
-user = User.find_or_initialize_by(email: 'test1@example.com').tap {
-  it.update! uid: 'test1@example.com', name: 'test1'
-}
+10.times do
+  email = "test#{it}@example.com"
 
-membership = user.memberships.find_or_create_by!(studio:)
+  user = User.find_or_initialize_by(email:)
+  user.update! uid: email, name: "test#{it}"
+  user.memberships.find_or_create_by! studio: studio
+end
+
+membership = User.find_by!(email: 'test1@example.com').memberships.find_or_create_by!(studio:)
 
 white_clay, _, black_clay = ['白土', '赤土', '黒土'].map {|clay|
   studio.clays.find_or_create_by! name: clay
