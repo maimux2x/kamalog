@@ -10,8 +10,6 @@ class SessionsController < ApplicationController
       email: auth.dig('info', 'email')
     )
 
-    user.memberships.find_or_create_by!(studio: Studio.first)
-
     reset_session
     session[:current_user_id] = user.id
     redirect_to request.env['omniauth.origin'] || studios_path, status: :see_other, notice: 'ログインしました。'

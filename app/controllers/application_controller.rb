@@ -10,9 +10,10 @@ class ApplicationController < ActionController::Base
   private
 
   def require_authentication
-    flash[:origin] = request.fullpath
+    return if authenticated?
 
-    redirect_to root_path unless authenticated?
+    flash[:origin] = request.fullpath if request.get?
+    redirect_to root_path
   end
 
   def current_user

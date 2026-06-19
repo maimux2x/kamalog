@@ -1,0 +1,15 @@
+<div class="card w-75 mx-auto">
+  <div class="card-body">
+    <p><b><%= @studio.name %></b>へ招待されています。</p>
+    <hr>
+    <div class="d-grid">
+      <% if current_user.studios.include?(@studio) %>
+        <div class="alert alert-info" role="alert">すでに参加済みです。</div>
+
+        <%= link_to '教室へ移動', studio_path(@studio), class: 'btn btn-outline-primary w-100' %>
+      <% else %>
+        <%= button_to '参加する', invitation_accept_path(@studio.token), class: 'btn btn-primary w-100', method: :post %>
+      <% end %>
+    </div>
+  </div>
+</div>

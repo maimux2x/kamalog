@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   resource :session, only: %i[destroy]
   resource :profile, only: %i[show update destroy]
 
+  resources :invitations, only: %i[show], param: :token do
+    post :accept
+  end
+
   resources :studios, only: %i[index show] do
     resources :settings, only: %i[index]
     resources :pieces,   only: %i[index show]
