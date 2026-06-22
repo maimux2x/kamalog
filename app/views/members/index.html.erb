@@ -4,7 +4,7 @@
   'メンバー'
 ] %>
 
-<ul class="list-group w-75 mx-auto">
+<ul class="list-group w-75 mx-auto mb-3">
   <% @members.each do |member| %>
     <li class="list-group-item d-flex align-items-center">
       <span class="me-auto">
@@ -15,3 +15,9 @@
     </li>
   <% end %>
 </ul>
+
+<% if @pagy.last > 1 %>
+  <div class="d-flex justify-content-center">
+    <%== @pagy.series_nav(:bootstrap) %>
+  </div>
+<% end %>
