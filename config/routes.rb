@@ -10,10 +10,12 @@ Rails.application.routes.draw do
     post :accept
   end
 
-  resources :studios, only: %i[index show] do
+  resources :studios, only: %i[index show edit update] do
     resources :settings, only: %i[index]
     resources :pieces,   only: %i[index show]
     resources :members,  only: %i[index destroy]
+
+    resource :invitation, only: %i[create destroy], module: 'studios'
 
     resources :clays,  only: %i[index new create edit update destroy]
 
