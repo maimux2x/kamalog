@@ -5,11 +5,12 @@
 ] %>
 
 <div class="mx-auto w-75 mb-3">
-  <%= bootstrap_form_with model: current_studio, url: [current_studio, :invitation], method: current_studio.invitation_enabled ? :delete : :post, data: {controller: 'submit-form'} do |f| %>
-    <%= f.check_box :invitation_enabled, label: 'メンバーの招待', name: nil, switch: true, data: {action: 'submit-form#submit'} %>
+  <%= bootstrap_form_with model: current_studio, url: [current_studio, :invitation], method: current_studio.invitation_enabled? ? :delete : :post, data: {controller: 'submit-form'} do |f| %>
+    <%= f.check_box :invitation_enabled?, label: 'メンバーの招待', name: nil, switch: true, data: {action: 'submit-form#submit'} %>
 
-    <% if current_studio.invitation_enabled %>
-      <%= f.text_field :invitation_url, readonly: true, value: invitation_url(current_studio.token), label: '招待用URL', hide_label: true, name: nil, append: f.button('コピー', type: 'button', class: 'btn btn-primary', data: {controller: 'clipboard tooltip', action: 'clipboard#copy clipboard:copy->tooltip#show', clipboard_text_value: invitation_url(current_studio.token), tooltip_title_value: 'コピーしました'}) %>
+    <% if current_studio.invitation_enabled? %>
+      <% url = invitation_url(current_studio.invitation_token) %>
+      <%= f.text_field :invitation_url, readonly: true, value: url, label: '招待用URL', hide_label: true, name: nil, append: f.button('コピー', type: 'button', class: 'btn btn-primary', data: {controller: 'clipboard tooltip', action: 'clipboard#copy clipboard:copy->tooltip#show', clipboard_text_value: url, tooltip_title_value: 'コピーしました'}) %>
     <% end %>
   <% end %>
 

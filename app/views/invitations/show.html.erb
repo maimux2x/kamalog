@@ -8,7 +8,7 @@
         <div class="alert alert-info" role="alert">すでに参加済みです。</div>
         <%= link_to '教室へ移動', studio_path(@studio), class: 'btn btn-outline-primary w-100' %>
       <% else %>
-        <%= button_to '参加する', invitation_accept_path(@studio.token), class: 'btn btn-primary w-100', method: :post %>
+        <%= button_to '参加する', invitation_accept_path(@studio.invitation_token), class: 'btn btn-primary w-100', method: :post %>
       <% end %>
     </div>
   </div>
