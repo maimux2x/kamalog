@@ -9,7 +9,7 @@
     <%= f.check_box :invitation_enabled, label: 'メンバーの招待', name: nil, switch: true, data: {action: 'submit-form#submit'} %>
 
     <% if current_studio.invitation_enabled %>
-      <%= f.text_field :invitation_url, readonly: true, value: invitation_url(current_studio.token), label: '招待用URL', hide_label: true, name: nil, append: f.button('コピー', type: 'button', class: 'btn btn-primary', data: {controller: 'clipboard tooltip', action: 'clipboard#copy clipboard:copy->tooltip#finish', clipboard_text_value: invitation_url(current_studio.token), bs_toggle: 'tooltip', bs_trigger: 'click', bs_title: 'コピーしました'}) %>
+      <%= f.text_field :invitation_url, readonly: true, value: invitation_url(current_studio.token), label: '招待用URL', hide_label: true, name: nil, append: f.button('コピー', type: 'button', class: 'btn btn-primary', data: {controller: 'clipboard tooltip', action: 'clipboard#copy clipboard:copy->tooltip#show', clipboard_text_value: invitation_url(current_studio.token), tooltip_title_value: 'コピーしました'}) %>
     <% end %>
   <% end %>
 
