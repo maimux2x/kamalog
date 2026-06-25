@@ -16,9 +16,7 @@
   <ul class="list-group">
     <% @members.each do |member| %>
       <li class="list-group-item d-flex align-items-center">
-        <span class="me-auto">
-          <%= member.name %>
-        </span>
+        <span class="me-auto"><%= member.name %></span>
 
         <%= button_to '削除', studio_member_path(current_studio, member), method: :delete, class: 'btn btn-danger', form: {data: {turbo_confirm: '本当に削除しますか？'}} %>
       </li>
