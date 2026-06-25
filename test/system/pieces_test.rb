@@ -2,6 +2,7 @@ require 'application_system_test_case'
 
 class PiecesTest < ApplicationSystemTestCase
   setup do
+    visit root_path
     sign_in_as users(:alice)
   end
 

@@ -1,2 +1,3 @@
 wonderland:
-  name: 'ワンダーランド教室'
+  name: ワンダーランド教室
+  invitation_token: TOKEN

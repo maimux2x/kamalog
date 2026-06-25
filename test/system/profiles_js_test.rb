@@ -4,6 +4,7 @@ class ProfilesJsTest < ApplicationSystemTestCase
   driven_by_simulated
 
   setup do
+    visit root_path
     sign_in_as users(:alice)
   end
 

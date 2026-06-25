@@ -2,6 +2,7 @@ require 'application_system_test_case'
 
 class Clays::BulksTest < ApplicationSystemTestCase
   setup do
+    visit root_path
     sign_in_as users(:alice)
 
     @studio = users(:alice).memberships.first.studio

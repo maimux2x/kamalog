@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pagy::Method
+
   before_action :require_authentication
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
@@ -10,7 +12,10 @@ class ApplicationController < ActionController::Base
   private
 
   def require_authentication
-    redirect_to root_path unless authenticated?
+    return if authenticated?
+
+    flash[:origin] = request.fullpath if request.get?
+    redirect_to root_path
   end
 
   def current_user

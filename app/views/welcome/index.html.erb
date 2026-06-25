@@ -3,9 +3,9 @@
 <% unless authenticated? %>
   <div class="d-flex gap-3">
     <% if Rails.env.development? %>
-      <%= button_to 'Developer アカウントでログイン', '/auth/developer', class: 'btn btn-primary', data: {turbo: false} %>
+      <%= button_to 'Developer アカウントでログイン', login_url(:developer), class: 'btn btn-primary', data: {turbo: false} %>
     <% end %>
 
-    <%= button_to 'Google アカウントでログイン', '/auth/google_oauth2', class: 'btn btn-primary', data: {turbo: false} %>
+    <%= button_to 'Google アカウントでログイン', login_url(:google_oauth2), class: 'btn btn-primary', data: {turbo: false} %>
   </div>
 <% end %>
