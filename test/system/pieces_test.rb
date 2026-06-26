@@ -31,7 +31,7 @@ class PiecesTest < ApplicationSystemTestCase
   end
 
   test '自分以外のユーザーの作品詳細を表示する' do
-    visit studio_piece_path(users(:bob).studios.first, pieces(:small_bowl))
+    visit studio_piece_path(memberships(:bob_membership).studio, pieces(:small_bowl))
 
     assert_text '小鉢'
 

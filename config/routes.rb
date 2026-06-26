@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     post :accept
   end
 
-  resources :studios, only: %i[index show edit update] do
+  resources :studios, only: %i[index show new create edit update] do
     resources :settings, only: %i[index]
     resources :pieces,   only: %i[index show]
     resources :members,  only: %i[index destroy]

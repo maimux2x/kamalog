@@ -1,0 +1,10 @@
+<%= render 'breadcrumb', items: [
+  ['所属教室', studios_path],
+  '教室を作成'
+] %>
+
+<%= bootstrap_form_with model: @studio, url: studios_path do |f| %>
+  <%= f.text_field :name, label: '名前' %>
+
+  <%= f.primary %>
+<% end %>

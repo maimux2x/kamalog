@@ -1,7 +1,7 @@
 <%= render 'breadcrumb', items: [
   [current_studio.name, studio_path(current_studio)],
   ['設定', studio_settings_path(current_studio)],
-  'スタジオ'
+  '教室'
 ] %>
 
 <%= bootstrap_form_with model: @studio, url: [@studio] do |f| %>

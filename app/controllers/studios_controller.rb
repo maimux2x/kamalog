@@ -3,14 +3,20 @@ class StudiosController < ApplicationController
 
   def index
     @studios = current_user.studios.order(:id).to_a
-
-    if @studios.size == 1
-      redirect_to studio_path(@studios.first)
-    end
   end
 
   def show
     @studio = current_studio
+  end
+
+  def new
+    @studio = current_user.studios.new
+  end
+
+  def create
+    studio = current_user.studios.create!(studio_params)
+
+    redirect_to studio_path(studio), status: :see_other, notice: '教室を作成しました。'
   end
 
   def edit
