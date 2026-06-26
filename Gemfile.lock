@@ -411,13 +411,13 @@ GEM
     ruby-vips (2.3.0)
       ffi (~> 1.12)
       logger
-    rusty_racer (0.1.8)
+    rusty_racer (0.1.10)
       rb_sys (~> 0.9)
-    rusty_racer (0.1.8-aarch64-linux)
+    rusty_racer (0.1.10-aarch64-linux)
       rb_sys (~> 0.9)
-    rusty_racer (0.1.8-arm64-darwin)
+    rusty_racer (0.1.10-arm64-darwin)
       rb_sys (~> 0.9)
-    rusty_racer (0.1.8-x86_64-linux)
+    rusty_racer (0.1.10-x86_64-linux)
       rb_sys (~> 0.9)
     sass-embedded (1.100.0-aarch64-linux-gnu)
       google-protobuf (~> 4.31)
@@ -694,10 +694,10 @@ CHECKSUMS
   rubocop-rails-omakase (1.1.0) sha256=2af73ac8ee5852de2919abbd2618af9c15c19b512c4cfc1f9a5d3b6ef009109d
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
-  rusty_racer (0.1.8) sha256=1b2b92f7cb066031d3e0c89228e46d155c2de5a01ff4067033e317e7b3854c3a
-  rusty_racer (0.1.8-aarch64-linux) sha256=a0e36fc3ec575840973a90b5c2e075f2b091c6bc30f81be13f268f336dd7c70c
-  rusty_racer (0.1.8-arm64-darwin) sha256=0271151d4cfeb5d91169fbb76c362f70cf7dcad16bfefc742be7edebcf43bf32
-  rusty_racer (0.1.8-x86_64-linux) sha256=241d81433006df4f49e6119b2f629acf239a6d5e8a429427e83029c02cf44a2f
+  rusty_racer (0.1.10) sha256=4133020a4bc97115ee3cb96648082a6f37d7f66b7d7a651d6877f85e00607407
+  rusty_racer (0.1.10-aarch64-linux) sha256=8829bb02b15471769b33265cfb38568c8dcd51ffe251779358a3c4341faeb2f8
+  rusty_racer (0.1.10-arm64-darwin) sha256=daa6b70a8fc826eb0145835183733d7f5190cd7f93a0947387f9ed6c5def8c18
+  rusty_racer (0.1.10-x86_64-linux) sha256=0015da49a748797f3836d046ad9d758554cf21f7bec1ca11315fc93a285f382d
   sass-embedded (1.100.0-aarch64-linux-gnu) sha256=c13187f8eaae7e7e64246b18eb896534a84465a17198829ef65730db4662860e
   sass-embedded (1.100.0-aarch64-linux-musl) sha256=1b0945a66cd4e40f505db73b1e790e2561e07e6d9fd04ef6ebbf279835666b3f
   sass-embedded (1.100.0-arm-linux-gnueabihf) sha256=a2de272bb02977ea91acaf3fecb6d8e09e4989501efbfc5375da4b5e7bff001d
