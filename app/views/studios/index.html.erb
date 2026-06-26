@@ -1,7 +1,13 @@
 <h1 class="mb-3 text-center">所属教室</h1>
 
-<div class="hstack justify-content-center">
+<% if @studios.blank? %>
+  <div class="alert alert-info">教室から招待を受けるか新しい教室を作成してください。</div>
+<% end %>
+
+<%= link_to '教室を作成', new_studio_path, class: 'btn btn-outline-primary mb-3' %>
+
+<div class="list-group">
   <% @studios.each do |studio| %>
-    <%= link_to studio.name, studio_path(studio), class: 'btn btn-outline-primary' %>
+    <%= link_to studio.name, studio_path(studio), class: 'list-group-item list-group-item-action' %>
   <% end %>
 </div>

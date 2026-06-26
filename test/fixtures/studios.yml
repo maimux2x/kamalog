@@ -1,3 +1,7 @@
 wonderland:
   name: ワンダーランド教室
-  invitation_token: TOKEN
+  invitation_token: wonderland
+
+mirrorland:
+  name: ミラーランド教室
+  invitation_token: mirrorland

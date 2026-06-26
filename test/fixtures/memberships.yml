@@ -5,3 +5,7 @@ alice_membership:
 bob_membership:
   user: bob
   studio: wonderland
+
+bob_membership_other:
+  user: bob
+  studio: mirrorland

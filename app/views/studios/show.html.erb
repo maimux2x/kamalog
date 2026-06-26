@@ -1,5 +1,9 @@
+<%= render 'breadcrumb', items: [
+  ['所属教室', studios_path],
+  @studio.name
+] %>
+
 <h1 class="text-center mb-3">作品を記録してシェアしよう</h1>
-<h2 class="text-center mb-3"><%= @studio.name %></h2>
 
 <div class="d-flex flex-column align-items-center mb-3">
   <%= link_to '自分の作品', studio_my_pieces_path(@studio), class: 'btn btn-outline-primary mb-3 w-50' %>
