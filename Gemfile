@@ -23,7 +23,7 @@ gem 'ruby-vips'
 gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'
-gem 'pg', '~> 1.1'
+gem 'sqlite3', '>= 2.1'
 gem 'stimulus-rails'
 gem 'thruster', require: false
 gem 'turbo-rails'
