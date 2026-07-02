@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   include CurrentMembership
 
   def index
-    @pagy, @members = pagy(:offset, current_studio.users.order(:id))
+    @pagy, @users = pagy(:offset, current_studio.users.order(:id))
   end
 
   def destroy

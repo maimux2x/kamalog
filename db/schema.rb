@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_29_055004) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -40,9 +40,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
   end
 
   create_table "clay_usages", force: :cascade do |t|
-    t.bigint "clay_id", null: false
+    t.integer "clay_id", null: false
     t.datetime "created_at", null: false
-    t.bigint "piece_id", null: false
+    t.integer "piece_id", null: false
     t.datetime "updated_at", null: false
     t.integer "weight", null: false
     t.index ["clay_id"], name: "index_clay_usages_on_clay_id"
@@ -52,7 +52,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
   create_table "clays", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
-    t.bigint "studio_id", null: false
+    t.integer "studio_id", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_clays_on_name", unique: true
     t.index ["studio_id"], name: "index_clays_on_studio_id"
@@ -60,8 +60,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
 
   create_table "glaze_usages", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "glaze_id", null: false
-    t.bigint "piece_id", null: false
+    t.integer "glaze_id", null: false
+    t.integer "piece_id", null: false
     t.datetime "updated_at", null: false
     t.index ["glaze_id"], name: "index_glaze_usages_on_glaze_id"
     t.index ["piece_id"], name: "index_glaze_usages_on_piece_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
   create_table "glazes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
-    t.bigint "studio_id", null: false
+    t.integer "studio_id", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_glazes_on_name", unique: true
     t.index ["studio_id"], name: "index_glazes_on_studio_id"
@@ -79,7 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
   create_table "log_photos", force: :cascade do |t|
     t.string "caption"
     t.datetime "created_at", null: false
-    t.bigint "log_id", null: false
+    t.integer "log_id", null: false
     t.datetime "updated_at", null: false
     t.index ["log_id"], name: "index_log_photos_on_log_id"
   end
@@ -88,16 +88,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
     t.string "body"
     t.datetime "created_at", null: false
     t.date "date", null: false
-    t.bigint "piece_id", null: false
+    t.integer "piece_id", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["piece_id"], name: "index_logs_on_piece_id"
   end
 
   create_table "memberships", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.integer "role", default: 0, null: false
-    t.bigint "studio_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "studio_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["studio_id"], name: "index_memberships_on_studio_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
@@ -105,7 +107,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
   create_table "piece_photos", force: :cascade do |t|
     t.string "caption"
     t.datetime "created_at", null: false
-    t.bigint "piece_id", null: false
+    t.integer "piece_id", null: false
     t.datetime "updated_at", null: false
     t.index ["piece_id"], name: "index_piece_photos_on_piece_id"
   end
@@ -114,7 +116,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_26_042741) do
     t.datetime "created_at", null: false
     t.string "description"
     t.integer "form_method", null: false
-    t.bigint "membership_id", null: false
+    t.integer "membership_id", null: false
     t.integer "status", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
