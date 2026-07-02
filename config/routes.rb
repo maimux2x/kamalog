@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :studios, only: %i[index show new create edit update] do
     resources :settings, only: %i[index]
     resources :pieces,   only: %i[index show]
-    resources :members,  only: %i[index destroy]
+    resources :members,  only: %i[index update destroy]
 
     resource :invitation, only: %i[create destroy], module: 'studios'
 

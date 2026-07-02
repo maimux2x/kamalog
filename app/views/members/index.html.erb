@@ -5,21 +5,24 @@
 ] %>
 
 <div class="mx-auto w-75 mb-3">
-  <%= bootstrap_form_with model: current_studio, url: [current_studio, :invitation], method: current_studio.invitation_enabled? ? :delete : :post, data: {controller: 'submit-form'} do |f| %>
-    <%= f.check_box :invitation_enabled?, label: 'メンバーの招待', name: nil, switch: true, data: {action: 'submit-form#submit'} %>
+  <% if current_membership.admin? %>
+    <%= bootstrap_form_with model: current_studio, url: [current_studio, :invitation], method: current_studio.invitation_enabled? ? :delete : :post, data: {controller: 'submit-form'} do |f| %>
+      <%= f.check_box :invitation_enabled?, label: 'メンバーの招待', name: nil, switch: true, data: {action: 'submit-form#submit'} %>
 
-    <% if current_studio.invitation_enabled? %>
-      <% url = invitation_url(current_studio.invitation_token) %>
-      <%= f.text_field :invitation_url, readonly: true, value: url, label: '招待用URL', hide_label: true, name: nil, append: f.button('コピー', type: 'button', class: 'btn btn-primary', data: {controller: 'clipboard tooltip', action: 'clipboard#copy clipboard:copy->tooltip#show', clipboard_text_value: url, tooltip_title_value: 'コピーしました'}) %>
+      <% if current_studio.invitation_enabled? %>
+        <% url = invitation_url(current_studio.invitation_token) %>
+        <%= f.text_field :invitation_url, readonly: true, value: url, label: '招待用URL', hide_label: true, name: nil, append: f.button('コピー', type: 'button', class: 'btn btn-primary', data: {controller: 'clipboard tooltip', action: 'clipboard#copy clipboard:copy->tooltip#show', clipboard_text_value: url, tooltip_title_value: 'コピーしました'}) %>
+      <% end %>
     <% end %>
   <% end %>
 
   <ul class="list-group">
-    <% @members.each do |member| %>
+    <% @users.each do |user| %>
       <li class="list-group-item d-flex align-items-center">
-        <span class="me-auto"><%= member.name %></span>
+        <span class="me-auto"><%= user.name %></span>
 
-        <%= button_to '削除', studio_member_path(current_studio, member), method: :delete, class: 'btn btn-danger', form: {data: {turbo_confirm: '本当に削除しますか？'}} %>
+
+        <%= button_to '削除', studio_member_path(current_studio, user), method: :delete, class: 'btn btn-danger', form: {data: {turbo_confirm: '本当に削除しますか？'}} %>
       </li>
     <% end %>
   </ul>
