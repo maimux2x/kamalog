@@ -1,10 +1,12 @@
 alice_membership:
   user: alice
   studio: wonderland
+  role: admin
 
 bob_membership:
   user: bob
   studio: wonderland
+  role: member
 
 bob_membership_other:
   user: bob

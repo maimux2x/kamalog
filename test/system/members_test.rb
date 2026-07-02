@@ -1,22 +1,29 @@
 require 'application_system_test_case'
 
 class MembersTest < ApplicationSystemTestCase
-  setup do
+  test 'メンバー一覧が表示されること' do
     visit root_path
     sign_in_as users(:alice)
-
-    @studio = users(:alice).studios.first
-  end
-
-  test 'メンバー一覧が表示されること' do
-    visit studio_members_path(@studio)
+    visit studio_members_path(users(:alice).studios.first)
 
     assert_text 'Alice'
     assert_text 'Bob'
   end
 
-  test 'メンバーを削除できること' do
-    visit studio_members_path(@studio)
+  test 'admin 権限のメンバーには招待設定、メンバーの権限変更選択欄と削除ボタンが表示されていること' do
+    visit root_path
+    sign_in_as users(:alice)
+    visit studio_members_path(users(:alice).studios.first)
+
+    assert_field 'メンバーの招待'
+    assert_selector 'select', text: '管理者'
+    assert_selector 'button', text: '削除'
+  end
+
+  test 'admin 権限のメンバーはメンバーを削除できること' do
+    visit root_path
+    sign_in_as users(:alice)
+    visit studio_members_path(users(:alice).studios.first)
 
     within 'ul.list-group li:nth-child(2)' do
       click_on '削除'
@@ -25,5 +32,15 @@ class MembersTest < ApplicationSystemTestCase
     assert_text 'メンバーを削除しました。'
     assert_text 'Alice'
     assert_no_text 'Bob'
+  end
+
+  test 'member 権限のメンバーには招待設定、メンバーの権限変更選択欄と削除ボタンが表示されないこと' do
+    visit root_path
+    sign_in_as users(:bob)
+    visit studio_members_path(users(:bob).studios.first)
+
+    assert_no_field 'メンバーの招待'
+    assert_no_selector 'select', text: '管理者'
+    assert_no_selector 'button', text: '削除'
   end
 end

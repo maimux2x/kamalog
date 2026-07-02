@@ -23,4 +23,18 @@ class MembersJsTest < ApplicationSystemTestCase
     assert_text 'メンバーの招待を有効にしました。'
     assert_field '招待用URL'
   end
+
+  test 'メンバーの権限を変更できること' do
+    visit studio_members_path(@studio)
+
+    within 'ul.list-group li:nth-child(2)' do
+      select '管理者', from: 'membership[role]'
+    end
+
+    assert_text 'メンバーの役割を更新しました。'
+
+    within 'ul.list-group li:nth-child(2)' do
+      assert_text '管理者'
+    end
+  end
 end
