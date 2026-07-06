@@ -10,4 +10,8 @@ class Studio < ApplicationRecord
   def invitation_enabled?
     !!invitation_token
   end
+
+  def sole_admin?
+    memberships.where(role: :admin).count == 1
+  end
 end
