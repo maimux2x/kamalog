@@ -30,8 +30,8 @@ class MembersController < ApplicationController
   def last_admin_cannot_leave
     user = current_studio.memberships.find(params[:id]).user
 
-    if current_studio.last_admin?(user)
-      redirect_to studio_members_path(current_studio), status: :see_other, alert: '管理者は最低一人必要です。'
-    end
+    return unless current_studio.last_admin?(user)
+
+    redirect_to studio_members_path(current_studio), status: :see_other, alert: '管理者は最低一人必要です。'
   end
 end
