@@ -22,7 +22,7 @@
         <span class="me-auto"><%= membership.user.name %></span>
 
         <% if current_membership.admin? %>
-          <% disabled = membership.user == current_user && current_studio.sole_admin? %>
+          <% disabled = current_studio.last_admin?(membership.user) %>
           <%= bootstrap_form_with model: membership, url: studio_member_path(current_studio, membership), class: 'me-2', data: {controller: 'submit-form'} do |f| %>
             <%= f.collection_select :role, Membership.roles_i18n, :first, :last, {wrapper: false}, disabled:, data: {action: 'submit-form#submit'} %>
           <% end %>

@@ -11,7 +11,11 @@ class Studio < ApplicationRecord
     !!invitation_token
   end
 
-  def sole_admin?
-    memberships.where(role: :admin).count == 1
+  def last_admin?(user)
+    admins = memberships.where(role: :admin).limit(2).extract_associated(:user)
+
+    return false unless admins.length == 1
+
+    admins.first == user
   end
 end
