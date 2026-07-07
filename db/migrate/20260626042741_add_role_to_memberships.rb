@@ -14,6 +14,6 @@ class AddRoleToMemberships < ActiveRecord::Migration[8.1]
   end
 
   def down
-    remove_column :memberships, :role, :integer, null: false, default: 0
+    remove_column :memberships, :role
   end
 end
