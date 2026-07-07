@@ -2,7 +2,7 @@ class GlazesController < ApplicationController
   include CurrentMembership
 
   def index
-    @glazes = current_studio.glazes.order(:id)
+    @glazes = current_studio.glazes.order(:created_at)
   end
 
   def new

@@ -26,7 +26,9 @@
           <%= bootstrap_form_with model: membership, url: studio_member_path(current_studio, membership), class: 'me-2', data: {controller: 'submit-form'} do |f| %>
             <%= f.collection_select :role, Membership.roles_i18n, :first, :last, {wrapper: false}, disabled:, data: {action: 'submit-form#submit'} %>
           <% end %>
-          <%= button_to '削除', studio_member_path(current_studio, membership), method: :delete, class: 'btn btn-danger', disabled:, form: {data: {turbo_confirm: '本当に削除しますか？'}} %>
+          <%= button_to '教室から削除', studio_member_path(current_studio, membership), method: :delete, class: 'btn btn-danger', disabled:, form: {data: {turbo_confirm: '本当に削除しますか？'}} %>
+        <% elsif membership.user == current_user %>
+          <%= button_to '退出', studio_member_path(current_studio, membership), method: :delete, class: 'btn btn-danger', disabled:, form: {data: {turbo_confirm: '本当に削除しますか？'}} %>
         <% end %>
       </li>
     <% end %>

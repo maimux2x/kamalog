@@ -12,3 +12,8 @@ ben:
   uid: 54321
   name: Ben
   email: ben@example.com
+
+lisa:
+  uid: 09876
+  name: Lisa
+  email: lisa@example.com

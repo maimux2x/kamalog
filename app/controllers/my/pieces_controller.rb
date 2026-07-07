@@ -2,7 +2,7 @@ class My::PiecesController < ApplicationController
   include CurrentMembership
 
   def index
-    @pieces = current_membership.pieces.order(:id)
+    @pieces = current_membership.pieces.order(:created_at)
   end
 
   def show

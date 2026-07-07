@@ -1,6 +1,6 @@
 require 'application_system_test_case'
 
-class MembersJsTest < ApplicationSystemTestCase
+class AdminMembersJsTest < ApplicationSystemTestCase
   driven_by_simulated
 
   setup do
