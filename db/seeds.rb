@@ -9,7 +9,7 @@ studio = Studio.find_or_create_by!(name: 'ワンダーランドスタジオ')
 end
 
 membership = User.find_by!(email: 'test1@example.com').memberships.find_or_create_by!(studio:)
-membership.update!(role: :admin)
+membership.admin!
 
 white_clay, _, black_clay = ['白土', '赤土', '黒土'].map {|clay|
   studio.clays.find_or_create_by! name: clay

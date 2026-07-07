@@ -12,7 +12,7 @@ class Studio < ApplicationRecord
   end
 
   def last_admin?(user)
-    admins = memberships.where(role: :admin).limit(2).extract_associated(:user)
+    admins = memberships.admin.limit(2).extract_associated(:user)
 
     return false unless admins.length == 1
 
