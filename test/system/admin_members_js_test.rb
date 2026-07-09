@@ -28,12 +28,16 @@ class AdminMembersJsTest < ApplicationSystemTestCase
     visit studio_members_path(@studio)
 
     within 'ul.list-group li:nth-child(2)' do
+      assert_text 'Bob'
+      assert_text 'メンバー'
+
       select '管理者', from: 'membership[role]'
     end
 
     assert_text 'メンバーの役割を更新しました。'
 
     within 'ul.list-group li:nth-child(2)' do
+      assert_text 'Bob'
       assert_text '管理者'
     end
   end

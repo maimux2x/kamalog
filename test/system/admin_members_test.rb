@@ -27,6 +27,7 @@ class AdminMembersTest < ApplicationSystemTestCase
     visit studio_members_path(@studio)
 
     within 'ul.list-group li:nth-child(2)' do
+      assert_text 'Bob'
       click_on '教室から削除'
     end
 
