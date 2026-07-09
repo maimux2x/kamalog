@@ -11,8 +11,11 @@ end
 membership = User.find_by!(email: 'test1@example.com').memberships.find_or_create_by!(studio:)
 membership.admin!
 
-white_clay, _, black_clay = ['白土', '赤土', '黒土'].map {|clay|
-  studio.clays.find_or_create_by! name: clay
+white_clay, _, black_clay = ['白土', '赤土', '黒土'].map.with_index {|clay, i|
+  clay = studio.clays.find_or_initialize_by(name: clay)
+  clay.update! position: i
+
+  clay
 }
 
 white_matte, perl, black_matte = ['白マット', 'パールラスター', '黒マット'].map {|glaze|
