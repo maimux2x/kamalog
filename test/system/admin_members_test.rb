@@ -8,6 +8,13 @@ class AdminMembersTest < ApplicationSystemTestCase
     @studio = memberships(:alice_membership).studio
   end
 
+  test '設定メニューに土と釉薬が表示されていること' do
+    visit studio_settings_path(@studio)
+
+    assert_text '土'
+    assert_text '釉薬'
+  end
+
   test 'メンバー一覧が表示されること' do
     visit studio_members_path(@studio)
 

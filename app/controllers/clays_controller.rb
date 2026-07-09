@@ -2,7 +2,7 @@ class ClaysController < ApplicationController
   include CurrentMembership
 
   def index
-    @clays = current_studio.clays.order(:created_at)
+    @clays = current_studio.clays.order(:position)
   end
 
   def new
@@ -10,7 +10,7 @@ class ClaysController < ApplicationController
   end
 
   def create
-    @clay = current_studio.clays.new(clay_params)
+    @clay = current_studio.clays.new(clay_params.merge(position: current_studio.clays.count + 1))
 
     if @clay.save
       redirect_to studio_clays_path, status: :see_other, notice: '土を登録しました。'
@@ -24,12 +24,28 @@ class ClaysController < ApplicationController
   end
 
   def update
-    @clay = current_studio.clays.find(params[:id])
+    clays = current_studio.clays.order(:position)
+    @clay = clays.find(params[:id])
 
-    if @clay.update(clay_params)
-      redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
-    else
-      render :edit, status: :unprocessable_content
+    ActiveRecord::Base.transaction do
+      if position = clay_params[:position]&.to_i
+        clays_arr = clays.to_a
+
+        clays_arr.delete @clay
+        clays_arr.insert position - 1, @clay
+
+        cond = clays_arr.size.times.map { 'WHEN ? THEN ?' }.join(' ')
+        args = clays_arr.flat_map.with_index(1) {|clay, i| [clay.id, i] }
+
+        clays.update_all 'position = -position'
+        clays.update_all ActiveRecord::Base.sanitize_sql_array(["position = CASE id #{cond} END", *args])
+      end
+
+      if @clay.update(clay_params.except(:position))
+        redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
+      else
+        render :edit, status: :unprocessable_content
+      end
     end
   end
 
@@ -45,7 +61,8 @@ class ClaysController < ApplicationController
 
   def clay_params
     params.expect(clay: [
-      :name
+      :name,
+      :position
     ])
   end
 end
