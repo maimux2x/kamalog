@@ -1,11 +1,14 @@
 white:
   studio: wonderland
   name: 白土
+  position: 1
 
 black:
   studio: wonderland
   name: 黒土
+  position: 2
 
 red:
   studio: wonderland
   name: 赤土
+  position: 3

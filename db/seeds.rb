@@ -113,3 +113,16 @@ base.logs.find_or_initialize_by(title: '高さを出す練習で花瓶を作っ�
     log.save!
   }
 }
+
+studio2 = Studio.find_or_create_by!(name: 'ミラーランドスタジオ')
+
+user = User.find_or_initialize_by(email: 'test1@example.com')
+user.memberships.find_or_create_by! studio: studio2
+
+membership = User.find_by!(email: 'test1@example.com').memberships.find_or_create_by!(studio: studio2)
+membership.admin!
+
+['白土', '赤土', '黒土'].each.with_index {|clay, i|
+  clay = studio2.clays.find_or_initialize_by(name: clay)
+  clay.update! position: i
+}
