@@ -15,7 +15,7 @@
     </label>
 
     <div class="list-group" data-attach-images-target="container">
-      <%= f.fields_for :photos, log.photos.order(:id), include_id: false do |photo| %>
+      <%= f.fields_for :photos, log.photos.order(:created_at), include_id: false do |photo| %>
         <%= render 'photo', photo: %>
       <% end %>
     </div>

@@ -2,7 +2,7 @@ class ClaysController < ApplicationController
   include CurrentMembership
 
   def index
-    @clays = current_studio.clays.order(:id)
+    @clays = current_studio.clays.order(:created_at)
   end
 
   def new

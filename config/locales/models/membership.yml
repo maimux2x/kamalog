@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    attributes:
+      membership:
+        role: 役割
+  enums:
+    membership:
+      role:
+        member: メンバー
+        admin: 管理者
