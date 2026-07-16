@@ -1,11 +1,14 @@
 white_matte:
   studio: wonderland
   name: 白マット
+  position: 1
 
 black_matte:
   studio: wonderland
   name: 黒マット
+  position: 2
 
 perl:
   studio: wonderland
   name: パールラスター
+  position: 3

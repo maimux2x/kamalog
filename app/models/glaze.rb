@@ -3,5 +3,5 @@ class Glaze < ApplicationRecord
 
   belongs_to :studio
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: {scope: :studio_id}
 end
