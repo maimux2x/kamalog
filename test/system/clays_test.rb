@@ -57,14 +57,24 @@ class ClaysTest < ApplicationSystemTestCase
   end
 
   test '作品で使用されていない土は削除できること' do
+    clays(:black).clay_usages.destroy_all
+
     visit studio_clays_path(@studio)
 
-    within 'ul.list-group li:nth-child(3)' do
+    within 'ul.list-group li:nth-child(2)' do
       click_on '削除'
     end
 
-    assert_text    '土を削除しました。'
-    assert_text    '白土'
-    assert_no_text '赤土'
+    assert_text '土を削除しました。'
+
+    within 'ul.list-group li', text: '白土' do
+      assert_select 'clay[position]', selected: '1'
+    end
+
+    assert_no_text '黒土'
+
+    within 'ul.list-group li', text: '赤土' do
+      assert_select 'clay[position]', selected: '2'
+    end
   end
 end

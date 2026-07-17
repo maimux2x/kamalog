@@ -24,21 +24,11 @@ class ClaysController < ApplicationController
   end
 
   def update
-    clays = current_studio.clays.order(:position)
-    @clay = clays.find(params[:id])
+    @clay = current_studio.clays.find(params[:id])
 
     ActiveRecord::Base.transaction do
       if position = clay_params[:position]&.to_i
-        clays_arr = clays.to_a
-
-        clays_arr.delete @clay
-        clays_arr.insert position - 1, @clay
-
-        cond = clays_arr.size.times.map { 'WHEN ? THEN ?' }.join(' ')
-        args = clays_arr.flat_map.with_index(1) {|clay, i| [clay.id, i] }
-
-        clays.update_all 'position = -position'
-        clays.update_all ActiveRecord::Base.sanitize_sql_array(["position = CASE id #{cond} END", *args])
+        @clay.move_to position
       end
 
       if @clay.update(clay_params.except(:position))
