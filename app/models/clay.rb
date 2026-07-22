@@ -7,5 +7,5 @@ class Clay < ApplicationRecord
 
   validates :name, presence: true, uniqueness: {scope: :studio_id}
 
-  self.positioned_on = -> { studio.clays }
+  positioned on: -> { studio.clays }
 end
