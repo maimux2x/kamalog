@@ -5,7 +5,7 @@ class MemberMembersTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:bob)
 
-    @studio = memberships(:bob_membership).studio
+    @studio = studios(:wonderland)
   end
 
   test 'member 権限のメンバーには自分自身にだけ教室からの退出ボタンが表示されること' do

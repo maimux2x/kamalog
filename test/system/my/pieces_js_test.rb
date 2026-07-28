@@ -7,7 +7,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).studios.first
+    @studio = studios(:wonderland)
   end
 
   test '製作中の作品を登録する' do

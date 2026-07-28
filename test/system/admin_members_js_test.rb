@@ -7,7 +7,7 @@ class AdminMembersJsTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).studios.first
+    @studio = studios(:wonderland)
   end
 
   test 'メンバーの招待を切り替えできること' do
@@ -38,7 +38,7 @@ class AdminMembersJsTest < ApplicationSystemTestCase
 
     within 'ul.list-group li:nth-child(2)' do
       assert_text 'Bob'
-      assert_text '管理者'
+      assert_select 'membership[role]', selected: '管理者'
     end
   end
 end

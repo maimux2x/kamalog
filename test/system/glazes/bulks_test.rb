@@ -5,7 +5,7 @@ class Glazes::BulksTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).memberships.first.studio
+    @studio = studios(:wonderland)
   end
 
   test '釉薬を一括登録できること' do

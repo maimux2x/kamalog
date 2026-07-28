@@ -2,7 +2,7 @@ class ClaysController < ApplicationController
   include CurrentMembership
 
   def index
-    @clays = current_studio.clays.order(:created_at)
+    @clays = current_studio.clays.order(:position)
   end
 
   def new
@@ -26,10 +26,16 @@ class ClaysController < ApplicationController
   def update
     @clay = current_studio.clays.find(params[:id])
 
-    if @clay.update(clay_params)
-      redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
-    else
-      render :edit, status: :unprocessable_content
+    ActiveRecord::Base.transaction do
+      if position = clay_params[:position]&.to_i
+        @clay.move_to position
+      end
+
+      if @clay.update(clay_params.except(:position))
+        redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
+      else
+        render :edit, status: :unprocessable_content
+      end
     end
   end
 
@@ -45,7 +51,8 @@ class ClaysController < ApplicationController
 
   def clay_params
     params.expect(clay: [
-      :name
+      :name,
+      :position
     ])
   end
 end

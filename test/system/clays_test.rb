@@ -5,7 +5,7 @@ class ClaysTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).memberships.first.studio
+    @studio = studios(:wonderland)
   end
 
   test '土の一覧が表示できること' do
@@ -15,8 +15,12 @@ class ClaysTest < ApplicationSystemTestCase
     assert_text '黒土'
   end
 
-  test '土を新規登録できること' do
-    visit new_studio_clay_path(@studio)
+  test '土が0個のスタジオで新規登録できること' do
+    studio = studios(:mirrorland)
+
+    visit new_studio_clay_path(studio)
+
+    assert_equal 0, studio.clays.count
 
     fill_in '名前', with: '大島耐火'
     click_on '登録する'
@@ -57,14 +61,24 @@ class ClaysTest < ApplicationSystemTestCase
   end
 
   test '作品で使用されていない土は削除できること' do
+    clays(:black).clay_usages.destroy_all
+
     visit studio_clays_path(@studio)
 
-    within 'ul.list-group li:nth-child(3)' do
+    within 'ul.list-group li:nth-child(2)' do
       click_on '削除'
     end
 
-    assert_text    '土を削除しました。'
-    assert_text    '白土'
-    assert_no_text '赤土'
+    assert_text '土を削除しました。'
+
+    within 'ul.list-group li', text: '白土' do
+      assert_select 'clay[position]', selected: '1'
+    end
+
+    assert_no_text '黒土'
+
+    within 'ul.list-group li', text: '赤土' do
+      assert_select 'clay[position]', selected: '2'
+    end
   end
 end
