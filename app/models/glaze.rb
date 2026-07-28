@@ -7,5 +7,5 @@ class Glaze < ApplicationRecord
 
   validates :name, presence: true, uniqueness: {scope: :studio_id}
 
-  positioned on: -> { studio.glazes }
+  self.positioned_on = -> { studio.glazes }
 end
