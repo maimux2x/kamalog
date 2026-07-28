@@ -30,16 +30,7 @@ class GlazesController < ApplicationController
 
     ActiveRecord::Base.transaction do
       if position = glaze_params[:position].presence&.to_i
-        glaze_arr = glazes.to_a
-
-        glaze_arr.delete @glaze
-        glaze_arr.insert position - 1, @glaze
-
-        cond = glaze_arr.size.times.map { 'WHEN ? THEN ?' }.join(' ')
-        args = glaze_arr.flat_map.with_index(1) {|glaze, i| [glaze.id, i] }
-
-        glazes.update_all 'position = -position'
-        glazes.update_all ActiveRecord::Base.sanitize_sql_array(["position = CASE id #{cond} END", *args])
+        @glaze.move_to position
       end
 
       if @glaze.update(glaze_params.except(:position))
