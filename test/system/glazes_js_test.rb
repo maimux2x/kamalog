@@ -7,7 +7,7 @@ class GlazesJSTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = memberships(:alice_membership).studio
+    @studio = studios(:wonderland)
   end
 
   test '釉薬の表示順の並び替えができること' do

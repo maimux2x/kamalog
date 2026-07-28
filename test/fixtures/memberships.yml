@@ -16,6 +16,12 @@ lisa_membership:
   role: member
   created_at: 2026-01-01 00:00:02
 
+alice_membership_other:
+  user: alice
+  studio: mirrorland
+  role: member
+  created_at: 2026-01-01 00:00:03
+
 bob_membership_other:
   user: bob
   studio: mirrorland

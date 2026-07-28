@@ -11,7 +11,7 @@ class GlazesController < ApplicationController
 
   def create
     glazes = current_studio.glazes
-    @glaze = glazes.new(glaze_params.merge(position: glazes.count + 1))
+    @glaze = glazes.new(glaze_params)
 
     if @glaze.save
       redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を登録しました。'

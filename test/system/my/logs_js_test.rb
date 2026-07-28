@@ -7,7 +7,7 @@ class My::LogsJsTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).studios.first
+    @studio = studios(:wonderland)
     @piece  = pieces(:cup)
   end
 

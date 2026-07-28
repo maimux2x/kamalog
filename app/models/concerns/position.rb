@@ -4,6 +4,10 @@ module Position
   included do
     class_attribute :positioned_on
 
+    before_create do
+      self.position ||= instance_exec(&positioned_on).maximum(:position).to_i + 1
+    end
+
     after_destroy do
       on = instance_exec(&positioned_on)
 

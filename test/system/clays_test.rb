@@ -5,7 +5,7 @@ class ClaysTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).memberships.first.studio
+    @studio = studios(:wonderland)
   end
 
   test '土の一覧が表示できること' do
@@ -15,8 +15,12 @@ class ClaysTest < ApplicationSystemTestCase
     assert_text '黒土'
   end
 
-  test '土を新規登録できること' do
-    visit new_studio_clay_path(@studio)
+  test '土が0個のスタジオで新規登録できること' do
+    studio = studios(:mirrorland)
+
+    visit new_studio_clay_path(studio)
+
+    assert_equal 0, studio.clays.count
 
     fill_in '名前', with: '大島耐火'
     click_on '登録する'

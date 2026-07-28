@@ -10,7 +10,7 @@ class ClaysController < ApplicationController
   end
 
   def create
-    @clay = current_studio.clays.new(clay_params.merge(position: current_studio.clays.count + 1))
+    @clay = current_studio.clays.new(clay_params)
 
     if @clay.save
       redirect_to studio_clays_path, status: :see_other, notice: '土を登録しました。'

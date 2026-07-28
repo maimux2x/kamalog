@@ -5,7 +5,7 @@ class AdminMembersTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = memberships(:alice_membership).studio
+    @studio = studios(:wonderland)
   end
 
   test '設定メニューに土と釉薬が表示されていること' do

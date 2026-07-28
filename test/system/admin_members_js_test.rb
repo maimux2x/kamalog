@@ -7,7 +7,7 @@ class AdminMembersJsTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).studios.first
+    @studio = studios(:wonderland)
   end
 
   test 'メンバーの招待を切り替えできること' do

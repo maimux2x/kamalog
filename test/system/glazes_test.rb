@@ -5,7 +5,7 @@ class GlazesTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).memberships.first.studio
+    @studio = studios(:wonderland)
   end
 
   test '釉薬の一覧が表示できること' do

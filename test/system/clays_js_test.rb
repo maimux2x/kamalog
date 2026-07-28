@@ -7,7 +7,7 @@ class ClaysJsTest < ApplicationSystemTestCase
     visit root_path
     sign_in_as users(:alice)
 
-    @studio = users(:alice).memberships.first.studio
+    @studio = studios(:wonderland)
   end
 
   test '土の表示順を並び替えできること（白→黒→赤から白→赤→黒）' do
