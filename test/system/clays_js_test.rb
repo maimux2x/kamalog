@@ -12,26 +12,21 @@ class ClaysJsTest < ApplicationSystemTestCase
 
   test '土の表示順を並び替えできること（白→黒→赤から白→赤→黒）' do
     visit studio_clays_path(@studio)
+    source = find('ul.list-group li:nth-child(2) .handle')
+    target = find('ul.list-group li:nth-child(3)')
 
-    within 'ul.list-group li:nth-child(2)' do
-      select 3, from: 'clay[position]'
-    end
-
-    assert_text '土を更新しました。'
+    source.drag_to target
 
     within 'ul.list-group li:nth-child(1)' do
       assert_text '白土'
-      assert_select 'clay[position]', selected: '1'
     end
 
     within 'ul.list-group li:nth-child(2)' do
       assert_text '赤土'
-      assert_select 'clay[position]', selected: '2'
     end
 
     within 'ul.list-group li:nth-child(3)' do
       assert_text '黒土'
-      assert_select 'clay[position]', selected: '3'
     end
   end
 end
