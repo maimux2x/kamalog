@@ -7,13 +7,10 @@
 <%= link_to '新規登録', new_studio_clay_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 <%= link_to '一括登録', new_studio_clays_bulk_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 
-<ul class="list-group">
+<ul class="list-group" data-controller="sortable" data-sortable-resource-name-value="clay">
   <% @clays.each do |clay| %>
-    <li class="d-flex list-group-item align-items-center gap-2">
+    <li class="d-flex list-group-item align-items-center gap-2" data-sortable-update-url="<%= studio_clay_path(current_studio, clay) %>">
       <div class="me-auto"><%= clay.name %></div>
-      <%= bootstrap_form_with model: clay, url: studio_clay_path(current_studio, clay), data: {controller: 'submit-form'} do |f| %>
-        <%= f.collection_select :position, current_studio.clays.order(:position), :position, :position, {wrapper: false}, data: {action: 'submit-form#submit'} %>
-      <% end %>
       <%= link_to '編集', edit_studio_clay_path(current_studio, clay), class: 'btn btn-outline-primary' %>
       <%= button_to '削除', studio_clay_path(current_studio, clay), method: :delete, form: {data: {turbo_confirm: '本当に削除しますか？'}}, class: 'btn btn-danger' %>
     </li>
