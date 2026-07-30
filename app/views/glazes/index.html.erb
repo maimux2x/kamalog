@@ -7,17 +7,12 @@
 <%= link_to '新規作成', new_studio_glaze_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 <%= link_to '一括登録', new_studio_glazes_bulk_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 
-<ul class="list-group" data-controller="sortable" data-sortable-resource-name-value="glaze" data-sortable-handle-value=".handle">
-  <% @glazes.each do |glaze| %>
-    <li class="list-group-item d-flex align-items-center gap-2" data-sortable-update-url="<%= studio_glaze_path(current_studio, glaze) %>">
-      <span class="me-auto">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list handle" viewBox="0 0 16 16" style="cursor: grab;">
-          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-        </svg>
-        <%= glaze.name %>
-      </span>
-      <%= link_to '編集', edit_studio_glaze_path(current_studio, glaze), class: 'btn btn-outline-primary' %>
-      <%= button_to '削除', [current_studio, glaze], method: :delete, form: {data: {turbo_confirm: '本当に削除しますか?'}}, class: 'btn btn-danger' %>
-    </li>
-  <% end %>
-</ul>
+<%= render 'sortable_list', **{
+  resource_name: 'glaze',
+  records:       @glazes,
+  name:          -> (glaze) { glaze.name },
+  update_url:    -> (glaze) { studio_glaze_path(current_studio, glaze) }
+} do |glaze| %>
+  <%= link_to '編集', edit_studio_glaze_path(current_studio, glaze), class: 'btn btn-outline-primary' %>
+  <%= button_to '削除', [current_studio, glaze], method: :delete, form: {data: {turbo_confirm: '本当に削除しますか?'}}, class: 'btn btn-danger' %>
+<% end %>
