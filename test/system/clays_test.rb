@@ -71,14 +71,14 @@ class ClaysTest < ApplicationSystemTestCase
 
     assert_text '土を削除しました。'
 
-    within 'ul.list-group li', text: '白土' do
-      assert_select 'clay[position]', selected: '1'
+    within 'ul.list-group li:nth-child(1)' do
+      assert_text '白土'
+    end
+
+    within 'ul.list-group li:nth-child(2)' do
+      assert_text '赤土'
     end
 
     assert_no_text '黒土'
-
-    within 'ul.list-group li', text: '赤土' do
-      assert_select 'clay[position]', selected: '2'
-    end
   end
 end
