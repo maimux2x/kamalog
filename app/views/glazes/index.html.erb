@@ -10,8 +10,8 @@
 <%= render 'sortable_list', **{
   resource_name: 'glaze',
   records:       @glazes,
-  name:          -> (glaze) { glaze.name },
-  update_url:    -> (glaze) { studio_glaze_path(current_studio, glaze) }
+  name:          ->(glaze) { glaze.name },
+  update_url:    ->(glaze) { studio_glaze_path(current_studio, glaze) }
 } do |glaze| %>
   <%= link_to '編集', edit_studio_glaze_path(current_studio, glaze), class: 'btn btn-outline-primary' %>
   <%= button_to '削除', [current_studio, glaze], method: :delete, form: {data: {turbo_confirm: '本当に削除しますか?'}}, class: 'btn btn-danger' %>
