@@ -10,9 +10,9 @@
 <%= render 'sortable_list', **{
   resource_name: 'glaze',
   records:       @glazes,
-  name:          ->(glaze) { glaze.name },
-  update_url:    ->(glaze) { studio_glaze_path(current_studio, glaze) }
+  update_url:    ->(glaze) { studio_glaze_path(current_studio, glaze) },
+  name:          :name.to_proc
 } do |glaze| %>
   <%= link_to '編集', edit_studio_glaze_path(current_studio, glaze), class: 'btn btn-outline-primary' %>
-  <%= button_to '削除', [current_studio, glaze], method: :delete, form: {data: {turbo_confirm: '本当に削除しますか?'}}, class: 'btn btn-danger' %>
+  <%= button_to '削除', studio_glaze_path(current_studio, glaze), method: :delete, form: {data: {turbo_confirm: '本当に削除しますか?'}}, class: 'btn btn-danger' %>
 <% end %>
