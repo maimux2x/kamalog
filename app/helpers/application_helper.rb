@@ -18,6 +18,6 @@ module ApplicationHelper
   end
 
   def clay_weight(usage)
-    "#{number_to_rounded(usage.weight, strip_insignificant_zeros: true)}#{usage.weight_unit_i18n}"
+    "#{number_to_rounded(usage.weight_amount, strip_insignificant_zeros: true)}#{usage.weight_unit_i18n}"
   end
 end

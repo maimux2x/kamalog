@@ -22,7 +22,7 @@ white_matte, perl, black_matte = ['白マット', 'パールラスター', '黒�
 rice_bowl = membership.pieces.find_or_initialize_by(title: 'お茶碗')
 rice_bowl.update! form_method: :electric_wheel
 
-rice_bowl.clay_usages.find_or_initialize_by(clay: white_clay).tap { it.update! weight: 500 }
+rice_bowl.clay_usages.find_or_initialize_by(clay: white_clay).tap { it.update! weight_amount: 500, weight_unit: :g }
 rice_bowl.glaze_usages.find_or_create_by! glaze: white_matte
 
 log = rice_bowl.logs.find_or_initialize_by(title: '電動ロクロでお茶碗を作る')
@@ -41,7 +41,7 @@ dish.update! form_method: :hand_building, status: :complete, description: '友�
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
 end
 
-dish.clay_usages.find_or_initialize_by(clay: white_clay).tap { it.update! weight: 500 }
+dish.clay_usages.find_or_initialize_by(clay: white_clay).tap { it.update! weight_amount: 500, weight_unit: :g }
 dish.glaze_usages.find_or_create_by! glaze: white_matte
 
 log = dish.logs.find_or_initialize_by(title: '手びねりでお皿を作る')
@@ -55,7 +55,7 @@ end
 cup = membership.pieces.find_or_initialize_by(title: 'マグカップ')
 cup.update! form_method: :coil_building
 
-cup.clay_usages.find_or_initialize_by(clay: black_clay).tap { it.update! weight: 300 }
+cup.clay_usages.find_or_initialize_by(clay: black_clay).tap { it.update! weight_amount: 300, weight_unit: :g }
 cup.glaze_usages.find_or_create_by! glaze: black_matte
 cup.glaze_usages.find_or_create_by! glaze: perl
 
@@ -78,7 +78,7 @@ base.update! form_method: :coil_building, status: :complete, description: '一�
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
 end
 
-base.clay_usages.find_or_initialize_by(clay: black_clay).tap { it.update! weight: 300 }
+base.clay_usages.find_or_initialize_by(clay: black_clay).tap { it.update! weight_amount: 300, weight_unit: :g }
 base.glaze_usages.find_or_create_by! glaze: black_matte
 base.glaze_usages.find_or_create_by! glaze: perl
 
