@@ -2,18 +2,22 @@ cup_usages:
   piece: cup
   clay: white
   weight: 500
+  weight_unit: g
 
 base_usages1:
   piece: base
   clay: white
-  weight: 250
+  weight: 0.25
+  weight_unit: kg
 
 base_usages2:
   piece: base
   clay: black
   weight: 300
+  weight_unit: g
 
 teacup_usages:
   piece: teacup
   clay: white
   weight: 300
+  weight_unit: g

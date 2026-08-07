@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_084017) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_07_010722) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_084017) do
     t.datetime "created_at", null: false
     t.integer "piece_id", null: false
     t.datetime "updated_at", null: false
-    t.integer "weight", null: false
+    t.float "weight", null: false
     t.integer "weight_unit", null: false
     t.index ["clay_id"], name: "index_clay_usages_on_clay_id"
     t.index ["piece_id"], name: "index_clay_usages_on_piece_id"
