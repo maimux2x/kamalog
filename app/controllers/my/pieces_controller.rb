@@ -56,7 +56,8 @@ class My::PiecesController < ApplicationController
 
       clay_usages_attributes: [[
         :clay_id,
-        :weight,
+        :weight_amount,
+        :weight_unit,
         :id,
         :_destroy
       ]],

@@ -3,4 +3,9 @@ ja:
     attributes:
       clay_usage:
         clay_id: 土
-        weight: 使用量
+        weight_amount: 使用量
+  enums:
+    clay_usage:
+      weight_unit:
+        g: g
+        kg: kg
