@@ -23,7 +23,8 @@ class My::PiecesJsTest < ApplicationSystemTestCase
       assert_selector 'button[disabled]', text: '削除'
 
       select '白土',    from: '土'
-      fill_in '使用量', with: '500'
+      fill_in '使用量', with: '0.5'
+      choose 'kg'
     end
 
     click_on '釉薬を追加'
@@ -39,7 +40,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
     assert_text 'お茶碗'
     assert_text '製作中'
     assert_text '電動ろくろ'
-    assert_text '白土 500g'
+    assert_text '白土 0.5kg'
     assert_text '白マット'
   end
 
@@ -57,6 +58,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
     within '.clays :nth-last-child(1 of [data-nested-form-target="item"])' do
       select '黒土',    from: '土'
       fill_in '使用量', with: '100'
+      choose 'g'
     end
 
     click_on '釉薬を追加'

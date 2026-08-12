@@ -44,7 +44,7 @@
       <dt>使用した土</dt>
 
       <% @piece.clay_usages.includes(:clay).order(:created_at).each do |usage| %>
-        <dd><%= usage.clay.name %> <%= usage.weight %>g</dd>
+        <dd><%= usage.clay.name %> <%= clay_weight(usage) %></dd>
       <% end %>
 
       <% if glazes = @piece.glazes.order(:id).pluck(:name).presence %>

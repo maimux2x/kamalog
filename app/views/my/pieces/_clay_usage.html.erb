@@ -1,8 +1,7 @@
 <div class="hstack gap-3 mb-3" data-nested-form-target="item">
-  <%= form.collection_select :clay_id, Clay.order(:created_at), :id, :name, include_blank: true, hide_label: true, required: true, wrapper: {class: false} %>
-  <%= form.number_field :weight, hide_label: true, wrapper: {class: false} %>
-
-  <span>g</span>
+  <%= form.collection_select :clay_id, current_studio.clays.order(:created_at), :id, :name, include_blank: true, hide_label: true, required: true, wrapper: {class: false} %>
+  <%= form.number_field :weight_amount, hide_label: true, wrapper: {class: false}, step: 'any', value: number_to_rounded(form.object.weight_amount, strip_insignificant_zeros: true) %>
+  <%= form.collection_radio_buttons :weight_unit, ClayUsage.weight_units_i18n, :first, :last, hide_label: true, wrapper: {class: false}, inline: true %>
 
   <div>
     <button
