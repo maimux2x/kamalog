@@ -9,3 +9,6 @@ linter:
 
 formatter:
   enabled: true
+
+  include:
+    - 'app/views/**/*.html.erb'

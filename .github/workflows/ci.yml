@@ -80,7 +80,7 @@ jobs:
         run: npx --yes @herb-tools/linter
 
       - name: Check HTML+ERB formatting
-        run: npx --yes @herb-tools/formatter
+        run: npx --yes @herb-tools/formatter --check 'app/views/**/*.html.erb'
 
   test:
     runs-on: ubuntu-latest
