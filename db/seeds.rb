@@ -31,6 +31,8 @@ log.update! date: '2026-05-01', body: 'プレゼント用に小さなお茶碗�
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
+
+  photo.save
 end
 
 dish = membership.pieces.find_or_initialize_by(title: 'お皿')
@@ -39,6 +41,8 @@ dish.update! form_method: :hand_building, status: :complete, description: '友�
 4.times do |i|
   photo = dish.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
+
+  photo.save
 end
 
 dish.clay_usages.find_or_initialize_by(clay: white_clay).tap { it.update! weight_amount: 500, weight_unit: :g }
@@ -50,6 +54,8 @@ log.update! date: '2026-05-10', body: 'お菓子を食べるときに使って�
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
+
+  photo.save
 end
 
 cup = membership.pieces.find_or_initialize_by(title: 'マグカップ')
@@ -68,6 +74,8 @@ log.update! date: '2026-04-12', body: '削りを入れて凹凸や底の厚み�
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
+
+  photo.save
 end
 
 base = membership.pieces.find_or_initialize_by(title: '花瓶')
@@ -76,6 +84,8 @@ base.update! form_method: :coil_building, status: :complete, description: '一�
 4.times do |i|
   photo = base.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
+
+  photo.save
 end
 
 base.clay_usages.find_or_initialize_by(clay: black_clay).tap { it.update! weight_amount: 300, weight_unit: :g }
