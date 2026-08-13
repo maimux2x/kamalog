@@ -1,5 +1,5 @@
 <div class="hstack gap-3 mb-3" data-nested-form-target="item">
-  <%= form.collection_select :glaze_id, Glaze.order(:created_at), :id, :name, include_blank: true, hide_label: true, wrapper: {class: false} %>
+  <%= form.collection_select :glaze_id, current_studio.glazes.order(:created_at), :id, :name, include_blank: true, hide_label: true, wrapper: {class: false} %>
 
   <div>
     <button

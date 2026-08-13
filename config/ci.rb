@@ -4,6 +4,8 @@ CI.run do
   step 'Setup', 'bin/setup --skip-server'
 
   step 'Style: Ruby', 'bin/rubocop'
+  step 'Lint ERB', 'npx --yes @herb-tools/linter'
+  step 'Format ERB', "npx --yes @herb-tools/formatter --check 'app/views/**/*.html.erb'"
 
   step 'Security: Gem audit', 'bin/bundler-audit'
   step 'Security: Yarn vulnerability audit', 'yarn audit'
