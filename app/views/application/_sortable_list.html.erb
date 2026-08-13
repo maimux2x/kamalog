@@ -1,12 +1,33 @@
-<ul class="list-group" data-controller="sortable" data-sortable-resource-name-value="<%= resource_name %>" data-sortable-handle-value=".handle">
+<ul
+  class="list-group"
+  data-controller="sortable"
+  data-sortable-resource-name-value="<%= resource_name %>"
+  data-sortable-handle-value=".handle"
+>
   <% records.each do |record| %>
-    <li class="list-group-item d-flex align-items-center gap-2" data-sortable-update-url="<%= update_url.call(record) %>">
+    <li
+      class="list-group-item d-flex align-items-center gap-2"
+      data-sortable-update-url="<%= update_url.call(record) %>"
+    >
       <span class="me-auto">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list handle" viewBox="0 0 16 16" style="cursor: grab;">
-          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-list handle"
+          viewBox="0 0 16 16"
+          style="cursor: grab;"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+          />
         </svg>
+
         <%= name.call(record) %>
       </span>
+
       <%= yield record %>
     </li>
   <% end %>
