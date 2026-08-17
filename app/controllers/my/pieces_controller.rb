@@ -32,6 +32,8 @@ class My::PiecesController < ApplicationController
   def update
     @piece = current_membership.pieces.find(params[:id])
 
+    @piece.photos.update_all 'position = -position'
+
     if @piece.update piece_params
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
     else
@@ -72,6 +74,7 @@ class My::PiecesController < ApplicationController
         :id,
         :file,
         :caption,
+        :position,
         :_destroy
       ]]
     ])

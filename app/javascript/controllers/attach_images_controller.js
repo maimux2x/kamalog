@@ -4,6 +4,7 @@ export default class AttachImagesController extends Controller {
   static targets = ['template', 'container', 'item']
 
   add(e) {
+
     let i = 0;
 
     for (const file of e.target.files) {
@@ -35,6 +36,12 @@ export default class AttachImagesController extends Controller {
       };
 
       reader.readAsDataURL(file);
+    }
+
+    let position = 1;
+    for (const item of this.itemTargets) {
+      const input = item.querySelector("input[id$='_position']");
+      input.value = position++;
     }
   }
 
