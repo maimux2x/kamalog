@@ -27,6 +27,7 @@ class My::PiecesController < ApplicationController
 
   def edit
     @piece = current_membership.pieces.find(params[:id])
+    @piece.photos.order(:position)
   end
 
   def update

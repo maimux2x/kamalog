@@ -25,6 +25,7 @@ class My::LogsController < ApplicationController
 
   def edit
     @log = find_piece.logs.find(params[:id])
+    @log.photos.order(:position)
   end
 
   def update
