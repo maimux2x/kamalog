@@ -30,6 +30,8 @@ class My::LogsController < ApplicationController
   def update
     @log = find_piece.logs.find(params[:id])
 
+    @log.photos.update_all 'position = -position'
+
     if @log.update(log_params)
       redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
     else
@@ -56,6 +58,7 @@ class My::LogsController < ApplicationController
         :id,
         :file,
         :caption,
+        :position,
         :_destroy
       ]]
     ])
