@@ -4,7 +4,6 @@ export default class AttachImagesController extends Controller {
   static targets = ['template', 'container', 'item']
 
   add(e) {
-
     let i = 0;
 
     for (const file of e.target.files) {
