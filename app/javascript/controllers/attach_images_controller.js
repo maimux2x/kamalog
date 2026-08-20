@@ -36,6 +36,12 @@ export default class AttachImagesController extends Controller {
 
       reader.readAsDataURL(file);
     }
+
+    let position = 1;
+    for (const item of this.itemTargets) {
+      const input = item.querySelector("input[id$='_position']");
+      input.value = position++;
+    }
   }
 
   remove(e) {

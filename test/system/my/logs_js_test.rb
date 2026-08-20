@@ -67,4 +67,33 @@ class My::LogsJsTest < ApplicationSystemTestCase
     assert_selector    'img[src$="/dish.png"]'
     assert_selector    'img[src$="/syokki_mug_cup.png"]'
   end
+
+  test '作業記録の画像の並び順を変更する' do
+    visit studio_my_piece_log_path(@studio, @piece, logs(:cup_log_day1))
+
+    click_on '編集'
+
+    source = find('div.list-group div.list-group-item:nth-child(1) div.vstack .handle')
+    target = find('div.list-group div.list-group-item:nth-child(2)')
+
+    source.drag_to target
+
+    within 'div.list-group div.list-group-item:nth-child(1) div.vstack' do
+      assert_selector 'img[src$="/dish.png"]'
+    end
+
+    within 'div.list-group div.list-group-item:nth-child(2) div.vstack' do
+      assert_selector 'img[src$="/dish_cup.png"]'
+    end
+
+    click_on '更新する'
+
+    within 'div.grid div.g-col-12:nth-child(1) div.d-flex' do
+      assert_selector 'img[src$="/dish.png"]'
+    end
+
+    within 'div.grid div.g-col-12:nth-child(2) div.d-flex' do
+      assert_selector 'img[src$="/dish_cup.png"]'
+    end
+  end
 end

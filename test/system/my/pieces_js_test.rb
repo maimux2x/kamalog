@@ -29,7 +29,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
 
     click_on '釉薬を追加'
 
-    select '白マット', from: '釉薬'
+  select '白マット', from: '釉薬'
 
     assert_no_text '作品説明'
     assert_no_text '画像を追加'
@@ -106,5 +106,33 @@ class My::PiecesJsTest < ApplicationSystemTestCase
     assert_no_text '黒土'
     assert_text '白マット'
     assert_no_text '黒マット'
+  end
+
+  test '作品の画像を並び替える' do
+    visit studio_my_piece_path(@studio, pieces(:teacup))
+
+    click_on '編集'
+    source = find('div.list-group div.list-group-item:nth-child(1) div.vstack .handle')
+    target = find('div.list-group div.list-group-item:nth-child(2)')
+
+    source.drag_to target
+
+    within 'div.list-group div:nth-child(1) div.vstack' do
+      assert_selector 'img[src$="/dish.png"]'
+    end
+
+    within 'div.list-group div:nth-child(2) div.vstack' do
+      assert_selector 'img[src$="/dish_cup.png"]'
+    end
+
+    click_on '更新する'
+
+    within 'div.grid div.g-col-12:nth-child(1) div.d-flex' do
+      assert_selector 'img[src$="/dish.png"]'
+    end
+
+    within 'div.grid div.g-col-12:nth-child(2) div.d-flex' do
+      assert_selector 'img[src$="/dish_cup.png"]'
+    end
   end
 end

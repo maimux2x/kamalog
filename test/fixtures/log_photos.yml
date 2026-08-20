@@ -1,7 +1,9 @@
 cup_photo:
   log: cup_log_day1
   caption: カップの説明
+  position: 1
 
 dish_photo:
   log: cup_log_day1
   caption: 皿の説明
+  position: 2

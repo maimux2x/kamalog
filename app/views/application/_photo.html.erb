@@ -1,13 +1,38 @@
-<div class="list-group-item position-relative" data-attach-images-target="item">
-  <% if photo.object.persisted? %>
-    <%= image_tag photo.object.file, height: 100, alt: '' %>
-    <%= photo.hidden_field :id %>
-  <% else %>
-    <%= image_tag '', height: 100, alt: '' %>
-    <%= photo.file_field :file, hidden: true, wrapper: false %>
-  <% end %>
+<div
+  class="list-group-item position-relative"
+  data-attach-images-target="item"
+  data-position-sortable-target="item"
+>
+  <div class="vstack">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-list handle mb-2"
+      viewBox="0 0 16 16"
+      style="cursor: grab;"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+      />
+    </svg>
 
-  <%= photo.text_field :caption %>
+    <div>
+      <% if photo.object.persisted? %>
+        <%= image_tag photo.object.file, height: 100, alt: '' %>
+        <%= photo.hidden_field :id %>
+        <%= photo.hidden_field :position %>
+      <% else %>
+        <%= image_tag '', height: 100, alt: '' %>
+        <%= photo.file_field :file, hidden: true, wrapper: false %>
+        <%= photo.hidden_field :position, value: '0' %>
+      <% end %>
+
+      <%= photo.text_field :caption %>
+    </div>
+  </div>
 
   <button
     class="btn-close position-absolute"
