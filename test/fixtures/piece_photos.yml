@@ -2,3 +2,8 @@ teacup_photo:
   piece: teacup
   caption: 湯呑みの説明
   position: 1
+
+dish_photo_2:
+  piece: teacup
+  caption: 皿の説明
+  position: 2

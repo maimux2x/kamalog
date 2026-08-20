@@ -12,3 +12,8 @@ teacup_photo_file:
   name: file
   record: teacup_photo (PiecePhoto)
   blob: teacup_photo_blob
+
+dish_photo_2_file:
+  name: file
+  record: dish_photo_2 (PiecePhoto)
+  blob: dish_photo_blob
