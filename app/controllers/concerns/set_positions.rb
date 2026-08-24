@@ -1,9 +1,7 @@
-module PositionAttributes
-  extend ActiveSupport::Concern
-
+module SetPositions
   private
 
-  def set_position(attrs)
+  def set_positions(attrs)
     return unless attrs
 
     attrs.values.reject { it[:_destroy] }.each.with_index 1 do |attr, i|

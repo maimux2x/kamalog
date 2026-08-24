@@ -1,6 +1,6 @@
 class My::PiecesController < ApplicationController
   include CurrentMembership
-  include PositionAttributes
+  include SetPositions
 
   def index
     @pieces = current_membership.pieces.order(:created_at)
@@ -38,7 +38,7 @@ class My::PiecesController < ApplicationController
 
       piece_params = piece_params()
 
-      set_position piece_params[:photos_attributes]
+      set_positions piece_params[:photos_attributes]
 
       if @piece.update piece_params
         redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'

@@ -1,6 +1,6 @@
 class My::LogsController < ApplicationController
   include CurrentMembership
-  include PositionAttributes
+  include SetPositions
 
   def index
     @piece = current_membership.pieces.find(params[:piece_id])
@@ -18,7 +18,7 @@ class My::LogsController < ApplicationController
     ActiveRecord::Base.transaction do
       log_params = log_params()
 
-      set_position log_params[:photos_attributes]
+      set_positions log_params[:photos_attributes]
 
       @log = find_piece.logs.new(log_params)
 
@@ -42,7 +42,7 @@ class My::LogsController < ApplicationController
 
       log_params = log_params()
 
-      set_position log_params[:photos_attributes]
+      set_positions log_params[:photos_attributes]
 
       if @log.update(log_params)
         redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
