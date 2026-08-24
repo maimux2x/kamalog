@@ -17,10 +17,10 @@
     <div
       class="list-group"
       data-attach-images-target="container"
-      data-controller="position-sortable"
+      data-controller="sortable"
       data-sortable-handle-value=".handle"
     >
-      <%= f.fields_for :photos, log.photos.order(:created_at), include_id: false do |photo| %>
+      <%= f.fields_for :photos, log.photos.order(:position), include_id: false do |photo| %>
         <%= render 'photo', photo: %>
       <% end %>
     </div>

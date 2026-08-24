@@ -1,5 +1,6 @@
 class My::PiecesController < ApplicationController
   include CurrentMembership
+  include PositionAttributes
 
   def index
     @pieces = current_membership.pieces.order(:created_at)
@@ -27,18 +28,23 @@ class My::PiecesController < ApplicationController
 
   def edit
     @piece = current_membership.pieces.find(params[:id])
-    @piece.photos.order(:position)
   end
 
   def update
     @piece = current_membership.pieces.find(params[:id])
 
-    @piece.photos.update_all 'position = -position'
+    ActiveRecord::Base.transaction do
+      @piece.photos.update_all 'position = -position'
 
-    if @piece.update piece_params
-      redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
-    else
-      render :edit, status: :unprocessable_content
+      piece_params = piece_params()
+
+      set_position piece_params[:photos_attributes]
+
+      if @piece.update piece_params
+        redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
+      else
+        render :edit, status: :unprocessable_content
+      end
     end
   end
 
@@ -75,7 +81,6 @@ class My::PiecesController < ApplicationController
         :id,
         :file,
         :caption,
-        :position,
         :_destroy
       ]]
     ])

@@ -1,7 +1,6 @@
 <div
   class="list-group-item position-relative"
   data-attach-images-target="item"
-  data-position-sortable-target="item"
 >
   <div class="vstack">
     <svg
@@ -23,11 +22,9 @@
       <% if photo.object.persisted? %>
         <%= image_tag photo.object.file, height: 100, alt: '' %>
         <%= photo.hidden_field :id %>
-        <%= photo.hidden_field :position %>
       <% else %>
         <%= image_tag '', height: 100, alt: '' %>
         <%= photo.file_field :file, hidden: true, wrapper: false %>
-        <%= photo.hidden_field :position, value: '0' %>
       <% end %>
 
       <%= photo.text_field :caption %>
