@@ -1,5 +1,6 @@
 <div class="hstack gap-2">
   <h1><%= piece.title %></h1>
+
   <% if piece.complete? %>
     <time datetime="<%= piece.completed_at.iso8601 %>"><%= l piece.completed_at.to_date %></time>
   <% end %>
