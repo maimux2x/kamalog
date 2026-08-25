@@ -32,7 +32,15 @@ class My::PiecesController < ApplicationController
   def update
     @piece = current_membership.pieces.find(params[:id])
 
-    if @piece.update(piece_params)
+    @piece.assign_attributes piece_params
+
+    if @piece.complete?
+      @piece.completed_at ||= Time.current
+    else
+      @piece.completed_at = nil
+    end
+
+    if @piece.save
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
     else
       render :edit, status: :unprocessable_content

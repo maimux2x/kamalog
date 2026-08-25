@@ -14,6 +14,7 @@ teacup:
   membership: alice_membership
   title: 湯呑み
   status: complete
+  completed_at: 2026-08-01
   form_method: hand_building
   description: 自宅用の小さな湯呑みを作った
 
@@ -21,4 +22,5 @@ small_bowl:
   membership: bob_membership
   title: 小鉢
   status: complete
+  completed_at: 2026-08-02
   form_method: hand_building
