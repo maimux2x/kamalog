@@ -26,16 +26,10 @@ class ClaysController < ApplicationController
   def update
     @clay = current_studio.clays.find(params[:id])
 
-    ActiveRecord::Base.transaction do
-      if position = clay_params[:position]&.to_i
-        @clay.move_to position
-      end
-
-      if @clay.update(clay_params.except(:position))
-        redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
-      else
-        render :edit, status: :unprocessable_content
-      end
+    if @clay.update(clay_params)
+      redirect_to studio_clays_path(current_studio), status: :see_other, notice: '土を更新しました。'
+    else
+      render :edit, status: :unprocessable_content
     end
   end
 

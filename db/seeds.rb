@@ -12,11 +12,11 @@ membership = User.find_by!(email: 'test1@example.com').memberships.find_or_creat
 membership.admin!
 
 white_clay, _, black_clay = ['白土', '赤土', '黒土'].map.with_index(1) {|name, i|
-  studio.clays.find_or_initialize_by(name:).tap { it.update! position: i }
+  studio.clays.find_or_create_by!(name:)
 }
 
 white_matte, perl, black_matte = ['白マット', 'パールラスター', '黒マット'].map.with_index(1) {|name, i|
-  studio.glazes.find_or_initialize_by(name:).tap { it.update! position: i }
+  studio.glazes.find_or_create_by!(name:)
 }
 
 rice_bowl = membership.pieces.find_or_initialize_by(title: 'お茶碗')
@@ -27,24 +27,20 @@ rice_bowl.glaze_usages.find_or_create_by! glaze: white_matte
 
 log = rice_bowl.logs.find_or_initialize_by(title: '電動ロクロでお茶碗を作る')
 log.update! date: '2026-05-01', body: 'プレゼント用に小さなお茶碗を作り始めた。'
-log.photos.update_all 'position = -position'
 
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
-  photo.position = i + 1
 
   photo.save
 end
 
 dish = membership.pieces.find_or_initialize_by(title: 'お皿')
 dish.update! form_method: :hand_building, status: :complete, description: '友達に上げるためのお皿を作った。'
-dish.photos.update_all 'position = -position'
 
 4.times do |i|
   photo = dish.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
-  photo.position = i + 1
 
   photo.save
 end
@@ -54,12 +50,10 @@ dish.glaze_usages.find_or_create_by! glaze: white_matte
 
 log = dish.logs.find_or_initialize_by(title: '手びねりでお皿を作る')
 log.update! date: '2026-05-10', body: 'お菓子を食べるときに使ってほしい'
-log.photos.update_all 'position = -position'
 
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
-  photo.position = i + 1
 
   photo.save
 end
@@ -76,24 +70,20 @@ log.update! date: '2026-04-05', body: '好きな作家さんの作風を参考�
 
 log = cup.logs.find_or_initialize_by(title: '削りで形を整える')
 log.update! date: '2026-04-12', body: '削りを入れて凹凸や底の厚みを削って形を整えた。'
-log.photos.update_all 'position = -position'
 
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
-  photo.position = i + 1
 
   photo.save
 end
 
 base = membership.pieces.find_or_initialize_by(title: '花瓶')
 base.update! form_method: :coil_building, status: :complete, description: '一輪挿しを作った。'
-base.photos.update_all 'position = -position'
 
 4.times do |i|
   photo = base.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
-  photo.position = i + 1
 
   photo.save
 end
@@ -104,12 +94,10 @@ base.glaze_usages.find_or_create_by! glaze: perl
 
 log = base.logs.find_or_initialize_by(title: '高さを出す練習で花瓶を作った')
 log.update! date: '2026-04-05', body: '雰囲気がある花瓶になった。'
-log.photos.update_all 'position = -position'
 
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
-  photo.position = i + 1
 
   photo.save
 end
@@ -123,9 +111,9 @@ membership = User.find_by!(email: 'test1@example.com').memberships.find_or_creat
 membership.admin!
 
 ['白土', '赤土', '黒土'].each.with_index 1 do |name, i|
-  studio2.clays.find_or_initialize_by(name:).update! position: i
+  studio2.clays.find_or_create_by!(name:)
 end
 
 ['白マット', 'パールラスター', '黒マット'].each.with_index 1 do |name, i|
-  studio2.glazes.find_or_initialize_by(name:).update! position: i
+  studio2.glazes.find_or_create_by!(name:)
 end

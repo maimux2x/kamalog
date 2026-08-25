@@ -24,6 +24,8 @@
         <%= photo.file_field :file, hidden: true, wrapper: false %>
       <% end %>
 
+      <%= photo.hidden_field :position, data: {sortable_positioning_target: 'position'} %>
+
       <%= photo.text_field :caption %>
     </div>
   </div>

@@ -17,6 +17,7 @@ gem 'kamal', require: false
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'pagy', '~> 43.6'
+gem 'positioning'
 gem 'propshaft'
 gem 'puma', '>= 5.0'
 gem 'ruby-vips'

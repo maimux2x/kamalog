@@ -1,6 +1,5 @@
 class My::LogsController < ApplicationController
   include CurrentMembership
-  include SetPositions
 
   def index
     @piece = current_membership.pieces.find(params[:piece_id])
@@ -15,18 +14,12 @@ class My::LogsController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      log_params = log_params()
+    @log = find_piece.logs.new(log_params)
 
-      set_positions log_params[:photos_attributes]
-
-      @log = find_piece.logs.new(log_params)
-
-      if @log.save
-        redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
-      else
-        render :new, status: :unprocessable_content
-      end
+    if @log.save
+      redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
+    else
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -37,18 +30,10 @@ class My::LogsController < ApplicationController
   def update
     @log = find_piece.logs.find(params[:id])
 
-    ActiveRecord::Base.transaction do
-      @log.photos.update_all 'position = -position'
-
-      log_params = log_params()
-
-      set_positions log_params[:photos_attributes]
-
-      if @log.update(log_params)
-        redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
-      else
-        render :edit, status: :unprocessable_content
-      end
+    if @log.update(log_params)
+      redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
+    else
+      render :edit, status: :unprocessable_content
     end
   end
 

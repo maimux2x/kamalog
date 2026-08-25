@@ -83,8 +83,8 @@
       <div
         class="list-group"
         data-attach-images-target="container"
-        data-controller="sortable"
-        data-sortable-handle-value=".handle"
+        data-controller="sortable-positioning"
+        data-sortable-positioning-handle-value=".handle"
       >
         <%= f.fields_for :photos, piece.photos.order(:position), include_id: false do |photo| %>
           <%= render 'photo', photo: photo %>
