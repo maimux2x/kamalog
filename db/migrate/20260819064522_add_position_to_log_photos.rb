@@ -4,7 +4,6 @@ class AddPositionToLogPhotos < ActiveRecord::Migration[8.1]
 
     reversible do |dir|
       dir.up do
-
         execute <<~SQL
           UPDATE log_photos
           SET position = tmp.num
@@ -14,7 +13,6 @@ class AddPositionToLogPhotos < ActiveRecord::Migration[8.1]
           ) AS tmp
           WHERE log_photos.id = tmp.id;
         SQL
-
       end
     end
 
