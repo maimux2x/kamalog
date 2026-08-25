@@ -28,16 +28,10 @@ class GlazesController < ApplicationController
     glazes = current_studio.glazes.order(:position)
     @glaze = glazes.find(params[:id])
 
-    ActiveRecord::Base.transaction do
-      if position = glaze_params[:position].presence&.to_i
-        @glaze.move_to position
-      end
-
-      if @glaze.update(glaze_params.except(:position))
-        redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を更新しました。'
-      else
-        render :edit, status: :unprocessable_content
-      end
+    if @glaze.update(glaze_params)
+      redirect_to studio_glazes_path(current_studio), status: :see_other, notice: '釉薬を更新しました。'
+    else
+      render :edit, status: :unprocessable_content
     end
   end
 

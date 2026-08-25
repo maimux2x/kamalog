@@ -4,4 +4,6 @@ class PiecePhoto < ApplicationRecord
   has_one_attached :file
 
   validates :file, attached: true
+
+  positioned on: :piece
 end

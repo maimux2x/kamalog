@@ -56,6 +56,7 @@ class My::LogsController < ApplicationController
         :id,
         :file,
         :caption,
+        :position,
         :_destroy
       ]]
     ])

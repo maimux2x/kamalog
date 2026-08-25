@@ -14,8 +14,13 @@
       >
     </label>
 
-    <div class="list-group" data-attach-images-target="container">
-      <%= f.fields_for :photos, log.photos.order(:created_at), include_id: false do |photo| %>
+    <div
+      class="list-group"
+      data-attach-images-target="container"
+      data-controller="sortable-positioning"
+      data-sortable-handle-value=".handle"
+    >
+      <%= f.fields_for :photos, log.photos.order(:position), include_id: false do |photo| %>
         <%= render 'photo', photo: %>
       <% end %>
     </div>

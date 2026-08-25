@@ -1,7 +1,7 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus';
 
 export default class AttachImagesController extends Controller {
-  static targets = ['template', 'container', 'item']
+  static targets = ['template', 'container', 'item'];
 
   add(e) {
     let i = 0;
@@ -31,7 +31,6 @@ export default class AttachImagesController extends Controller {
 
       reader.onload = e => {
         img.src = e.target.result;
-
       };
 
       reader.readAsDataURL(file);
@@ -40,7 +39,7 @@ export default class AttachImagesController extends Controller {
 
   remove(e) {
     const item         = e.target.closest('[data-attach-images-target="item"]');
-    const maybeIdInput = item.querySelector('input[type="hidden"][name$="[id]"]')
+    const maybeIdInput = item.querySelector('input[type="hidden"][name$="[id]"]');
 
     if (maybeIdInput instanceof HTMLInputElement && maybeIdInput.name.endsWith('[id]')) {
       item.hidden = true;

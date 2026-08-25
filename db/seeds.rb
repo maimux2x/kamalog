@@ -12,11 +12,11 @@ membership = User.find_by!(email: 'test1@example.com').memberships.find_or_creat
 membership.admin!
 
 white_clay, _, black_clay = ['白土', '赤土', '黒土'].map.with_index(1) {|name, i|
-  studio.clays.find_or_initialize_by(name:).tap { it.update! position: i }
+  studio.clays.find_or_create_by!(name:)
 }
 
 white_matte, perl, black_matte = ['白マット', 'パールラスター', '黒マット'].map.with_index(1) {|name, i|
-  studio.glazes.find_or_initialize_by(name:).tap { it.update! position: i }
+  studio.glazes.find_or_create_by!(name:)
 }
 
 rice_bowl = membership.pieces.find_or_initialize_by(title: 'お茶碗')
@@ -98,6 +98,8 @@ log.update! date: '2026-04-05', body: '雰囲気がある花瓶になった。'
 4.times do |i|
   photo = log.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
   photo.file.attach io: File.open("app/assets/images/IMG_077#{i}.jpg"), filename: "IMG_077#{i}.jpg"
+
+  photo.save
 end
 
 studio2 = Studio.find_or_create_by!(name: 'ミラーランドスタジオ')
@@ -109,9 +111,9 @@ membership = User.find_by!(email: 'test1@example.com').memberships.find_or_creat
 membership.admin!
 
 ['白土', '赤土', '黒土'].each.with_index 1 do |name, i|
-  studio2.clays.find_or_initialize_by(name:).update! position: i
+  studio2.clays.find_or_create_by!(name:)
 end
 
 ['白マット', 'パールラスター', '黒マット'].each.with_index 1 do |name, i|
-  studio2.glazes.find_or_initialize_by(name:).update! position: i
+  studio2.glazes.find_or_create_by!(name:)
 end

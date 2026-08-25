@@ -32,7 +32,7 @@ class My::PiecesController < ApplicationController
   def update
     @piece = current_membership.pieces.find(params[:id])
 
-    if @piece.update piece_params
+    if @piece.update(piece_params)
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
     else
       render :edit, status: :unprocessable_content
@@ -72,6 +72,7 @@ class My::PiecesController < ApplicationController
         :id,
         :file,
         :caption,
+        :position,
         :_destroy
       ]]
     ])
