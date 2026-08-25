@@ -2,7 +2,7 @@ class PiecesController < ApplicationController
   include CurrentMembership
 
   def index
-    @pieces = current_studio.pieces.where(status: :complete).order(created_at: :desc)
+    @pagy, @pieces = pagy(current_studio.pieces.where(status: :complete).order(created_at: :desc))
   end
 
   def show

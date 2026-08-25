@@ -3,6 +3,8 @@ class My::LogsController < ApplicationController
 
   def index
     @piece = current_membership.pieces.find(params[:piece_id])
+
+    @pagy, @logs = pagy(@piece.logs.order(:created_at))
   end
 
   def show

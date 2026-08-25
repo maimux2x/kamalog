@@ -6,7 +6,7 @@ class MembersController < ApplicationController
   before_action :last_admin_cannot_leave, only: %i[update destroy]
 
   def index
-    @pagy, @memberships = pagy(:offset, current_studio.memberships.includes(:user).order(:created_at))
+    @pagy, @memberships = pagy(current_studio.memberships.includes(:user).order(:created_at))
   end
 
   def update

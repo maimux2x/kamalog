@@ -11,7 +11,7 @@
   <%= link_to '作業記録を登録する', new_studio_my_piece_log_path(current_studio), class: 'btn btn-outline-primary mb-3' %>
 </div>
 
-<% @piece.logs.each do |log| %>
+<% @logs.each do |log| %>
   <div class="card mb-3">
     <div class="card-body">
       <h2>
@@ -28,5 +28,7 @@
     </div>
   </div>
 <% end %>
+
+<%= render 'pagination', pagy: @pagy %>
 
 <%= link_to '戻る', studio_my_pieces_path(current_studio), class: 'btn btn-outline-primary' %>
