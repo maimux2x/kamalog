@@ -1,3 +1,5 @@
+return unless Rails.env.development?
+
 studio = Studio.find_or_create_by!(name: 'ワンダーランドスタジオ')
 
 10.times do
