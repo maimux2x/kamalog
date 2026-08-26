@@ -36,7 +36,7 @@ log.update! date: '2026-05-01', body: 'プレゼント用に小さなお茶碗�
 end
 
 dish = membership.pieces.find_or_initialize_by(title: 'お皿')
-dish.update! form_method: :hand_building, status: :complete, description: '友達に上げるためのお皿を作った。'
+dish.update! form_method: :hand_building, status: :complete, completed_at: '2026-08-01', description: '友達に上げるためのお皿を作った。'
 
 4.times do |i|
   photo = dish.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")
@@ -79,7 +79,7 @@ log.update! date: '2026-04-12', body: '削りを入れて凹凸や底の厚み�
 end
 
 base = membership.pieces.find_or_initialize_by(title: '花瓶')
-base.update! form_method: :coil_building, status: :complete, description: '一輪挿しを作った。'
+base.update! form_method: :coil_building, status: :complete, completed_at: '2026-08-02', description: '一輪挿しを作った。'
 
 4.times do |i|
   photo = base.photos.find_or_initialize_by(caption: "#{i}テストテストテストテストテストテストテストテスト")

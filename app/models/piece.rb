@@ -13,6 +13,7 @@ class Piece < ApplicationRecord
   has_many :glazes, through: :glaze_usages
 
   validates :title, presence: true
+  validates :completed_at, presence: true, if: :complete?
 
   enum :status, {
     in_progress: 0,

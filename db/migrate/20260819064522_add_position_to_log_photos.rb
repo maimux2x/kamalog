@@ -1,9 +1,9 @@
 class AddPositionToLogPhotos < ActiveRecord::Migration[8.1]
   def change
+    add_column :log_photos, :position, :integer
+
     reversible do |dir|
       dir.up do
-        add_column :log_photos, :position, :integer
-
         execute <<~SQL
           UPDATE log_photos
           SET position = tmp.num
@@ -13,14 +13,10 @@ class AddPositionToLogPhotos < ActiveRecord::Migration[8.1]
           ) AS tmp
           WHERE log_photos.id = tmp.id;
         SQL
-
-        change_column_null :log_photos, :position, false
-        add_index :log_photos, [:log_id, :position], unique: true
-      end
-
-      dir.down do
-        remove_column :log_photos, :position
       end
     end
+
+    change_column_null :log_photos, :position, false
+    add_index :log_photos, [:log_id, :position], unique: true
   end
 end
