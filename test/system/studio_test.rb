@@ -16,7 +16,7 @@ class StudioTest < ApplicationSystemTestCase
 
     fill_in '名前', with: 'ドリームランド教室'
 
-    click_on '登録する'
+    click_on '作成する'
 
     assert_text '教室を作成しました。'
 

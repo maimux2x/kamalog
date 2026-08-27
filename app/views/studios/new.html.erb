@@ -6,5 +6,5 @@
 <%= bootstrap_form_with model: @studio, url: studios_path do |f| %>
   <%= f.text_field :name, label: '名前' %>
 
-  <%= f.primary %>
+  <%= f.primary value: '作成する' %>
 <% end %>
