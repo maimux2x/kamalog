@@ -19,7 +19,13 @@ class StudioTest < ApplicationSystemTestCase
     click_on '登録する'
 
     assert_text '教室を作成しました。'
-    assert_text 'ドリームランド教室'
+
+    click_on '設定'
+    click_on 'メンバー'
+
+    within '.list-group-item', text: 'Bob' do
+      assert_select 'membership[role]', selected: '管理者', disabled: true
+    end
   end
 
   test 'どこの教室にも所属していないメッセージが表示されること' do
