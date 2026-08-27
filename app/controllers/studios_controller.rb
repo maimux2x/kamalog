@@ -2,7 +2,7 @@ class StudiosController < ApplicationController
   include CurrentMembership
 
   def index
-    @studios = current_user.studios.order(:created_at).to_a
+    @studios = current_user.studios.order(:created_at)
   end
 
   def show
@@ -14,7 +14,9 @@ class StudiosController < ApplicationController
   end
 
   def create
-    studio = current_user.studios.create!(studio_params)
+    studio = Studio.create!(studio_params) {
+      it.memberships.new user: current_user, role: 'admin'
+    }
 
     redirect_to studio_path(studio), status: :see_other, notice: '教室を作成しました。'
   end
@@ -24,7 +26,7 @@ class StudiosController < ApplicationController
   end
 
   def update
-    current_studio.update!(studio_params)
+    current_studio.update! studio_params
 
     redirect_to edit_studio_path(current_studio), status: :see_other, notice: 'スタジオを更新しました。'
   end
