@@ -1,4 +1,6 @@
 Rails.application.configure do
+  return unless Rails.env.production?
+
   litestream = Rails.application.credentials.litestream
 
   config.litestream.access_key_id     = litestream.access_key_id
