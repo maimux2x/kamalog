@@ -1,0 +1,10 @@
+dbs:
+  - path: storage/production.sqlite3 
+    replicas:
+      - type: s3
+        path: storage/production.sqlite3
+        endpoint: https://3479aaa2da0f7667602ecfc3cb20cbe9.r2.cloudflarestorage.com
+        access-key-id: $LITESTREAM_ACCESS_KEY_ID
+        secret-access-key: $LITESTREAM_SECRET_ACCESS_KEY
+        region: auto
+        bucket: kamalog-db

@@ -15,6 +15,7 @@ gem 'importmap-rails'
 gem 'rails-i18n', '~> 8.1.0'
 gem 'jbuilder'
 gem 'kamal', require: false
+gem 'litestream'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'pagy', '~> 43.6'
