@@ -1,11 +1,6 @@
 Rails.application.configure do
-  return unless Rails.env.production?
-
-  litestream = Rails.application.credentials.litestream
-
-  config.litestream.access_key_id     = litestream.access_key_id
-  config.litestream.secret_access_key = litestream.secret_access_key
-
-  config.litestream.username = litestream.username
-  config.litestream.password = litestream.password
+  config.litestream.replica_key_id     = Rails.application.credentials.dig(:litestream, :access_key_id)
+  config.litestream.replica_access_key = Rails.application.credentials.dig(:litestream, :secret_access_key)
+  config.litestream.username           = Rails.application.credentials.dig(:litestream, :username)
+  config.litestream.password           = Rails.application.credentials.dig(:litestream, :password)
 end
