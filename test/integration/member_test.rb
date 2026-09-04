@@ -2,24 +2,12 @@ require 'test_helper'
 
 class MemberTest < ActionDispatch::IntegrationTest
   setup do
-    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
-      provider: 'google_oauth2',
-      uid:      '67890',
-
-      info: {
-        name:  'Bob',
-        email: 'bob@example.com'
-      }
-    )
-
-    get '/auth/google_oauth2/callback'
-
     @membership = memberships(:bob_membership)
     @studio     = @membership.studio
-  end
 
-  teardown do
-    OmniAuth.config.mock_auth[:google_oauth2] = nil
+    mock_auth users(:bob) do
+      get '/auth/google_oauth2/callback'
+    end
   end
 
   test 'メンバーは権限を更新できないこと' do

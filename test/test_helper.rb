@@ -1,6 +1,6 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
-require_relative 'sign_in_helper'
+require_relative 'mock_auth_helper'
 require 'rails/test_help'
 
 OmniAuth.config.test_mode = true
@@ -14,5 +14,6 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    include MockAuthHelper
   end
 end
