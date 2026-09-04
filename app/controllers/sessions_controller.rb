@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_authentication, only: %i[create]
+  skip_before_action :require_authentication, only: %i[create failure]
 
   def create
     auth = request.env['omniauth.auth']
@@ -21,5 +21,9 @@ class SessionsController < ApplicationController
     @current_user = nil
 
     redirect_to root_path, status: :see_other, notice: 'ログアウトしました。'
+  end
+
+  def failure
+    redirect_to root_path, status: :see_other, alert: '認証に失敗しました。時間を置いて再度お試しください。'
   end
 end
