@@ -2,24 +2,12 @@ require 'test_helper'
 
 class AdminTest < ActionDispatch::IntegrationTest
   setup do
-    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
-      provider: 'google_oauth2',
-      uid:      '12345',
-
-      info: {
-        name:  'Alice',
-        email: 'alice@example.com'
-      }
-    )
-
-    get '/auth/google_oauth2/callback'
-
     @membership = memberships(:alice_membership)
-    @studio = studios(:wonderland)
-  end
+    @studio     = studios(:wonderland)
 
-  teardown do
-    OmniAuth.config.mock_auth[:google_oauth2] = nil
+    mock_auth users(:alice) do
+      get '/auth/google_oauth2/callback'
+    end
   end
 
   test '最後の管理者は自分自身の権限をメンバーに更新できないこと(update)' do

@@ -3,7 +3,12 @@ require 'application_system_test_case'
 class PiecesTest < ApplicationSystemTestCase
   setup do
     visit root_path
-    sign_in_as users(:alice)
+
+    mock_auth users(:alice) do
+      click_on 'Google アカウントでログイン'
+    end
+
+    assert_text 'ログインしました。'
   end
 
   test 'みんなの作品を表示できること' do

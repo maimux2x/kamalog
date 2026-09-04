@@ -2,10 +2,15 @@ require 'application_system_test_case'
 
 class MemberMembersTest < ApplicationSystemTestCase
   setup do
-    visit root_path
-    sign_in_as users(:bob)
-
     @studio = studios(:wonderland)
+
+    visit root_path
+
+    mock_auth users(:bob) do
+      click_on 'Google アカウントでログイン'
+    end
+
+    assert_text 'ログインしました。'
   end
 
   test 'member 権限のメンバーには自分自身にだけ教室からの退出ボタンが表示されること' do

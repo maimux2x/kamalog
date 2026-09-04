@@ -4,10 +4,15 @@ class My::PiecesJsTest < ApplicationSystemTestCase
   driven_by_simulated
 
   setup do
-    visit root_path
-    sign_in_as users(:alice)
-
     @studio = studios(:wonderland)
+
+    visit root_path
+
+    mock_auth users(:alice) do
+      click_on 'Google アカウントでログイン'
+    end
+
+    assert_text 'ログインしました。'
   end
 
   test '製作中の作品を登録する' do

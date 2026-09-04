@@ -5,7 +5,12 @@ class GlazesJSTest < ApplicationSystemTestCase
 
   setup do
     visit root_path
-    sign_in_as users(:alice)
+
+    mock_auth users(:alice) do
+      click_on 'Google アカウントでログイン'
+    end
+
+    assert_text 'ログインしました。'
 
     @studio = studios(:wonderland)
   end

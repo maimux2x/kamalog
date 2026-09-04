@@ -9,8 +9,6 @@ end
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :rack_test
 
-  include SignInHelper
-
   def self.driven_by_simulated
     driven_by :simulated
   end

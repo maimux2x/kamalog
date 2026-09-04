@@ -2,11 +2,16 @@ require 'application_system_test_case'
 
 class My::LogsTest < ApplicationSystemTestCase
   setup do
-    visit root_path
-    sign_in_as users(:alice)
-
     @studio = studios(:wonderland)
     @piece  = pieces(:cup)
+
+    visit root_path
+
+    mock_auth users(:alice) do
+      click_on 'Google アカウントでログイン'
+    end
+
+    assert_text 'ログインしました。'
   end
 
   test '作業記録を表示できること' do

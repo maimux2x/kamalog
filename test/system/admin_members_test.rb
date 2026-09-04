@@ -2,10 +2,15 @@ require 'application_system_test_case'
 
 class AdminMembersTest < ApplicationSystemTestCase
   setup do
-    visit root_path
-    sign_in_as users(:alice)
-
     @studio = studios(:wonderland)
+
+    visit root_path
+
+    mock_auth users(:alice) do
+      click_on 'Google アカウントでログイン'
+    end
+
+    assert_text 'ログインしました。'
   end
 
   test '設定メニューに土と釉薬が表示されていること' do

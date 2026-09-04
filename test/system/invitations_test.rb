@@ -8,17 +8,9 @@ class InvitationsTest < ApplicationSystemTestCase
   test '未ログインかつアカウントが未作成' do
     visit invitation_path(@studio.invitation_token)
 
-    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
-      provider: 'google_oauth2',
-      uid:      'UID',
-
-      info: {
-        name:  'lisa',
-        email: 'lisa@example.com'
-      }
-    )
-
-    click_on 'Google アカウントでログイン'
+    mock_auth User.new(uid: 42, name: 'lisa', email: 'lisa@example.com') do
+      click_on 'Google アカウントでログイン'
+    end
 
     assert_text 'ログインしました。'
 
@@ -30,7 +22,9 @@ class InvitationsTest < ApplicationSystemTestCase
   test '未ログインかつアカウント作成済み教室へ未参加' do
     visit invitation_path(@studio.invitation_token)
 
-    sign_in_as users(:ben)
+    mock_auth users(:ben) do
+      click_on 'Google アカウントでログイン'
+    end
 
     assert_text 'ログインしました。'
 
@@ -42,7 +36,9 @@ class InvitationsTest < ApplicationSystemTestCase
   test '未ログインかつアカウント作成済み教室へ参加済み' do
     visit invitation_path(@studio.invitation_token)
 
-    sign_in_as users(:alice)
+    mock_auth users(:alice) do
+      click_on 'Google アカウントでログイン'
+    end
 
     assert_text 'ログインしました。'
     assert_text 'すでに参加済みです。'

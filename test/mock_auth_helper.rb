@@ -1,5 +1,5 @@
-module SignInHelper
-  def sign_in_as(user)
+module MockAuthHelper
+  def mock_auth(user)
     OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
       provider: 'google_oauth2',
       uid:      user.uid,
@@ -10,8 +10,8 @@ module SignInHelper
       }
     )
 
-    click_on 'Google アカウントでログイン'
-
-    assert_text 'ログインしました。'
+    yield
+  ensure
+    OmniAuth.config.mock_auth[:google_oauth2] = nil
   end
 end
