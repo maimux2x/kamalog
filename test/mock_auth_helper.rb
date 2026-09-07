@@ -14,4 +14,12 @@ module MockAuthHelper
   ensure
     OmniAuth.config.mock_auth[:google_oauth2] = nil
   end
+
+  def mock_failure_auth
+    OmniAuth.config.mock_auth[:google_oauth2] = :invalid_credentials
+
+    yield
+  ensure
+    OmniAuth.config.mock_auth[:google_oauth2] = nil
+  end
 end
