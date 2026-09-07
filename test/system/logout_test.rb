@@ -10,6 +10,8 @@ class LogoutTest < ApplicationSystemTestCase
       click_on 'Google アカウントでログイン'
     end
 
+    assert_text 'ログインしました。'
+
     click_on 'Alice'
     click_on 'ログアウト'
 
