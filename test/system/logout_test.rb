@@ -5,7 +5,10 @@ class LogoutTest < ApplicationSystemTestCase
 
   test 'ログアウトするとログイン画面が表示される' do
     visit root_path
-    sign_in_as users(:alice)
+
+    mock_auth users(:alice) do
+      click_on 'Google アカウントでログイン'
+    end
 
     click_on 'Alice'
     click_on 'ログアウト'
