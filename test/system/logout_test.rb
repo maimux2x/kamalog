@@ -1,8 +1,6 @@
 require 'application_system_test_case'
 
 class LogoutTest < ApplicationSystemTestCase
-  driven_by_simulated
-
   test 'ログアウトするとログイン画面が表示される' do
     visit root_path
 
@@ -12,7 +10,6 @@ class LogoutTest < ApplicationSystemTestCase
 
     assert_text 'ログインしました。'
 
-    click_on 'Alice'
     click_on 'ログアウト'
 
     assert_text 'ログアウトしました。'
