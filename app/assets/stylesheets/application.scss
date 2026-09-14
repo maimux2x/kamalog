@@ -1,7 +1,9 @@
 $enable-grid-classes: false;
 $enable-cssgrid: true;
 
+@import 'variables';
 @import 'bootstrap';
+@import 'theme';
 
 html [hidden] {
   display: none !important;

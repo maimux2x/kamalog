@@ -7,7 +7,7 @@ class ClaysTest < ApplicationSystemTestCase
     visit root_path
 
     mock_auth users(:alice) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'

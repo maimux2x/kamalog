@@ -1,0 +1,225 @@
+// ============================================================
+// Kamalog — Bootstrap 5 変数上書き
+// ============================================================
+// 読み込み順（app/assets/stylesheets/application.bootstrap.scss など）
+//
+//   @import "kamalog/variables";        // ← このファイル（1. 変数）
+//   @import "bootstrap/scss/bootstrap";
+//   @import "kamalog/theme";            // ← 2. CSS変数・独自部品
+//
+// Bootstrap より前に読ませないと変数の上書きが効きません。
+// ============================================================
+
+
+// ------------------------------------------------------------
+// 1. 色
+// ------------------------------------------------------------
+// 土色をブランド色に。釉色は補助（完成・共有まわり）。
+
+$kml-clay:          #7A5A42;  // 土色 / primary
+$kml-clay-dark:     #5E4432;  // hover, リンクの押下
+$kml-clay-tint:     #F0E4D8;  // バッジ、選択中チップの背景
+$kml-clay-tint-2:   #EADCC9;  // 教室アイコンなど
+
+$kml-glaze:         #5E7A73;  // 釉色 / 完成・公開
+$kml-glaze-tint:    #EEF2F0;
+$kml-glaze-border:  #DEE7E4;
+$kml-glaze-ink:     #3F544E;  // 釉色地の上のテキスト
+
+$kml-danger:        #A85A45;  // 削除・退会
+$kml-danger-border: #E8CFC7;
+
+// 背景と面
+$kml-bg:            #F3EEE7;  // ページ背景
+$kml-surface:       #FAF6F0;  // セクションの面
+$kml-card:          #FFFFFF;  // カード
+$kml-sand:          #F6F1E9;  // 補助の面（読み取り専用の行など）
+
+// 罫線
+$kml-border:        #E2D8C9;
+$kml-border-soft:   #EDE5DA;
+$kml-border-hair:   #F1EAE0;
+
+// 文字（4.5:1 以上を確保した値。これより薄い色は使わない）
+$kml-ink:           #3A322B;  // 本文
+$kml-ink-2:         #4B443D;  // やや弱い本文
+$kml-ink-3:         #5E554D;  // 補足
+$kml-ink-muted:     #6B6058;  // ラベル、日付、注記の下限
+$kml-ink-faint:     #7A6349;  // 見出しの上のキャプション、シェブロン
+
+// プレースホルダ（写真枠）
+$kml-placeholder-a: #EFE6D9;
+$kml-placeholder-b: #EAE0D1;
+
+$primary:   $kml-clay;
+$secondary: $kml-glaze;
+$danger:    $kml-danger;
+$body-bg:   $kml-bg;
+$body-color:$kml-ink;
+
+$theme-colors: (
+  "primary":   $kml-clay,
+  "secondary": $kml-glaze,
+  "danger":    $kml-danger,
+  "light":     $kml-surface,
+  "dark":      $kml-ink
+);
+
+$border-color: $kml-border;
+
+$link-color:            $kml-clay;
+$link-hover-color:      $kml-clay-dark;
+$link-decoration:       none;
+$link-hover-decoration: underline;
+
+
+// ------------------------------------------------------------
+// 2. 書体
+// ------------------------------------------------------------
+// 見出しは Zen Maru Gothic、本文は Zen Kaku Gothic New。
+// Google Fonts の読み込みは layout の <head> で。
+//   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+
+$font-family-sans-serif: "Zen Kaku Gothic New", system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif;
+$headings-font-family:   "Zen Maru Gothic", "Zen Kaku Gothic New", sans-serif;
+
+$font-size-base:   1rem;      // 16px
+$line-height-base: 1.8;       // 日本語なので広め
+
+$h1-font-size: 1.75rem;   // 28px  ログインのアプリ名
+$h2-font-size: 1.5625rem; // 25px  作品詳細のタイトル
+$h3-font-size: 1.375rem;  // 22px  画面見出し（作品棚など）
+$h4-font-size: 1.125rem;  // 18px  セクション見出し（制作中の作品）
+$h5-font-size: 1rem;      // 16px  カード内の見出し
+$h6-font-size: .9375rem;  // 15px
+
+$headings-font-weight:  700;
+$headings-line-height:  1.45;
+$headings-color:        $kml-ink;
+
+$small-font-size: .8125rem; // 13px
+
+
+// ------------------------------------------------------------
+// 3. 角丸
+// ------------------------------------------------------------
+// 既定より一段柔らかく。カードは 16px、入力は 12px。
+
+$border-radius:    .75rem;   // 12px  入力・ボタン
+$border-radius-sm: .625rem;  // 10px  入力内の小要素
+$border-radius-lg: 1rem;     // 16px  カード
+$border-radius-xl: 1.125rem; // 18px  大きめのカード
+$border-radius-xxl:1.75rem;  // 28px  ボトムシート・端末枠
+$border-radius-pill: 50rem;
+
+
+// ------------------------------------------------------------
+// 4. 余白
+// ------------------------------------------------------------
+// 既定に .875rem（14px）と 1.375rem（22px）を足す。設計で多用した値。
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * .25,   //  4px
+  2: $spacer * .5,    //  8px
+  3: $spacer * .75,   // 12px
+  4: $spacer * .875,  // 14px
+  5: $spacer,         // 16px
+  6: $spacer * 1.125, // 18px
+  7: $spacer * 1.375, // 22px
+  8: $spacer * 1.625, // 26px
+  9: $spacer * 2,     // 32px
+  10:$spacer * 2.75   // 44px
+);
+
+
+// ------------------------------------------------------------
+// 5. フォーム
+// ------------------------------------------------------------
+// スマホで44px以上になるよう縦padding を確保。
+
+$input-bg:                    $kml-card;
+$input-border-color:          $kml-border;
+$input-color:                 $kml-ink;
+$input-placeholder-color:     $kml-ink-muted;
+$input-padding-y:             .875rem;
+$input-padding-x:             .875rem;
+$input-font-size:             .96875rem;  // 15.5px
+$input-focus-border-color:    $kml-clay;
+$input-focus-box-shadow:      0 0 0 .2rem rgba($kml-clay, .18);
+
+$form-label-font-size:        .8125rem;   // 13px
+$form-label-font-weight:      500;
+$form-label-color:            $kml-ink-muted;
+$form-label-margin-bottom:    .5rem;
+
+$form-text-color:             $kml-ink-muted;
+$form-text-font-size:         .71875rem;  // 11.5px
+
+$form-select-indicator-color: $kml-ink-faint;
+
+// トグル（完成にする、招待リンクのON/OFF）
+$form-switch-width:           2.875em;   // 46px
+$form-switch-checked-color:   $kml-card;
+$form-check-input-bg:         #E4DACB;
+$form-check-input-border:     0;
+$form-check-input-checked-bg-color: $kml-clay;
+
+
+// ------------------------------------------------------------
+// 6. ボタン
+// ------------------------------------------------------------
+
+$btn-padding-y:      .875rem;
+$btn-padding-x:      1rem;
+$btn-font-size:      .96875rem;  // 15.5px
+$btn-font-weight:    500;
+$btn-border-radius:  $border-radius;
+$btn-focus-box-shadow: 0 0 0 .2rem rgba($kml-clay, .2);
+
+$btn-padding-y-sm:   .5625rem;
+$btn-padding-x-sm:   .875rem;
+$btn-font-size-sm:   .84375rem;  // 13.5px
+
+
+// ------------------------------------------------------------
+// 7. カード・その他
+// ------------------------------------------------------------
+
+$card-bg:              $kml-card;
+$card-border-color:    $kml-border-soft;
+$card-border-radius:   $border-radius-lg;
+$card-spacer-y:        .875rem;
+$card-spacer-x:        .875rem;
+$card-cap-bg:          $kml-sand;
+
+$badge-font-size:      .78125rem;  // 12.5px
+$badge-font-weight:    500;
+$badge-padding-y:      .25rem;
+$badge-padding-x:      .6875rem;
+$badge-border-radius:  $border-radius-pill;
+
+$list-group-border-color: $kml-border-hair;
+$list-group-item-padding-y: .875rem;
+$list-group-item-padding-x: .9375rem;
+
+$offcanvas-bg-color:      $kml-surface;
+$offcanvas-border-color:  $kml-border;
+$offcanvas-horizontal-width: 232px;   // PCのサイドメニュー幅
+
+$modal-content-bg:           $kml-surface;
+$modal-content-border-color: $kml-border;
+$modal-content-border-radius:$border-radius-xxl;
+
+$dropdown-bg:              $kml-card;
+$dropdown-border-color:    $kml-border;
+$dropdown-border-radius:   $border-radius-lg;
+$dropdown-link-color:      $kml-ink;
+$dropdown-link-hover-bg:   $kml-sand;
+
+$box-shadow:    0 4px 14px rgba(80, 60, 40, .08);
+$box-shadow-lg: 0 18px 40px rgba(80, 60, 40, .10);
+
+$enable-shadows: false;
+$enable-negative-margins: true;  // タブバー中央の丸ボタンの持ち上げに使用

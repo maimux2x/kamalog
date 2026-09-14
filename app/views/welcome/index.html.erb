@@ -1,11 +1,26 @@
-<h1>Welcome</h1>
+<main class="kml-login">
+  <div class="kml-login__center">
+    <span class="kml-login__mark">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3.2 20V12a8.8 8.8 0 0 1 17.6 0v8z" fill="#fff"></path>
+        <path d="M9 20v-4.4a3 3 0 0 1 6 0V20z" fill="currentColor"></path>
+      </svg>
+    </span>
+    <h1 class="kml-login__name">Kamalog</h1>
+    <p class="kml-login__lead mb-0">陶芸教室でつくった作品を、<br>制作の途中から記録しておくアプリです。</p>
+  </div>
 
-<% unless authenticated? %>
-  <div class="d-flex gap-3">
-    <% if Rails.env.development? %>
-      <%= button_to 'Developer アカウントでログイン', login_url(:developer), class: 'btn btn-primary', data: {turbo: false} %>
+  <div class="kml-login__foot">
+    <%= button_to login_url(:google_oauth2), class: 'btn btn-light border w-100 kml-oauth', data: {turbo: false} do %>
+      <span class="kml-oauth__icon" aria-hidden="true">G</span>Google で続ける
     <% end %>
 
-    <%= button_to 'Google アカウントでログイン', login_url(:google_oauth2), class: 'btn btn-primary', data: {turbo: false} %>
+    <% if Rails.env.development? %>
+      <%= button_to '開発者アカウントでログイン', login_url(:developer), class: 'btn btn-light border w-100 kml-oauth', data: {turbo: false} %>
+    <% end %>
+
+<%# <p class="kml-login__terms mb-0"> %>
+<%# 続けると<a href="/terms">利用規約</a>と<a href="/privacy">プライバシーポリシー</a>に<br>同意したものとみなされます。 %>
+<%# </p> %>
   </div>
-<% end %>
+</main>

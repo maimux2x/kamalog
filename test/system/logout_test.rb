@@ -5,7 +5,7 @@ class LogoutTest < ApplicationSystemTestCase
     visit root_path
 
     mock_auth users(:alice) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'
@@ -13,6 +13,6 @@ class LogoutTest < ApplicationSystemTestCase
     click_on 'ログアウト'
 
     assert_text 'ログアウトしました。'
-    assert_button 'Google アカウントでログイン'
+    assert_button 'Google で続ける'
   end
 end
