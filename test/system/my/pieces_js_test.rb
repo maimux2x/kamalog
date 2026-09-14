@@ -1,7 +1,7 @@
 require 'application_system_test_case'
 
 class My::PiecesJsTest < ApplicationSystemTestCase
-  driven_by_simulated
+  driven_by :selenium, using: :headless_chrome
 
   setup do
     @studio = studios(:wonderland)
@@ -10,9 +10,9 @@ class My::PiecesJsTest < ApplicationSystemTestCase
 
     mock_auth users(:alice) do
       click_on 'Google で続ける'
-    end
 
-    assert_text 'ログインしました。'
+      assert_text 'ログインしました。'
+    end
   end
 
   test '製作中の作品を登録する' do
@@ -34,7 +34,7 @@ class My::PiecesJsTest < ApplicationSystemTestCase
 
     click_on '釉薬を追加'
 
-  select '白マット', from: '釉薬'
+    select '白マット', from: '釉薬'
 
     assert_no_text '作品説明'
     assert_no_text '画像を追加'
@@ -117,26 +117,26 @@ class My::PiecesJsTest < ApplicationSystemTestCase
     visit studio_my_piece_path(@studio, pieces(:teacup))
 
     click_on '編集'
-    source = find('div.list-group div.list-group-item:nth-child(1) div.vstack .handle')
-    target = find('div.list-group div.list-group-item:nth-child(2)')
+    source = find('.list-group-item:nth-child(1) .handle')
+    target = find('.list-group-item:nth-child(2)')
 
     source.drag_to target
 
-    within 'div.list-group div:nth-child(1) div.vstack' do
+    within '.list-group-item:nth-child(1)' do
       assert_selector 'img[src$="/dish.png"]'
     end
 
-    within 'div.list-group div:nth-child(2) div.vstack' do
+    within '.list-group-item:nth-child(2)' do
       assert_selector 'img[src$="/dish_cup.png"]'
     end
 
     click_on '更新する'
 
-    within 'div.grid div.g-col-12:nth-child(1) div.d-flex' do
+    within '.g-col-12:nth-child(1)' do
       assert_selector 'img[src$="/dish.png"]'
     end
 
-    within 'div.grid div.g-col-12:nth-child(2) div.d-flex' do
+    within '.g-col-12:nth-child(2)' do
       assert_selector 'img[src$="/dish_cup.png"]'
     end
   end
