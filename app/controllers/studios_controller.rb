@@ -7,6 +7,8 @@ class StudiosController < ApplicationController
 
   def show
     @studio = current_studio
+
+    current_user.update! last_seen_studio: @studio
   end
 
   def new
