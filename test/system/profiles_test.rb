@@ -5,7 +5,7 @@ class ProfilesTest < ApplicationSystemTestCase
     visit root_path
 
     mock_auth users(:alice) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'
@@ -29,6 +29,6 @@ class ProfilesTest < ApplicationSystemTestCase
     end
 
     assert_text 'アカウントを削除しました。'
-    assert_text 'ログイン'
+    assert_text 'Google で続ける'
   end
 end

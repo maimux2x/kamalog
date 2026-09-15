@@ -9,7 +9,7 @@ class InvitationsTest < ApplicationSystemTestCase
     visit invitation_path(@studio.invitation_token)
 
     mock_auth User.new(uid: 42, name: 'lisa', email: 'lisa@example.com') do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'
@@ -23,7 +23,7 @@ class InvitationsTest < ApplicationSystemTestCase
     visit invitation_path(@studio.invitation_token)
 
     mock_auth users(:ben) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'
@@ -37,7 +37,7 @@ class InvitationsTest < ApplicationSystemTestCase
     visit invitation_path(@studio.invitation_token)
 
     mock_auth users(:alice) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'

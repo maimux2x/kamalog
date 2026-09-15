@@ -5,7 +5,7 @@ class StudioTest < ApplicationSystemTestCase
     visit root_path
 
     mock_auth users(:bob) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'
@@ -18,7 +18,7 @@ class StudioTest < ApplicationSystemTestCase
     visit root_path
 
     mock_auth users(:bob) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'
@@ -43,7 +43,7 @@ class StudioTest < ApplicationSystemTestCase
     visit root_path
 
     mock_auth users(:ben) do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text 'ログインしました。'

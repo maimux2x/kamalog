@@ -5,10 +5,10 @@ class LoginFailureTest < ApplicationSystemTestCase
     visit root_path
 
     mock_failure_auth do
-      click_on 'Google アカウントでログイン'
+      click_on 'Google で続ける'
     end
 
     assert_text '認証に失敗しました。時間を置いて再度お試しください。'
-    assert_button 'Google アカウントでログイン'
+    assert_button 'Google で続ける'
   end
 end

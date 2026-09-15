@@ -1,0 +1,922 @@
+// ============================================================
+// Kamalog — テーマと独自部品
+// Bootstrap 本体の *あと* に読み込む
+// ============================================================
+//
+//   @import "kamalog/variables";
+//   @import "bootstrap/scss/bootstrap";
+//   @import "kamalog/theme";   // ← このファイル
+//
+// Bootstrap に対応物がない4つだけを自前で用意する。
+//   .kml-chip      工程・釉薬のチップ
+//   .kml-sortable  画像の並べ替え行（Stimulus と組み合わせる）
+//   .kml-sheet     ボトムシート
+//   .kml-tabbar    スマホのタブバー
+// ============================================================
+
+
+// ------------------------------------------------------------
+// CSS変数
+// ------------------------------------------------------------
+// SCSS の再ビルドなしに色を差し替えたいときはここを書き換える。
+
+:root {
+  --kml-clay:         #{$kml-clay};
+  --kml-clay-tint:    #{$kml-clay-tint};
+  --kml-glaze:        #{$kml-glaze};
+  --kml-glaze-tint:   #{$kml-glaze-tint};
+  --kml-glaze-ink:    #{$kml-glaze-ink};
+  --kml-surface:      #{$kml-surface};
+  --kml-sand:         #{$kml-sand};
+  --kml-border:       #{$kml-border};
+  --kml-border-soft:  #{$kml-border-soft};
+  --kml-ink-muted:    #{$kml-ink-muted};
+  --kml-placeholder-a:#{$kml-placeholder-a};
+  --kml-placeholder-b:#{$kml-placeholder-b};
+
+  --kml-tap-min: 44px;  // タップ領域の下限
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-wrap: pretty;
+}
+
+
+// ------------------------------------------------------------
+// 写真のプレースホルダ
+// ------------------------------------------------------------
+// 画像がない作品のサムネイル枠。
+
+.kml-photo-empty {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--kml-placeholder-a) 0 10px,
+    var(--kml-placeholder-b) 10px 20px
+  );
+  display: grid;
+  place-items: center;
+  font-size: .71875rem;
+  color: var(--kml-ink-muted);
+}
+
+
+// ------------------------------------------------------------
+// チップ（工程・釉薬・絞り込み）
+// ------------------------------------------------------------
+// input[type=checkbox] / radio を隠してラベルをチップにする。
+//
+//   <input type="checkbox" class="kml-chip-input" id="step_3" ...>
+//   <label class="kml-chip" for="step_3">釉掛け</label>
+
+.kml-chip-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.kml-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  min-height: var(--kml-tap-min);
+  padding: .6875rem 1rem;
+  border: 1px solid var(--kml-border);
+  border-radius: $border-radius-pill;
+  background: #FFF;
+  color: $kml-ink;
+  font-size: .875rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .12s, border-color .12s, color .12s;
+
+  &:hover { background: var(--kml-sand); }
+}
+
+.kml-chip-input:checked + .kml-chip {
+  background: var(--kml-clay);
+  border-color: var(--kml-clay);
+  color: #FFF;
+
+  &::before { content: "✓"; font-size: .8125rem; }
+}
+
+.kml-chip-input:focus-visible + .kml-chip {
+  outline: 2px solid var(--kml-clay);
+  outline-offset: 2px;
+}
+
+// 絞り込み用の小さいチップ（完成品の全件一覧）
+.kml-chip--sm {
+  min-height: 0;
+  padding: .5rem .875rem;
+  font-size: .8125rem;
+}
+
+// 追加用の破線チップ
+.kml-chip--add {
+  border-style: dashed;
+  border-color: #DCCFBC;
+  color: var(--kml-clay);
+  font-weight: 500;
+}
+
+
+// ------------------------------------------------------------
+// 状態バッジ
+// ------------------------------------------------------------
+//   <span class="kml-badge kml-badge--clay">前回 釉掛け</span>
+//   <span class="kml-badge kml-badge--glaze">完成</span>
+
+.kml-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: .25rem .6875rem;
+  border-radius: $border-radius-pill;
+  font-size: .78125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.kml-badge--clay  { background: var(--kml-clay-tint); color: var(--kml-clay); }
+.kml-badge--glaze { background: var(--kml-glaze-tint); color: var(--kml-glaze-ink); }
+.kml-badge--plain { background: var(--kml-sand); color: $kml-ink-muted; }
+.kml-badge--off   { background: #EFE7DB; color: $kml-ink-3; }
+
+
+// ------------------------------------------------------------
+// 並べ替え行（Stimulus と組み合わせる）
+// ------------------------------------------------------------
+// CSS が担うのは見た目だけ。ドラッグの挙動・position の更新は
+// Stimulus コントローラ側で行う。
+//
+//   <div class="kml-sortable" data-controller="sortable">
+//     <div class="kml-sortable__row" data-sortable-target="item">
+//       <span class="kml-sortable__handle" data-sortable-target="handle">⣿</span>
+//       <img class="kml-sortable__thumb" ...>
+//       <input class="form-control kml-sortable__caption" ...>
+//       <input type="hidden" name="...[position]" data-sortable-target="position">
+//       <button class="kml-sortable__remove" type="button">削除</button>
+//     </div>
+//   </div>
+//
+// Stimulus 側で付ける想定のクラスは .is-dragging と .is-over の2つ。
+
+.kml-sortable {
+  display: flex;
+  flex-direction: column;
+  gap: .5625rem;
+}
+
+.kml-sortable__row {
+  display: flex;
+  align-items: center;
+  gap: .6875rem;
+  padding: .6875rem;
+  background: #FFF;
+  border: 1px solid var(--kml-border);
+  border-radius: $border-radius-lg;
+
+  // 掴んでいる行
+  &.is-dragging {
+    opacity: .5;
+    // ドラッグ中はテキスト選択が邪魔になる
+    user-select: none;
+  }
+
+  // 落下先
+  &.is-over {
+    border-color: var(--kml-clay);
+    box-shadow: 0 0 0 2px rgba($kml-clay, .18);
+  }
+
+  // 先頭の行に「サムネイル」バッジを出す。
+  // 並べ替え後もクラスの付け替えが不要になる。
+  &:first-child .kml-sortable__cover { display: inline-flex; }
+}
+
+.kml-sortable__handle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--kml-tap-min);
+  height: var(--kml-tap-min);
+  margin: calc(var(--kml-tap-min) / -2 + 1.125rem) -.5rem;  // 見た目を詰めつつ当たり判定は44px
+  color: #9A8A76;
+  font-size: .9375rem;
+  cursor: grab;
+  touch-action: none;      // スマホで縦スクロールと競合させない
+  user-select: none;
+
+  &:active { cursor: grabbing; }
+}
+
+.kml-sortable__thumb {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: $border-radius-sm;
+  object-fit: cover;
+  background: var(--kml-placeholder-a);
+}
+
+.kml-sortable__caption {
+  flex: 1;
+  min-width: 0;
+  padding: .625rem .6875rem;
+  background: var(--kml-surface);
+  border: 0;
+  border-radius: .5625rem;
+  font-size: .84375rem;
+
+  &:focus {
+    background: #FFF;
+    box-shadow: 0 0 0 2px rgba($kml-clay, .2);
+  }
+}
+
+.kml-sortable__cover {
+  display: none;           // 既定は非表示。:first-child のときだけ出る
+  align-items: center;
+  align-self: flex-start;
+  padding: .125rem .5rem;
+  border-radius: $border-radius-pill;
+  background: var(--kml-clay);
+  color: #FFF;
+  font-size: .65625rem;
+  white-space: nowrap;
+}
+
+.kml-sortable__remove {
+  flex: none;
+  min-height: var(--kml-tap-min);
+  padding: 0 .25rem;
+  border: 0;
+  background: none;
+  color: $kml-danger;
+  font-size: .78125rem;
+  white-space: nowrap;
+}
+
+// マスタ管理（土・釉薬・工程）の並べ替え行
+.kml-sortable__row--master {
+  padding: .875rem .9375rem;
+  gap: .75rem;
+}
+
+.kml-swatch {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: $border-radius-pill;
+  border: 1px solid rgba(0, 0, 0, .06);
+}
+
+
+// ------------------------------------------------------------
+// ボトムシート
+// ------------------------------------------------------------
+// Bootstrap の offcanvas を下から出す形に。
+//   <div class="offcanvas offcanvas-bottom kml-sheet" ...>
+
+.kml-sheet {
+  height: auto;
+  max-height: 88vh;
+  border-radius: $border-radius-xxl $border-radius-xxl 0 0;
+  border-top: 1px solid var(--kml-border);
+  box-shadow: 0 -12px 30px rgba(80, 60, 40, .12);
+
+  // つまみ
+  &::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: .875rem auto .25rem;
+    border-radius: $border-radius-pill;
+    background: #E0D6C6;
+  }
+}
+
+
+// ------------------------------------------------------------
+// タブバー（スマホ）
+// ------------------------------------------------------------
+
+.kml-tabbar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5625rem 1.375rem calc(1.25rem + env(safe-area-inset-bottom));
+  background: #FFF;
+  border-top: 1px solid #E8E0D5;
+}
+
+.kml-tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+  width: 64px;
+  min-height: var(--kml-tap-min);
+  padding: .375rem 0;
+  color: $kml-ink-muted;
+  font-size: .65625rem;
+  text-decoration: none;
+
+  &.is-active {
+    color: var(--kml-clay);
+    font-weight: 500;
+  }
+}
+
+// 中央の「作品を登録」
+.kml-tabbar__fab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3125rem;
+  margin-top: -1.375rem;
+  color: var(--kml-clay);
+  font-size: .65625rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  &::before {
+    content: "＋";
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: $border-radius-pill;
+    background: var(--kml-clay);
+    color: #FFF;
+    font-size: 1.625rem;
+    box-shadow: 0 6px 16px rgba($kml-clay, .32);
+  }
+}
+
+
+// ------------------------------------------------------------
+// PCのサイドメニュー
+// ------------------------------------------------------------
+
+.kml-sidebar {
+  width: 232px;
+  flex: none;
+  flex-direction: column;
+  background: #FFF;
+  border-right: 1px solid var(--kml-border-soft);
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow-y: auto;
+}
+.kml-sidebar__me {
+  display: flex; align-items: center; gap: .625rem;
+  color: $kml-ink; text-decoration: none;
+  &:hover { color: var(--kml-clay); }
+}
+
+.kml-sidebar__link {
+  display: block;
+  padding: .6875rem .8125rem;
+  border-radius: .625rem;
+  color: $kml-ink-2;
+  font-size: .90625rem;
+  text-decoration: none;
+
+  &:hover { background: var(--kml-sand); color: $kml-ink; }
+
+  &.is-active {
+    background: var(--kml-clay-tint);
+    color: #6E4F38;
+    font-weight: 500;
+  }
+}
+
+// 設定の下位項目
+.kml-sidebar__sub {
+  padding: .5625rem .8125rem;
+  font-size: .875rem;
+}
+
+.kml-sidebar__heading {
+  padding: 0 .8125rem .25rem;
+  color: $kml-ink-faint;
+  font-size: .71875rem;
+  letter-spacing: .06em;
+}
+
+
+// ------------------------------------------------------------
+// 読み取り専用の行（作品編集の「最後にした作業」など）
+// ------------------------------------------------------------
+
+.kml-readonly {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .875rem 1rem;
+  background: var(--kml-sand);
+  border: 1px solid #E6DCCB;
+  border-radius: $border-radius-lg;
+}
+
+
+// ------------------------------------------------------------
+// レイアウトの器
+// ------------------------------------------------------------
+
+.kml-body   { min-height: 100dvh; background: $kml-bg; }
+.kml-app    { display: flex; flex-direction: column; min-height: 100dvh; background: $kml-bg; }
+.kml-shell  { display: flex; min-height: 100dvh; }
+.kml-shell__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.kml-main   { flex: 1; }
+
+// 本文へ移動
+.kml-skip {
+  position: absolute; left: -9999px;
+  &:focus {
+    left: 1rem; top: 1rem; z-index: 1080;
+    padding: .75rem 1rem; border-radius: $border-radius;
+    background: var(--kml-clay); color: #FFF; text-decoration: none;
+  }
+}
+
+// ヘッダー（スマホ・PC共通）
+.kml-header {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .75rem 1.125rem;
+  background: #FFF; border-bottom: 1px solid var(--kml-border-soft);
+}
+.kml-header__studio { flex: 1; min-width: 0; display: flex; }
+.kml-logo__mark { display: inline-flex; }
+
+@include media-breakpoint-up(lg) {
+  .kml-header { padding: 1rem 1.75rem; }
+  .kml-logo__mark { display: none; }  // PCはサイドメニューに教室があるのでマークだけ省く
+}
+
+// 本文の器
+.kml-page { padding: 1.375rem 1.125rem 2rem; }
+.kml-page--narrow { max-width: 720px; }
+.kml-page__head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+@include media-breakpoint-up(lg) {
+  .kml-page { padding: 1.75rem; }
+  .kml-page--narrow { padding-left: 1.75rem; padding-right: 1.75rem; }
+}
+
+.kml-flash { padding: .875rem 1.125rem 0;
+  @include media-breakpoint-up(lg) { padding: 1rem 1.75rem 0; } }
+
+// PC で 2カラムにする画面（作品詳細、設定の編集）
+.kml-split { display: flex; flex-direction: column; gap: 1.25rem; }
+@include media-breakpoint-up(lg) {
+  .kml-split { flex-direction: row; align-items: flex-start; gap: 2rem; }
+  .kml-split__side { width: 380px; flex: none; position: sticky; top: 1.75rem; }
+  .kml-split__body { flex: 1; min-width: 0; }
+}
+
+// 本文 + 右カラム（みんなの作品）
+.kml-with-aside { display: flex; flex-direction: column; gap: 1.25rem; }
+.kml-with-aside__body { flex: 1; min-width: 0; }
+@include media-breakpoint-up(lg) {
+  .kml-with-aside { flex-direction: row; align-items: flex-start; gap: 1.75rem; }
+  .kml-with-aside__side { width: 258px; flex: none; display: flex; flex-direction: column; gap: .875rem; }
+}
+
+.kml-stat {
+  display: flex; flex-direction: column; gap: .4375rem;
+  padding: 1rem 1.125rem; border-radius: $border-radius-lg;
+  background: var(--kml-glaze-tint); border: 1px solid var(--kml-glaze-border);
+}
+.kml-stat__label { font-size: .75rem; color: $kml-glaze-ink; }
+.kml-stat__value { font-family: $headings-font-family; font-size: 1.5rem; font-weight: 700; color: $kml-glaze-ink; }
+
+.kml-panel {
+  padding: 1rem 1.125rem; border-radius: $border-radius-lg;
+  background: #FFF; border: 1px solid var(--kml-border-soft);
+}
+.kml-panel__title { font-size: .875rem; font-weight: 500; margin-bottom: .8125rem; }
+.kml-panel__row { display: flex; align-items: center; gap: .625rem; font-size: .84375rem; }
+
+.kml-subbar {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .9375rem 1.125rem; background: #FFF; border-bottom: 1px solid var(--kml-border-soft);
+}
+.kml-subbar__title  { font-family: $headings-font-family; font-size: .96875rem; font-weight: 700; }
+.kml-subbar__action { color: var(--kml-clay); font-size: .84375rem; font-weight: 500; text-decoration: none; }
+.kml-subbar__spacer { width: 2.5rem; }
+
+
+// ------------------------------------------------------------
+// ヘッダーの部品
+// ------------------------------------------------------------
+
+.kml-logo { display: inline-flex; align-items: center; gap: .5rem; color: var(--kml-clay); text-decoration: none; }
+.kml-logo__text { font-family: $headings-font-family; font-size: 1rem; font-weight: 700; }
+
+.kml-studio-picker {
+  display: inline-flex; align-items: center; gap: .4375rem;
+  min-height: var(--kml-tap-min);
+  padding: .4375rem .6875rem;
+  background: #FFF; border: 1px solid var(--kml-border); border-radius: $border-radius-pill;
+}
+.kml-studio-picker__icon {
+  flex: none; display: grid; place-items: center; width: 20px; height: 20px;
+  border-radius: .375rem; background: $kml-clay-tint-2;
+  color: var(--kml-clay); font-size: .625rem; font-weight: 700;
+}
+.kml-studio-picker__name  { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .8125rem; font-weight: 500; }
+.kml-studio-picker__caret { flex: none; font-size: .5625rem; color: $kml-ink-faint; }
+
+.kml-avatar {
+  flex: none; display: block; width: 34px; height: 34px;
+  border-radius: $border-radius-pill; background: #DCCDB8;
+}
+.kml-avatar--xs { width: 20px; height: 20px; }
+.kml-avatar--sm { width: 30px; height: 30px; }
+.kml-avatar--md { width: 40px; height: 40px; }
+.kml-avatar--lg { width: 76px; height: 76px; }
+
+.kml-back {
+  display: inline-flex; align-items: center; min-height: var(--kml-tap-min);
+  color: $kml-ink-muted; font-size: .84375rem; text-decoration: none;
+  &::before { content: "‹ "; }
+}
+.kml-back--close::before { content: none; }
+
+.kml-menu-btn {
+  flex: none; width: var(--kml-tap-min); height: var(--kml-tap-min);
+  border: 0; background: none; color: $kml-ink-muted; font-size: 1.0625rem;
+}
+
+
+// ------------------------------------------------------------
+// 一覧の部品
+// ------------------------------------------------------------
+
+.kml-count { font-size: .78125rem; color: $kml-ink-muted; white-space: nowrap; }
+.kml-meta  { font-size: .71875rem; color: $kml-ink-muted; }
+.kml-note  { font-size: .78125rem; line-height: 1.8; color: $kml-ink-muted; }
+.kml-lead  { font-size: .90625rem; line-height: 1.9; }
+.kml-section-label {
+  margin-bottom: .6875rem;
+  color: $kml-ink-faint; font-size: .78125rem; font-weight: 400; letter-spacing: .04em;
+}
+
+.kml-grid { display: grid; gap: .625rem; }
+.kml-grid--2 { grid-template-columns: repeat(2, 1fr); gap: .875rem; }
+.kml-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.kml-grid--4 { grid-template-columns: repeat(4, 1fr); gap: .5rem; }
+
+@include media-breakpoint-up(lg) {
+  .kml-page .kml-grid--3 { grid-template-columns: repeat(4, 1fr); gap: 1.125rem; }
+  .kml-page .kml-grid--2 { grid-template-columns: repeat(3, 1fr); gap: 1.125rem; }
+  .kml-page .kml-piece-row-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+
+.kml-tile { display: flex; flex-direction: column; gap: .375rem; color: $kml-ink; text-decoration: none; }
+.kml-tile__photo  { aspect-ratio: 1; border-radius: $border-radius-lg; }
+.kml-tile__title  { font-size: .75rem; line-height: 1.4; }
+.kml-tile__meta   { font-size: .65625rem; color: $kml-ink-muted; }
+.kml-tile__author { display: flex; align-items: center; gap: .4375rem; font-size: .71875rem; color: $kml-ink-muted; }
+.kml-tile--shared .kml-tile__title { font-size: .875rem; font-weight: 500; }
+
+.kml-piece-row {
+  display: flex; align-items: center; gap: .8125rem;
+  padding: .75rem; background: #FFF;
+  border: 1px solid var(--kml-border-soft); border-radius: $border-radius-xl;
+  color: $kml-ink; text-decoration: none;
+}
+.kml-piece-row__thumb { flex: none; width: 78px; height: 78px; border-radius: .8125rem; }
+.kml-piece-row__body  { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .4375rem; }
+.kml-piece-row__title { font-size: .96875rem; font-weight: 500; }
+
+
+// ------------------------------------------------------------
+// 詳細の部品
+// ------------------------------------------------------------
+
+.kml-detail__bar  { display: flex; align-items: center; justify-content: space-between; padding: .5rem 1.125rem; }
+.kml-detail__head { display: flex; flex-direction: column; gap: .5625rem; padding: .25rem 1.125rem 1rem; }
+.kml-detail__body { display: flex; flex-direction: column; gap: 1.25rem; padding: 1.125rem; }
+
+.kml-hero { height: 300px; }
+
+.kml-carousel {
+  display: flex; gap: .625rem; overflow-x: auto;
+  padding: 0 1.125rem .625rem; scroll-snap-type: x mandatory;
+}
+.kml-carousel__item    { flex: none; width: 296px; margin: 0; scroll-snap-align: center; }
+.kml-carousel__photo   { display: block; height: 296px; border-radius: $border-radius-xl; }
+.kml-carousel__caption { padding-top: .4375rem; font-size: .75rem; color: $kml-ink-muted; }
+
+.kml-dots { display: flex; justify-content: center; gap: .375rem; }
+.kml-dots__dot { width: 7px; height: 7px; border-radius: $border-radius-pill; background: #DCCDB8;
+  &.is-active { background: var(--kml-clay); } }
+
+.kml-spec {
+  background: #FFF; border: 1px solid var(--kml-border-soft);
+  border-radius: $border-radius-lg; overflow: hidden;
+}
+.kml-spec__row {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: .875rem .9375rem; font-size: .875rem;
+  & + & { border-top: 1px solid var(--kml-border-hair); }
+  dt { color: $kml-ink-muted; font-weight: 400; white-space: nowrap; }
+  dd { margin: 0; text-align: right; }
+}
+
+// 作業記録のアコーディオン（Bootstrap の accordion を上書き）
+.kml-logs .accordion-item {
+  background: #FFF; border: 1px solid var(--kml-border);
+  border-radius: .875rem; margin-bottom: .5625rem;
+}
+.kml-log__head {
+  gap: .6875rem; padding: .8125rem .9375rem;
+  background: #FFF; box-shadow: none; font-size: .78125rem;
+  &:not(.collapsed) { background: #FFF; color: $kml-ink; border-bottom: 1px solid var(--kml-border-hair); }
+  &::after { margin-left: auto; }
+}
+.kml-log__date   { color: $kml-ink-muted; white-space: nowrap; }
+.kml-log__body   { display: flex; flex-direction: column; gap: .6875rem; padding: .875rem .9375rem; font-size: .84375rem; }
+.kml-log__photos { display: flex; gap: .5rem; }
+.kml-log__photo  { display: block; width: 78px; height: 78px; border-radius: .6875rem; background: var(--kml-placeholder-a); }
+.kml-log__caption{ display: block; padding-top: .3125rem; font-size: .65625rem; color: $kml-ink-muted; }
+
+.kml-author { display: flex; align-items: center; gap: .6875rem; padding: 0 1.125rem 1rem; }
+.kml-author__body { display: flex; flex-direction: column; gap: .1875rem; }
+.kml-author__name { font-size: .90625rem; font-weight: 500; }
+
+
+// ------------------------------------------------------------
+// フォームの部品
+// ------------------------------------------------------------
+
+.kml-form { display: flex; flex-direction: column; min-height: 100dvh; background: $kml-surface; }
+.kml-form__body { display: flex; flex-direction: column; gap: 1.375rem; padding: 1.375rem 1.125rem 1.625rem; }
+
+.kml-formbar {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .9375rem 1.125rem; background: #FFF; border-bottom: 1px solid var(--kml-border-soft);
+}
+.kml-formbar__title  { font-family: $headings-font-family; font-size: .96875rem; font-weight: 700; }
+.kml-formbar__cancel { color: $kml-ink-muted; font-size: .84375rem; text-decoration: none; }
+.kml-formbar__submit {
+  border: 0; background: none; color: #9A8A76; font-size: .84375rem;
+  &.is-enabled { color: var(--kml-clay); font-weight: 500; }
+}
+.kml-formbar__spacer { width: 3.125rem; }
+
+.kml-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+.kml-target {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .8125rem .9375rem; border-radius: .875rem; background: var(--kml-clay-tint);
+}
+.kml-target__thumb { flex: none; width: 42px; height: 42px; border-radius: .6875rem; }
+.kml-target__body  { display: flex; flex-direction: column; gap: .125rem; }
+.kml-target__label { font-size: .6875rem; color: var(--kml-clay); }
+.kml-target__name  { font-size: .96875rem; font-weight: 500; }
+
+.kml-material-row {
+  display: flex; flex-direction: column; gap: .625rem;
+  padding: .75rem; background: #FFF;
+  border: 1px solid var(--kml-border); border-radius: .875rem;
+  & + & { margin-top: .5625rem; }
+}
+.kml-material-row__amount { display: flex; align-items: center; gap: .5625rem; }
+.kml-unit { flex: none; }
+
+.kml-add-btn {
+  display: block; width: 100%; margin-top: .5625rem;
+  padding: .8125rem; border: 1px dashed #DCCFBC; border-radius: $border-radius;
+  background: none; color: var(--kml-clay); font-size: .875rem; font-weight: 500;
+  text-align: center; text-decoration: none;
+  &:hover { background: rgba($kml-clay, .04); }
+}
+.kml-add-btn--glaze { border-color: #C4D3CE; color: var(--kml-glaze-ink); }
+
+.kml-remove-btn {
+  border: 0; background: none; color: $kml-danger; font-size: .78125rem; white-space: nowrap;
+}
+
+.kml-glaze-panel {
+  padding: .9375rem; border: 1px solid var(--kml-glaze-border);
+  border-radius: .875rem; background: var(--kml-glaze-tint);
+  .form-label { color: var(--kml-glaze-ink); }
+}
+.kml-glaze-panel__item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .8125rem; border-radius: .6875rem; background: #FFF; font-size: .90625rem;
+}
+
+.kml-switch-row {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .9375rem 1rem; background: #FFF;
+  border: 1px solid var(--kml-border); border-radius: .875rem;
+}
+.kml-switch-row--flush { padding: 0; background: none; border: 0; }
+.kml-switch-row__body  { display: flex; flex-direction: column; gap: .1875rem; }
+.kml-switch-row__label { font-size: .875rem; font-weight: 500; }
+.kml-switch-row__note  { font-size: .71875rem; color: $kml-ink-muted; }
+
+.kml-link-btn { color: $kml-ink-muted; font-size: .84375rem; text-decoration: none;
+  &:hover { color: $kml-ink; text-decoration: underline; } }
+
+// 代表画像の候補（チェックで枠が付く）
+.kml-pick-input { position: absolute; opacity: 0; width: 0; height: 0; }
+.kml-pick {
+  display: block; aspect-ratio: 1; border-radius: .6875rem;
+  border: 1px solid var(--kml-border-soft); cursor: pointer;
+}
+.kml-pick-input:checked + .kml-pick { border: 2px solid var(--kml-clay); }
+.kml-pick-input:focus-visible + .kml-pick { outline: 2px solid var(--kml-clay); outline-offset: 2px; }
+
+.kml-sortable__body { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .375rem; }
+.kml-sortable__caption-text { font-size: .84375rem; }
+.kml-sortable__name { display: flex; align-items: center; gap: .5rem; font-size: .9375rem; font-weight: 500; }
+.kml-sortable__row--master.is-hidden {
+  background: var(--kml-sand);
+  .kml-sortable__name { color: $kml-ink-muted; }
+}
+
+.kml-swatch--white { background: #EFE6D9; }
+.kml-swatch--red   { background: #C8B49C; }
+.kml-swatch--black { background: #6E635A; }
+.kml-swatch--amber { background: #8A5A2E; }
+.kml-swatch--green { background: #4F6B4A; }
+.kml-swatch--none  { background: #E4DACB; }
+
+.kml-swatch-picker { display: grid; grid-template-columns: repeat(6, 1fr); gap: .625rem; }
+.kml-swatch-input  { position: absolute; opacity: 0; width: 0; height: 0; }
+.kml-swatch-option { display: block; aspect-ratio: 1; border-radius: .6875rem; cursor: pointer; }
+.kml-swatch-input:checked + .kml-swatch-option { box-shadow: 0 0 0 3px $kml-surface, 0 0 0 5px var(--kml-clay); }
+
+
+// ------------------------------------------------------------
+// 設定の部品
+// ------------------------------------------------------------
+
+.kml-settings-list { border-radius: $border-radius-lg; overflow: hidden; border: 1px solid var(--kml-border); }
+.kml-settings-item {
+  display: flex; align-items: center; gap: .75rem;
+  min-height: var(--kml-tap-min); color: $kml-ink; text-decoration: none;
+}
+.kml-settings-item__label { flex: 1; font-size: .90625rem; }
+.kml-settings-item__value { font-size: .84375rem; color: $kml-ink-muted; white-space: nowrap; }
+.kml-chevron { flex: none; color: $kml-ink-faint; font-size: .8125rem; }
+
+.kml-studio-row {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .875rem .9375rem; background: #FFF;
+  border: 1px solid var(--kml-border); border-radius: .875rem;
+  color: $kml-ink; text-decoration: none;
+  &.is-current { border: 2px solid var(--kml-clay); }
+}
+.kml-studio-row__icon {
+  flex: none; display: grid; place-items: center; width: 40px; height: 40px;
+  border-radius: .75rem; background: $kml-clay-tint-2;
+  color: var(--kml-clay); font-size: .875rem; font-weight: 700;
+}
+.kml-studio-row__icon--alt { background: #E4EAE7; color: var(--kml-glaze-ink); }
+.kml-studio-row__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .1875rem; }
+.kml-studio-row__name { font-size: .9375rem; font-weight: 500; }
+
+.kml-check {
+  flex: none; display: grid; place-items: center; width: 22px; height: 22px;
+  border-radius: $border-radius-pill; background: var(--kml-clay); color: #FFF; font-size: .75rem;
+}
+
+.kml-member {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .8125rem .9375rem; background: #FFF;
+  border: 1px solid var(--kml-border); border-radius: .875rem;
+}
+.kml-member__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .1875rem; }
+.kml-member__name { font-size: .90625rem; font-weight: 500; }
+
+.kml-invite {
+  display: flex; flex-direction: column; gap: .75rem;
+  padding: .9375rem 1rem; background: #FFF;
+  border: 1px solid var(--kml-border); border-radius: $border-radius-lg;
+}
+.kml-invite__detail { display: flex; flex-direction: column; gap: .75rem; }
+.kml-invite__url {
+  padding: .75rem .8125rem; border-radius: .6875rem; background: $kml-surface;
+  font-size: .78125rem; color: $kml-ink-3;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+.kml-filter-scroll {
+  display: flex; gap: .5rem; overflow-x: auto;
+  padding: .5rem 1.125rem .875rem;
+  > .kml-chip { flex: none; }
+}
+
+.kml-readonly__body  { flex: 1; display: flex; flex-direction: column; gap: .25rem; }
+.kml-readonly__label { font-size: .78125rem; color: $kml-ink-3; }
+.kml-readonly__value { font-size: .90625rem; font-weight: 500; }
+.kml-readonly__note  { font-size: .71875rem; color: $kml-ink-muted; text-align: right; white-space: nowrap; }
+
+
+// ------------------------------------------------------------
+// 空状態・ログイン
+// ------------------------------------------------------------
+
+.kml-empty { display: flex; flex-direction: column; align-items: center; gap: 1.125rem; text-align: center; }
+.kml-empty__icon {
+  display: grid; place-items: center; width: 88px; height: 88px;
+  border-radius: 1.75rem; background: var(--kml-placeholder-a);
+  font-family: $headings-font-family; font-size: 1.875rem; color: #8A7157;
+}
+.kml-empty__lead { font-size: .84375rem; line-height: 1.9; color: $kml-ink-3; }
+
+.kml-login {
+  display: flex; flex-direction: column;
+  min-height: 100dvh;
+  max-width: 420px;          // PC でも1カラムのまま中央に置く
+  margin-inline: auto;
+  background: $kml-surface;
+}
+
+@include media-breakpoint-up(lg) {
+  // 10a と同じく、カード枠は付けず面の中央に置く
+  .kml-login {
+    justify-content: center;
+    max-width: none;
+  }
+  .kml-login__center {
+    flex: none;
+    gap: 1.875rem;
+    width: 420px;
+    margin-inline: auto;
+    padding: 0;
+  }
+  .kml-login__foot {
+    flex: none;
+    gap: .875rem;
+    width: 420px;
+    margin-inline: auto;
+    padding: 1.875rem 0 0;
+  }
+  .kml-login__name { font-size: 2rem; color: var(--kml-clay); }
+  .kml-login__lead { font-size: .9375rem; }
+  // 幅に余裕があるので規約は1行に
+  .kml-login__terms br { display: none; }
+}
+.kml-login__center {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.625rem; padding: 2.5rem 2.125rem; text-align: center;
+}
+.kml-login__mark {
+  display: grid; place-items: center; width: 76px; height: 76px;
+  border-radius: 1.5rem; background: var(--kml-clay); color: var(--kml-clay);
+}
+.kml-login__name  { font-family: $headings-font-family; font-size: 1.875rem; font-weight: 700; letter-spacing: .02em; margin: 0; }
+.kml-login__lead  { font-size: .90625rem; line-height: 2; color: $kml-ink-3; }
+.kml-login__foot  { display: flex; flex-direction: column; gap: 1rem; padding: 0 1.625rem 2.75rem; }
+.kml-login__terms { font-size: .71875rem; line-height: 1.9; color: $kml-ink-muted; text-align: center; }
+.kml-oauth {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6875rem;
+  background: #FFF;           // カード（#FAF6F0）と差をつける
+  border-color: var(--kml-border);
+  &:hover, &:focus { background: #FFF; border-color: var(--kml-clay); }
+}
+.kml-oauth__icon {
+  display: grid; place-items: center; width: 22px; height: 22px;
+  border-radius: $border-radius-pill; background: var(--kml-clay-tint);
+  color: var(--kml-clay); font-size: .75rem; font-weight: 700;
+}
+
+.kml-profile { display: flex; flex-direction: column; align-items: center; gap: .8125rem; padding: 1.625rem 0 1.375rem; }
+
+.kml-sidebar__head { display: flex; align-items: center; gap: .5rem; padding: 1.25rem 1.25rem .5rem; }
+.kml-sidebar__studio { font-size: .84375rem; font-weight: 500; }
+.kml-sidebar__nav  { display: flex; flex-direction: column; gap: .25rem; padding: 1rem 1rem 0; }
+.kml-sidebar__foot { display: flex; align-items: center; gap: .625rem; margin-top: auto; padding: 1.25rem; font-size: .84375rem; }
+.kml-sheet__body   { display: flex; flex-direction: column; gap: 1.25rem; padding: .875rem 1.25rem 1.75rem; }
+
+
+// ------------------------------------------------------------
+// 危険な操作
+// ------------------------------------------------------------
+
+.btn-outline-danger-soft {
+  border: 1px solid $kml-danger-border;
+  background: #FFF;
+  color: $kml-danger;
+  font-weight: 500;
+
+  &:hover { background: #FDF6F4; border-color: $kml-danger; }
+}
