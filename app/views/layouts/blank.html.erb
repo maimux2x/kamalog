@@ -26,6 +26,7 @@
     <div class="kml-shell">
       <div class="kml-shell__main">
         <%= yield :header %>
+
         <main class="kml-main" id="main">
           <%= render "shared/flash" %>
           <%= content_for?(:content) ? yield(:content) : yield %>
