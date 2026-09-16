@@ -28,7 +28,7 @@
         <%= yield :header %>
 
         <main class="kml-main" id="main">
-          <%= render "shared/flash" %>
+          <%= render 'shared/flash' %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
       </div>
