@@ -376,6 +376,19 @@ body {
   height: 100dvh;
   overflow-y: auto;
 }
+/* アカウントメニューの先頭に名前とメールアドレスを出す */
+.kml-account {
+  display: flex; align-items: center; gap: .6875rem;
+  padding: .875rem 1rem;
+}
+.kml-account__text { display: flex; flex-direction: column; gap: .125rem; min-width: 0; }
+.kml-account__name { font-size: .875rem; font-weight: 500; }
+.kml-account__mail {
+  font-size: .71875rem; color: $kml-ink-muted;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.dropdown-menu .kml-account + hr { margin-top: 0; }
+
 .kml-sidebar__me {
   display: flex; align-items: center; gap: .625rem;
   color: $kml-ink; text-decoration: none;
@@ -436,7 +449,7 @@ body {
 .kml-app    { display: flex; flex-direction: column; min-height: 100dvh; background: $kml-bg; }
 .kml-shell  { display: flex; min-height: 100dvh; }
 .kml-shell__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.kml-main   { flex: 1; }
+.kml-main   { flex: 1; display: flex; flex-direction: column; }
 
 // 本文へ移動
 .kml-skip {
@@ -609,6 +622,52 @@ body {
 
 .kml-detail__bar  { display: flex; align-items: center; justify-content: space-between; padding: .5rem 1.125rem; }
 .kml-detail__head { display: flex; flex-direction: column; gap: .5625rem; padding: .25rem 1.125rem 1rem; }
+
+/* 作品名・記録見出しの右に置く編集／削除 */
+.kml-title-row {
+  display: flex; align-items: flex-start; gap: .625rem;
+}
+.kml-title-row > :first-child { flex: 1 1 auto; min-width: 0; }
+.kml-title-actions {
+  display: flex; flex: none; gap: .125rem; margin-top: .125rem;
+}
+.kml-icon-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4375rem;
+  flex: none; min-width: var(--kml-tap-min); min-height: var(--kml-tap-min);
+  padding: 0; border: 0; border-radius: .625rem;
+  background: none; color: $kml-ink-muted; text-decoration: none;
+  font-size: .84375rem; line-height: 1;
+}
+.kml-icon-btn:hover,
+.kml-icon-btn:focus-visible { background: $kml-sand; color: $kml-ink; }
+.kml-icon-btn--danger,
+.kml-icon-btn--danger:hover { color: $kml-danger; }
+.kml-icon-btn--sm { min-width: 2.125rem; min-height: 2.125rem; border-radius: .5625rem; }
+.kml-icon-btn__label { display: none; }
+
+@include media-breakpoint-up(lg) {
+  .kml-title-actions { gap: .5rem; }
+  .kml-icon-btn {
+    padding-inline: .875rem;
+    border: 1px solid $kml-border; background: $kml-card;
+    color: $kml-ink; min-height: 2.375rem;
+  }
+  .kml-icon-btn--danger { border-color: $kml-danger-border; color: $kml-danger; }
+  .kml-icon-btn--sm { padding-inline: 0; border: 0; background: none; }
+  .kml-icon-btn__label { display: inline; }
+  .kml-icon-btn--sm .kml-icon-btn__label { display: none; }
+}
+
+/* 記録の行：見出しボタンの右に操作を並べ、開いている行だけ出す */
+.kml-log__header { display: flex; align-items: center; }
+.kml-log__header > .kml-log__head { flex: 1 1 auto; min-width: 0; }
+.kml-log__actions { display: flex; flex: none; gap: .125rem; padding-right: .5rem; }
+.kml-log__head.collapsed ~ .kml-log__actions { display: none; }
+
+/* 削除確認 */
+.kml-confirm { border: 0; border-radius: 1.125rem; background: $kml-surface; }
+.kml-confirm .modal-body { padding: 1.5rem 1.5rem 1rem; }
+.kml-confirm__foot { border-top: 0; gap: .5rem; padding: 0 1.5rem 1.5rem; }
 .kml-detail__body { display: flex; flex-direction: column; gap: 1.25rem; padding: 1.125rem; }
 
 .kml-hero { height: 300px; }
@@ -843,10 +902,11 @@ body {
 .kml-empty__lead { font-size: .84375rem; line-height: 1.9; color: $kml-ink-3; }
 
 .kml-login {
+  flex: 1;
   display: flex; flex-direction: column;
-  min-height: 100dvh;
   max-width: 420px;          // PC でも1カラムのまま中央に置く
   margin-inline: auto;
+  width: 100%;
   background: $kml-surface;
 }
 
@@ -900,6 +960,43 @@ body {
 }
 
 .kml-profile { display: flex; flex-direction: column; align-items: center; gap: .8125rem; padding: 1.625rem 0 1.375rem; }
+
+// 教室に未所属のとき（7p）
+// 共通レイアウトの .kml-main 内に置く想定（<main> は二重にしない）
+.kml-onboarding {
+  flex: 1;
+  display: flex; flex-direction: column;
+  max-width: 420px;
+  margin-inline: auto;
+  width: 100%;
+  background: $kml-surface;
+}
+.kml-onboarding__center {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.5rem; padding: 2.5rem 1.875rem; text-align: center;
+}
+.kml-onboarding__icon {
+  display: grid; place-items: center; width: 88px; height: 88px;
+  border-radius: 1.75rem; background: var(--kml-placeholder-a);
+  font-family: $headings-font-family; font-size: 1.875rem; color: $kml-ink-faint;
+}
+.kml-onboarding__text  { display: flex; flex-direction: column; gap: .75rem; }
+.kml-onboarding__title {
+  margin: 0;
+  font-family: $headings-font-family; font-size: 1.3125rem; font-weight: 700; line-height: 1.5;
+}
+.kml-onboarding__lead  { font-size: .84375rem; line-height: 1.9; color: $kml-ink-3; }
+.kml-onboarding__foot  { display: flex; flex-direction: column; gap: 1rem; padding: 0 1.5rem 1.5rem; }
+.kml-onboarding__note  { font-size: .75rem; line-height: 1.9; color: $kml-ink-muted; text-align: center; }
+
+@include media-breakpoint-up(lg) {
+  .kml-onboarding { justify-content: center; max-width: none; }
+  .kml-onboarding__center { flex: none; width: 420px; margin-inline: auto; padding: 0; }
+  .kml-onboarding__foot   { flex: none; width: 420px; margin-inline: auto; padding: 1.875rem 0 0; }
+  .kml-onboarding__title  { font-size: 1.5rem; }
+  .kml-onboarding__note br { display: none; }
+}
 
 .kml-sidebar__head { display: flex; align-items: center; gap: .5rem; padding: 1.25rem 1.25rem .5rem; }
 .kml-sidebar__studio { font-size: .84375rem; font-weight: 500; }

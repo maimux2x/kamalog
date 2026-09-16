@@ -1,10 +1,6 @@
 class StudiosController < ApplicationController
   include CurrentMembership
 
-  def index
-    @studios = current_user.studios.order(:created_at)
-  end
-
   def show
     @studio = current_studio
 
