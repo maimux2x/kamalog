@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pagy::Method
+  include CurrentMembership
 
   before_action :require_authentication
 

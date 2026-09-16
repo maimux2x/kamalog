@@ -1,6 +1,4 @@
 class MembersController < ApplicationController
-  include CurrentMembership
-
   before_action :require_self_or_admin,   only: %i[destroy]
   before_action :require_admin,           only: %i[update]
   before_action :last_admin_cannot_leave, only: %i[update destroy]

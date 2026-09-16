@@ -8,14 +8,16 @@ module CurrentMembership
   private
 
   def current_membership
-    @current_membership ||= current_user.memberships.find_by!(studio_id: studio_id_params)
+    return nil unless studio_id_param
+
+    @current_membership ||= current_user.memberships.find_by!(studio_id: studio_id_param)
   end
 
   def current_studio
-    current_membership.studio
+    current_membership&.studio
   end
 
-  def studio_id_params
+  def studio_id_param
     params[:studio_id]
   end
 end

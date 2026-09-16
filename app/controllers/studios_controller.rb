@@ -1,6 +1,4 @@
 class StudiosController < ApplicationController
-  include CurrentMembership
-
   def show
     @studio = current_studio
 
@@ -37,7 +35,7 @@ class StudiosController < ApplicationController
 
   private
 
-  def studio_id_params
+  def studio_id_param
     params[:id]
   end
 

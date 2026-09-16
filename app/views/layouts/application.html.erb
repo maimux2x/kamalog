@@ -29,40 +29,39 @@
     </a>
 
     <!-- 教室セレクタ：lg 未満のみ -->
-    <div class="kml-header__studio d-lg-none">
-      <div class="dropdown">
-        <button
-          class="kml-studio-picker"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <span class="kml-studio-picker__icon" aria-hidden="true">陶</span>
-          <span class="kml-studio-picker__name">やまなみ陶芸</span>
-          <span class="kml-studio-picker__caret" aria-hidden="true">▼</span>
-        </button>
+    <% if current_studio %>
+      <div class="kml-header__studio d-lg-none">
+        <div class="dropdown">
+          <button
+            class="kml-studio-picker"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="kml-studio-picker__name"><%= current_studio.name %></span>
+            <span class="kml-studio-picker__caret" aria-hidden="true">▼</span>
+          </button>
 
-        <ul class="dropdown-menu">
-          <li>
-            <h2 class="dropdown-header">教室を切り替える</h2>
-          </li>
+          <ul class="dropdown-menu">
+            <li>
+              <h2 class="dropdown-header">教室を切り替える</h2>
+            </li>
 
-          <li>
-            <a
-              class="dropdown-item active"
-              href="/studios/1"
-              aria-current="true"
-            >
-              やまなみ陶芸教室
-            </a>
-          </li>
+            <% current_user.studios.order(:id).each do |studio| %>
+              <li>
+                <%= link_to studio.name, studio_my_pieces_path(studio), class: 'dropdown-item' %>
+              </li>
+            <% end %>
 
-          <li><a class="dropdown-item" href="/studios/2">土曜の陶芸サークル</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="/studios/new">＋ 新しい教室を作る</a></li>
-        </ul>
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+              <%= link_to '＋ 新しい教室を作る', new_studio_path, class: 'dropdown-item' %>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <!-- PC：右端に登録ボタン -->
     <%= yield :header_action %>

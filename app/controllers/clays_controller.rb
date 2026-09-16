@@ -1,6 +1,4 @@
 class ClaysController < ApplicationController
-  include CurrentMembership
-
   def index
     @clays = current_studio.clays.order(:position)
   end
