@@ -1,12 +1,8 @@
 class StudiosController < ApplicationController
-  include CurrentMembership
-
-  def index
-    @studios = current_user.studios.order(:created_at)
-  end
-
   def show
     @studio = current_studio
+
+    current_user.update! last_seen_studio: @studio
   end
 
   def new
@@ -39,7 +35,7 @@ class StudiosController < ApplicationController
 
   private
 
-  def studio_id_params
+  def studio_id_param
     params[:id]
   end
 

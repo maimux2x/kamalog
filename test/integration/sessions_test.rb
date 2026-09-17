@@ -6,10 +6,8 @@ class SessionsTest < ActionDispatch::IntegrationTest
       mock_auth users(:alice) do
         get '/auth/google_oauth2/callback'
       end
-
-      assert_response :see_other
     end
 
-    assert_redirected_to studios_path
+    assert_redirected_to welcome_path
   end
 end

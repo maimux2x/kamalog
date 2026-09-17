@@ -1,6 +1,4 @@
 class Clays::BulksController < ApplicationController
-  include CurrentMembership
-
   def new; end
 
   def create

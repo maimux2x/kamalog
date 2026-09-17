@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
 
   has_many :studios, through: :memberships
+
+  belongs_to :last_seen_studio, class_name: 'Studio', optional: true
 end

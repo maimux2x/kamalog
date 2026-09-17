@@ -1,6 +1,4 @@
 class My::PiecesController < ApplicationController
-  include CurrentMembership
-
   def index
     @pagy, @pieces = pagy(current_membership.pieces.order(:created_at))
   end

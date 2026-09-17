@@ -1,6 +1,4 @@
 class Studios::InvitationsController < ApplicationController
-  include CurrentMembership
-
   def create
     current_studio.update! invitation_token: SecureRandom.base58(24)
 

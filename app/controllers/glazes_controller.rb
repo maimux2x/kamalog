@@ -1,6 +1,4 @@
 class GlazesController < ApplicationController
-  include CurrentMembership
-
   def index
     @glazes = current_studio.glazes.order(:position)
   end

@@ -1,6 +1,4 @@
 class Glazes::BulksController < ApplicationController
-  include CurrentMembership
-
   def new; end
 
   def create

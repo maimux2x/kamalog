@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: 'sessions#failure'
 
-  root to: 'welcome#index'
+  root to: 'landings#show'
 
+  resource :welcome, only: %i[show]
   resource :session, only: %i[destroy]
   resource :profile, only: %i[show update destroy]
 
