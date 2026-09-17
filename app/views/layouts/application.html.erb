@@ -1,67 +1,69 @@
 <%= content_for :header do %>
   <header class="kml-header">
     <!-- スマホ：ハンバーガーは置かず、設定はアバターから -->
-    <a class="kml-logo flex-shrink-0" href="/">
-      <span class="kml-logo__mark" aria-hidden="true">
-        <svg
-          width="26"
-          height="26"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <rect
-            width="24"
-            height="24"
-            rx="8"
-            fill="currentColor"
-          ></rect>
-
-          <path d="M6.6 18.4V13a5.4 5.4 0 0 1 10.8 0v5.4z" fill="#fff"></path>
-
-          <path
-            d="M10.2 18.4v-2.6a1.8 1.8 0 0 1 3.6 0v2.6z"
-            fill="currentColor"
-          ></path>
-        </svg>
-      </span>
-
-      <span class="kml-logo__text">Kamalog</span>
-    </a>
-
-    <!-- 教室セレクタ：lg 未満のみ -->
-    <% if current_studio %>
-      <div class="kml-header__studio d-lg-none">
-        <div class="dropdown">
-          <button
-            class="kml-studio-picker"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+    <div class="me-auto">
+      <a class="kml-logo flex-shrink-0" href="/">
+        <span class="kml-logo__mark" aria-hidden="true">
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
           >
-            <span class="kml-studio-picker__name"><%= current_studio.name %></span>
-            <span class="kml-studio-picker__caret" aria-hidden="true">▼</span>
-          </button>
+            <rect
+              width="24"
+              height="24"
+              rx="8"
+              fill="currentColor"
+            ></rect>
 
-          <ul class="dropdown-menu">
-            <li>
-              <h2 class="dropdown-header">教室を切り替える</h2>
-            </li>
+            <path d="M6.6 18.4V13a5.4 5.4 0 0 1 10.8 0v5.4z" fill="#fff"></path>
 
-            <% current_user.studios.order(:id).each do |studio| %>
+            <path
+              d="M10.2 18.4v-2.6a1.8 1.8 0 0 1 3.6 0v2.6z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </span>
+
+        <span class="kml-logo__text">Kamalog</span>
+      </a>
+
+      <!-- 教室セレクタ：lg 未満のみ -->
+      <% if current_studio %>
+        <div class="kml-header__studio d-lg-none">
+          <div class="dropdown">
+            <button
+              class="kml-studio-picker"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="kml-studio-picker__name"><%= current_studio.name %></span>
+              <span class="kml-studio-picker__caret" aria-hidden="true">▼</span>
+            </button>
+
+            <ul class="dropdown-menu">
               <li>
-                <%= link_to studio.name, studio_my_pieces_path(studio), class: 'dropdown-item' %>
+                <h2 class="dropdown-header">教室を切り替える</h2>
               </li>
-            <% end %>
 
-            <li><hr class="dropdown-divider"></li>
+              <% current_user.studios.order(:id).each do |studio| %>
+                <li>
+                  <%= link_to studio.name, studio_my_pieces_path(studio), class: 'dropdown-item' %>
+                </li>
+              <% end %>
 
-            <li>
-              <%= link_to '＋ 新しい教室を作る', new_studio_path, class: 'dropdown-item' %>
-            </li>
-          </ul>
+              <li><hr class="dropdown-divider"></li>
+
+              <li>
+                <%= link_to '＋ 新しい教室を作る', new_studio_path, class: 'dropdown-item' %>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
 
     <!-- PC：右端に登録ボタン -->
     <%= yield :header_action %>
