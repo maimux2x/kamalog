@@ -362,20 +362,42 @@ body {
 
 
 // ------------------------------------------------------------
-// PCのサイドメニュー
+// ヘッダー内の主ナビ（PC）
+// ------------------------------------------------------------
+// サイドメニューは廃止。常時出すのは2項目だけなのでヘッダーに横並びで置く。
+// タブは下線で示すので、ヘッダーの下ボーダーと重ねて -1px ずらす。
+
+.kml-header__nav {
+  align-items: stretch;
+  gap: .125rem;
+  margin-left: .5rem;
+  align-self: stretch;
+}
+
+.kml-header__tab {
+  display: flex; align-items: center;
+  padding: 0 .8125rem;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: $kml-ink-muted;
+  font-size: .90625rem;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover { color: $kml-ink; }
+
+  &.is-active {
+    border-bottom-color: var(--kml-clay);
+    color: $kml-ink;
+    font-weight: 500;
+  }
+}
+
+
+// ------------------------------------------------------------
+// アカウントメニュー
 // ------------------------------------------------------------
 
-.kml-sidebar {
-  width: 232px;
-  flex: none;
-  flex-direction: column;
-  background: #FFF;
-  border-right: 1px solid var(--kml-border-soft);
-  position: sticky;
-  top: 0;
-  height: 100dvh;
-  overflow-y: auto;
-}
 /* アカウントメニューの先頭に名前とメールアドレスを出す */
 .kml-account {
   display: flex; align-items: center; gap: .6875rem;
@@ -388,43 +410,6 @@ body {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .dropdown-menu .kml-account + hr { margin-top: 0; }
-
-.kml-sidebar__me {
-  display: flex; align-items: center; gap: .625rem;
-  color: $kml-ink; text-decoration: none;
-  &:hover { color: var(--kml-clay); }
-}
-
-.kml-sidebar__link {
-  display: block;
-  padding: .6875rem .8125rem;
-  border-radius: .625rem;
-  color: $kml-ink-2;
-  font-size: .90625rem;
-  text-decoration: none;
-
-  &:hover { background: var(--kml-sand); color: $kml-ink; }
-
-  &.is-active {
-    background: var(--kml-clay-tint);
-    color: #6E4F38;
-    font-weight: 500;
-  }
-}
-
-// 設定の下位項目
-.kml-sidebar__sub {
-  padding: .5625rem .8125rem;
-  font-size: .875rem;
-}
-
-.kml-sidebar__heading {
-  padding: 0 .8125rem .25rem;
-  color: $kml-ink-faint;
-  font-size: .71875rem;
-  letter-spacing: .06em;
-}
-
 
 // ------------------------------------------------------------
 // 読み取り専用の行（作品編集の「最後にした作業」など）
@@ -447,7 +432,7 @@ body {
 
 .kml-body   { min-height: 100dvh; background: $kml-bg; }
 .kml-app    { display: flex; flex-direction: column; min-height: 100dvh; background: $kml-bg; }
-.kml-shell  { display: flex; min-height: 100dvh; }
+.kml-shell  { display: flex; flex-direction: column; min-height: 100dvh; }
 .kml-shell__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .kml-main   { flex: 1; display: flex; flex-direction: column; }
 
@@ -467,12 +452,14 @@ body {
   padding: .75rem 1.125rem;
   background: #FFF; border-bottom: 1px solid var(--kml-border-soft);
 }
-.kml-header__studio { flex: 1; min-width: 0; display: flex; }
+// 右側の一群を押し出す。セレクタが無い画面（未所属）でも位置が変わらない
+.kml-header__spacer { flex: 1 1 auto; min-width: 0; }
+.kml-header__studio { flex: 0 1 auto; min-width: 0; display: flex; }
 .kml-logo__mark { display: inline-flex; }
 
 @include media-breakpoint-up(lg) {
-  .kml-header { padding: 1rem 1.75rem; }
-  .kml-logo__mark { display: none; }  // PCはサイドメニューに教室があるのでマークだけ省く
+  .kml-header { padding: 0 1.75rem; gap: .875rem; }
+  .kml-logo { padding-block: .9375rem; }
 }
 
 // 本文の器
@@ -998,10 +985,6 @@ body {
   .kml-onboarding__note br { display: none; }
 }
 
-.kml-sidebar__head { display: flex; align-items: center; gap: .5rem; padding: 1.25rem 1.25rem .5rem; }
-.kml-sidebar__studio { font-size: .84375rem; font-weight: 500; }
-.kml-sidebar__nav  { display: flex; flex-direction: column; gap: .25rem; padding: 1rem 1rem 0; }
-.kml-sidebar__foot { display: flex; align-items: center; gap: .625rem; margin-top: auto; padding: 1.25rem; font-size: .84375rem; }
 .kml-sheet__body   { display: flex; flex-direction: column; gap: 1.25rem; padding: .875rem 1.25rem 1.75rem; }
 
 

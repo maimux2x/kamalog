@@ -1,101 +1,68 @@
 <%= content_for :header do %>
   <header class="kml-header">
     <!-- スマホ：ハンバーガーは置かず、設定はアバターから -->
-    <div class="me-auto">
-      <a class="kml-logo flex-shrink-0" href="/">
-        <span class="kml-logo__mark" aria-hidden="true">
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <rect
-              width="24"
-              height="24"
-              rx="8"
-              fill="currentColor"
-            ></rect>
+    <%= link_to root_path, class: 'kml-logo flex-shrink-0' do %>
+      <span class="kml-logo__mark" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <rect width="24" height="24" rx="8" fill="currentColor"></rect>
+          <path d="M6.6 18.4V13a5.4 5.4 0 0 1 10.8 0v5.4z" fill="#fff"></path>
+          <path d="M10.2 18.4v-2.6a1.8 1.8 0 0 1 3.6 0v2.6z" fill="currentColor"></path>
+        </svg>
+      </span>
+      <span class="kml-logo__text">Kamalog</span>
+    <% end %>
 
-            <path d="M6.6 18.4V13a5.4 5.4 0 0 1 10.8 0v5.4z" fill="#fff"></path>
+    <% if current_studio %>
+      <!-- PC：ロゴの右に主ナビ。2項目しかないのでサイドメニューは置かない -->
+      <nav class="kml-header__nav d-none d-lg-flex" aria-label="メイン">
+        <%= link_to '自分の作品', studio_my_pieces_path(current_studio), class: 'kml-header__tab is-active' %>
+        <%= link_to 'みんなの作品', studio_pieces_path(current_studio), class: 'kml-header__tab' %>
+      </nav>
+    <% end %>
 
-            <path
-              d="M10.2 18.4v-2.6a1.8 1.8 0 0 1 3.6 0v2.6z"
-              fill="currentColor"
-            ></path>
-          </svg>
-        </span>
+    <span class="kml-header__spacer"></span>
 
-        <span class="kml-logo__text">Kamalog</span>
-      </a>
-
-      <!-- 教室セレクタ：lg 未満のみ -->
-      <% if current_studio %>
-        <div class="kml-header__studio d-lg-none">
-          <div class="dropdown">
-            <button
-              class="kml-studio-picker"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span class="kml-studio-picker__name"><%= current_studio.name %></span>
-              <span class="kml-studio-picker__caret" aria-hidden="true">▼</span>
-            </button>
-
-            <ul class="dropdown-menu">
-              <li>
-                <h2 class="dropdown-header">教室を切り替える</h2>
-              </li>
-
-              <% current_user.studios.order(:id).each do |studio| %>
-                <li>
-                  <%= link_to studio.name, studio_my_pieces_path(studio), class: 'dropdown-item' %>
-                </li>
-              <% end %>
-
-              <li><hr class="dropdown-divider"></li>
-
-              <li>
-                <%= link_to '＋ 新しい教室を作る', new_studio_path, class: 'dropdown-item' %>
-              </li>
-            </ul>
-          </div>
+    <% if current_studio %>
+      <!-- 教室セレクタ：スマホ・PC 共通。切り替え・設定・新規作成がここに集まる -->
+      <div class="kml-header__studio">
+        <div class="dropdown">
+          <button class="kml-studio-picker" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="kml-studio-picker__name"><%= current_studio.name %></span>
+            <span class="kml-studio-picker__caret" aria-hidden="true">▼</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><h2 class="dropdown-header">教室を切り替える</h2></li>
+            <% current_user.studios.order('memberships.id').each do |studio| %>
+              <li><%= link_to studio.name, studio_my_pieces_path(studio), class: 'dropdown-item' %></li>
+            <% end %>
+            <li><hr class="dropdown-divider"></li>
+            <li><%= link_to '教室の設定', studio_path(current_studio), class: 'dropdown-item' %></li>
+            <li><%= link_to '＋ 新しい教室を作る', new_studio_path, class: 'dropdown-item' %></li>
+          </ul>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
-    <!-- PC：右端に登録ボタン -->
+    <!-- PC：登録ボタン。スマホはタブバー中央の丸ボタンが担当 -->
     <%= yield :header_action %>
 
     <!-- アバター：スマホ・PC 共通。アカウント設定への唯一の入口 -->
     <div class="dropdown flex-shrink-0">
-      <button
-        class="kml-avatar"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-label="アカウント"
-      >
+      <button class="kml-avatar" type="button" data-bs-toggle="dropdown" aria-label="アカウント">
         <span class="visually-hidden">アカウント</span>
       </button>
-
       <ul class="dropdown-menu dropdown-menu-end">
         <li class="kml-account">
           <span class="kml-avatar kml-avatar--sm" aria-hidden="true"></span>
-
           <span class="kml-account__text">
             <span class="kml-account__name"><%= current_user.name %></span>
             <span class="kml-account__mail"><%= current_user.email %></span>
           </span>
         </li>
-
         <li><hr class="dropdown-divider"></li>
         <li><%= link_to 'アカウント設定', profile_path, class: 'dropdown-item' %></li>
         <li><hr class="dropdown-divider"></li>
-
-        <li>
-          <%= button_to 'ログアウト', session_path, method: :delete, class: 'dropdown-item' %>
-        </li>
+        <li><%= button_to 'ログアウト', session_path, method: :delete, class: 'dropdown-item' %></li>
       </ul>
     </div>
   </header>
