@@ -3,6 +3,8 @@ class Studio < ApplicationRecord
   has_many :clays,       dependent: :destroy
   has_many :glazes,      dependent: :destroy
 
+  has_many :last_seen_users, class_name: 'User', dependent: :nullify, foreign_key: :last_seen_studio_id
+
   has_many :users, through: :memberships
 
   has_many :pieces, through: :memberships
