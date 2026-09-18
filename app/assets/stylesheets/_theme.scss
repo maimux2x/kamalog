@@ -475,9 +475,107 @@ body {
   .kml-page--narrow { padding-left: 1.75rem; padding-right: 1.75rem; }
 }
 
-.kml-flash { padding: .875rem 1.125rem 0;
-  @include media-breakpoint-up(lg) { padding: 1rem 1.75rem 0; } }
+// Flash
+// ------------------------------------------------------------
+// ヘッダーの下、本文の先頭に入る。固定で浮かせないので
+// 教室セレクタやアカウントアイコンを覆わない。
+//
+// 色は _variables.scss に置いてあるが、あちらを読み込まなくても
+// 動くように !default で受けておく（既に定義があればそちらが勝つ）。
 
+$kml-success:        #4E7A5B !default;
+$kml-success-bg:     #EDF3EE !default;
+$kml-success-border: #CBDDD0 !default;
+$kml-success-ink:    #2F4636 !default;
+
+$kml-error-bg:       #F8ECE8 !default;
+$kml-error-border:   #E5C9C1 !default;
+$kml-error-ink:      #6E3122 !default;
+$kml-error-mark:     #9E4A34 !default;
+
+$kml-warning:        #8A6A24 !default;
+$kml-warning-bg:     #FAF3E6 !default;
+$kml-warning-border: #E6D6B4 !default;
+$kml-warning-ink:    #5E4A1C !default;
+
+$kml-notice-bg:      #F1EEEA !default;
+$kml-notice-border:  #DDD5CA !default;
+
+// 背景は持たせない（地の色のまま）。空になったときに箱が見えないよう、
+// 上下のパディングは container に置かず .alert の margin-top で取る。
+// Bootstrap が閉じた .alert を取り除くと、高さは自動で 0 になる。
+
+.kml-flash {
+  display: flex; flex-direction: column;
+  padding: 0 1.125rem;
+  @include media-breakpoint-up(lg) { padding: 0 1.75rem; }
+}
+
+.kml-flash .alert {
+  display: flex; align-items: center; gap: .6875rem;
+  margin: .875rem 0 0;
+  padding: .8125rem .9375rem;
+  border-radius: .75rem;
+  border-width: 1px;
+  font-size: .875rem;
+  line-height: 1.6;
+
+  @include media-breakpoint-up(lg) { margin-top: 1rem; }
+}
+
+// 種別の目印。文字だけに頼らず丸バッジを付ける
+.kml-flash__mark {
+  flex: none;
+  width: 1.25rem; height: 1.25rem;
+  border-radius: 999px;
+  display: grid; place-items: center;
+  color: #fff;
+  font-size: .6875rem;
+  font-weight: 700;
+}
+
+.kml-flash__body { flex: 1; min-width: 0; }
+
+// 閉じるボタンは Bootstrap の .btn-close をそのまま使うが、
+// .alert-dismissible が付ける absolute 配置を外して flex の最後に置く。
+// 押せる大きさを確保したいので、枠は 1.5rem、×印は .625rem にする。
+.kml-flash .alert-dismissible { padding-right: .9375rem; }
+
+.kml-flash .btn-close {
+  position: static;
+  flex: none;
+  width: 1.5rem; height: 1.5rem;
+  padding: 0;
+  background-position: center;
+  background-size: .625rem;
+  opacity: .55;
+
+  &:hover { opacity: .9; }
+}
+
+.kml-flash .alert-success {
+  background: $kml-success-bg; border-color: $kml-success-border; color: $kml-success-ink;
+  .kml-flash__mark { background: $kml-success; }
+}
+
+.kml-flash .alert-danger {
+  background: $kml-error-bg; border-color: $kml-error-border; color: $kml-error-ink;
+  .kml-flash__mark { background: $kml-error-mark; }
+}
+
+.kml-flash .alert-warning {
+  background: $kml-warning-bg; border-color: $kml-warning-border; color: $kml-warning-ink;
+  .kml-flash__mark { background: $kml-warning; }
+}
+
+// notice（ログアウトなど、成否のない知らせ）
+.kml-flash .alert-secondary {
+  background: $kml-notice-bg; border-color: $kml-notice-border; color: $kml-ink-2;
+  .kml-flash__mark { background: $kml-ink-muted; }
+}
+
+
+// ------------------------------------------------------------
 // PC で 2カラムにする画面（作品詳細、設定の編集）
 .kml-split { display: flex; flex-direction: column; gap: 1.25rem; }
 @include media-breakpoint-up(lg) {
@@ -888,13 +986,22 @@ body {
 }
 .kml-empty__lead { font-size: .84375rem; line-height: 1.9; color: $kml-ink-3; }
 
+// ヘッダーを持たない画面（ログイン、教室に未所属）の面の色
+// ------------------------------------------------------------
+// 色は body に持たせる。本文（420px）側に付けると、その外に出る flash との間で
+// 色が割れて空の箱のように見える。<body class="kml-body kml-body--plain">
+
+.kml-body--plain { background: $kml-surface; }
+
+// flash も本文と同じ 420px に揃える
+.kml-body--plain .kml-flash { max-width: 420px; margin-inline: auto; width: 100%; }
+
 .kml-login {
   flex: 1;
   display: flex; flex-direction: column;
   max-width: 420px;          // PC でも1カラムのまま中央に置く
   margin-inline: auto;
   width: 100%;
-  background: $kml-surface;
 }
 
 @include media-breakpoint-up(lg) {
@@ -956,7 +1063,6 @@ body {
   max-width: 420px;
   margin-inline: auto;
   width: 100%;
-  background: $kml-surface;
 }
 .kml-onboarding__center {
   flex: 1;

@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 
     @current_user = nil
 
-    redirect_to root_path, status: :see_other, notice: 'ログアウトしました。'
+    redirect_to root_path, status: :see_other, flash: {info: 'ログアウトしました。'}
   end
 
   def failure
