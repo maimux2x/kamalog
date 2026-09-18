@@ -1,14 +1,18 @@
-<% {notice: 'alert-success', alert: 'alert-danger'}.each do |key, style| %>
-  <% if message = flash[key].presence %>
-    <div class="alert <%= style %> alert-dismissible fade show">
-      <%= message %>
+<div class="kml-flash" role="status" aria-live="polite">
+  <% {notice: ['success', '✓'], alert: ['danger', '!'], warning: ['warning', '!'], info: ['secondary', 'i']}.each do |key, (style, mark)| %>
+    <% if message = flash[key].presence %>
+      <div class="alert <%= 'alert-' + style %> alert-dismissible fade show">
+        <span class="kml-flash__mark" aria-hidden="true"><%= mark %></span>
 
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
+        <span class="kml-flash__body"><%= message %></span>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="閉じる"
+        ></button>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>

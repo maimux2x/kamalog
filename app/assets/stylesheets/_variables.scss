@@ -29,6 +29,25 @@ $kml-glaze-ink:     #3F544E;  // 釉色地の上のテキスト
 $kml-danger:        #A85A45;  // 削除・退会
 $kml-danger-border: #E8CFC7;
 
+// Flash（.alert）。面は薄く、文字は地の上で 4.5:1 を満たす濃さにする
+$kml-success:        #4E7A5B;
+$kml-success-bg:     #EDF3EE;
+$kml-success-border: #CBDDD0;
+$kml-success-ink:    #2F4636;
+
+$kml-error-bg:       #F8ECE8;
+$kml-error-border:   #E5C9C1;
+$kml-error-ink:      #6E3122;
+$kml-error-mark:     #9E4A34;
+
+$kml-warning:        #8A6A24;
+$kml-warning-bg:     #FAF3E6;
+$kml-warning-border: #E6D6B4;
+$kml-warning-ink:    #5E4A1C;
+
+$kml-notice-bg:      #F1EEEA;
+$kml-notice-border:  #DDD5CA;
+
 // 背景と面
 $kml-bg:            #F3EEE7;  // ページ背景
 $kml-surface:       #FAF6F0;  // セクションの面
@@ -54,6 +73,8 @@ $kml-placeholder-b: #EAE0D1;
 $primary:   $kml-clay;
 $secondary: $kml-glaze;
 $danger:    $kml-danger;
+$success:   $kml-success;
+$warning:   $kml-warning;
 $body-bg:   $kml-bg;
 $body-color:$kml-ink;
 
@@ -61,6 +82,8 @@ $theme-colors: (
   "primary":   $kml-clay,
   "secondary": $kml-glaze,
   "danger":    $kml-danger,
+  "success":   $kml-success,
+  "warning":   $kml-warning,
   "light":     $kml-surface,
   "dark":      $kml-ink
 );
@@ -160,7 +183,10 @@ $form-text-font-size:         .71875rem;  // 11.5px
 $form-select-indicator-color: $kml-ink-faint;
 
 // トグル（完成にする、招待リンクのON/OFF）
-$form-switch-width:           2.875em;   // 46px
+// $form-switch-width は em で指定する。Bootstrap 側が
+//   $form-switch-padding-start: $form-switch-width + .5em
+// と em を足すため、rem を入れると単位不一致でビルドが落ちる。
+$form-switch-width:           2.875em;   // 約46px（font-size 16px 基準）
 $form-switch-checked-color:   $kml-card;
 $form-check-input-bg:         #E4DACB;
 $form-check-input-border:     0;
