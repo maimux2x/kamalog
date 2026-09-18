@@ -2,13 +2,9 @@
   <% {notice: ['success', '✓'], alert: ['danger', '!'], warning: ['warning', '!'], info: ['secondary', 'i']}.each do |key, (style, mark)| %>
     <% if message = flash[key].presence %>
       <div class="alert <%= 'alert-' + style %> alert-dismissible fade show">
-        <span class="kml-flash__mark" aria-hidden="true">
-          <%= mark %>
-        </span>
+        <span class="kml-flash__mark" aria-hidden="true"><%= mark %></span>
 
-        <span class="kml-flash__body">
-          <%= message %>
-        </span>
+        <span class="kml-flash__body"><%= message %></span>
 
         <button
           type="button"
