@@ -465,8 +465,10 @@ body {
 // 本文の器
 .kml-page { padding: 1.375rem 1.125rem 2rem; }
 .kml-page--narrow { max-width: 720px; }
+// 見出しと件数は隣り合わせで読むものなので、両端に振らず並べる。
+// 右端に何か置きたい画面は、その要素に .ms-auto を付ける。
 .kml-page__head {
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+  display: flex; align-items: baseline; gap: .625rem;
   margin-bottom: 1.25rem;
 }
 
@@ -677,10 +679,19 @@ $kml-notice-border:  #DDD5CA !default;
 .kml-grid--3 { grid-template-columns: repeat(3, 1fr); }
 .kml-grid--4 { grid-template-columns: repeat(4, 1fr); gap: .5rem; }
 
+// PC：本文は 1200px で止めて中央に置く。画面幅に比例して写真が伸びないようにする。
+// 列数の切り替えは .kml-page の有無に依らず .kml-main 配下で効かせる
+// （ホームは section を直接並べていて .kml-page を持たないため）。
 @include media-breakpoint-up(lg) {
-  .kml-page .kml-grid--3 { grid-template-columns: repeat(4, 1fr); gap: 1.125rem; }
-  .kml-page .kml-grid--2 { grid-template-columns: repeat(3, 1fr); gap: 1.125rem; }
-  .kml-page .kml-piece-row-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .kml-main { width: 100%; max-width: 1200px; margin-inline: auto; }
+
+  .kml-main .kml-grid--3 { grid-template-columns: repeat(4, 1fr); gap: 1.125rem; }
+  .kml-main .kml-grid--2 { grid-template-columns: repeat(3, 1fr); gap: 1.125rem; }
+  .kml-main .kml-piece-row-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+
+@include media-breakpoint-up(xxl) {
+  .kml-main .kml-grid--3 { grid-template-columns: repeat(5, 1fr); }
 }
 
 .kml-tile { display: flex; flex-direction: column; gap: .375rem; color: $kml-ink; text-decoration: none; }
