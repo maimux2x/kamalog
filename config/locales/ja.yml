@@ -1,4 +1,5 @@
 ja:
   time:
     formats:
-      year_month_date: "%Y年%m月%d日"
+      year_month_date: '%Y年%m月%d日'
+      month_date: '%m月%d日'
