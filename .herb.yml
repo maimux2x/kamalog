@@ -1,3 +1,5 @@
+framework: ruby
+
 linter:
   enabled: true
 
