@@ -108,3 +108,7 @@
 <% end %>
 
 <%= render template: 'layouts/blank' %>
+
+<% if current_studio %>
+  <%= render 'shared/tabbar' %>
+<% end %>
