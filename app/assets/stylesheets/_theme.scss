@@ -989,7 +989,18 @@ $kml-notice-border:  #DDD5CA !default;
 // 空状態・ログイン
 // ------------------------------------------------------------
 
-.kml-empty { display: flex; flex-direction: column; align-items: center; gap: 1.125rem; text-align: center; }
+// 本文の残り高さいっぱいに広げて中央に置く（.kml-main は flex column）。
+// 上下の余白は同じにして、見た目の重心をわずかに上げるため下だけ少し多めに取る。
+.kml-empty {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.125rem;
+  width: 100%; max-width: 360px; margin-inline: auto;
+  padding: 2.75rem 1.625rem 4rem;
+  text-align: center;
+}
+// ボタンは本文幅（360px）まで。スマホでは画面幅いっぱい
+.kml-empty .btn { width: 100%; }
 .kml-empty__icon {
   display: grid; place-items: center; width: 88px; height: 88px;
   border-radius: 1.75rem; background: var(--kml-placeholder-a);

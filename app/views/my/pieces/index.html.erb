@@ -2,43 +2,52 @@
   <%= link_to '作品を登録', new_studio_my_piece_path(current_studio), class: 'btn btn-primary btn-sm d-none d-lg-inline-flex' %>
 <% end %>
 
-<section class="px-6 pt-7">
-  <div class="kml-page__head mb-3">
-    <h2 class="h4 mb-0">制作中の作品</h2>
-    <span class="kml-count"><%= @pieces.in_progress.size %>点</span>
-  </div>
+<% if @pieces.present? %>
+  <section class="px-6 pt-7">
+    <div class="kml-page__head mb-3">
+      <h2 class="h4 mb-0">制作中の作品</h2>
+      <span class="kml-count"><%= @pieces.in_progress.size %>点</span>
+    </div>
 
-  <ul class="kml-piece-row-list list-unstyled d-flex flex-column gap-3 mb-0">
-    <% @pieces.in_progress.order(:created_at).each do |piece| %>
-      <li>
-        <%= link_to studio_my_piece_path(current_studio, piece), class: 'kml-piece-row' do %>
-          <span class="kml-piece-row__thumb kml-photo-empty"></span>
+    <ul class="kml-piece-row-list list-unstyled d-flex flex-column gap-3 mb-0">
+      <% @pieces.in_progress.order(:created_at).each do |piece| %>
+        <li>
+          <%= link_to studio_my_piece_path(current_studio, piece), class: 'kml-piece-row' do %>
+            <span class="kml-piece-row__thumb kml-photo-empty"></span>
 
-          <span class="kml-piece-row__body">
-            <span class="kml-piece-row__title"><%= piece.title %></span>
-            <span class="kml-badge kml-badge--clay">前回 釉掛け</span>
-            <span class="kml-meta"><%= l piece.created_at, format: :month_date %>から ・ 記録<%= piece.logs.size %>件</span>
-          </span>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-</section>
-
-<section class="px-6 pt-8 pb-8">
-  <div class="kml-page__head mb-3">
-    <h2 class="h4 mb-0">完成品</h2>
-    <span class="kml-count"><%= @pieces.complete.size %>点</span>
-  </div>
-
-  <ul class="kml-grid kml-grid--3 list-unstyled mb-5">
-    <% @pieces.complete.order(completed_at: :desc).each do |piece| %>
-      <%= link_to studio_my_piece_path(current_studio, piece), class: 'kml-title' do %>
-        <span class="kml-tile__photo kml-photo-empty"></span>
-        <span class="kml-tile__title"><%= piece.title %></span>
+            <span class="kml-piece-row__body">
+              <span class="kml-piece-row__title"><%= piece.title %></span>
+              <span class="kml-badge kml-badge--clay">前回 釉掛け</span>
+              <span class="kml-meta"><%= l piece.created_at, format: :month_date %>から ・ 記録<%= piece.logs.size %>件</span>
+            </span>
+          <% end %>
+        </li>
       <% end %>
-    <% end %>
-  </ul>
+    </ul>
+  </section>
 
-  <%= link_to 'すべて表示する', studio_my_pieces_path(current_studio), class: 'btn btn-light w-100 border' %>
-</section>
+  <section class="px-6 pt-8 pb-8">
+    <div class="kml-page__head mb-3">
+      <h2 class="h4 mb-0">完成品</h2>
+      <span class="kml-count"><%= @pieces.complete.size %>点</span>
+    </div>
+
+    <ul class="kml-grid kml-grid--3 list-unstyled mb-5">
+      <% @pieces.complete.order(completed_at: :desc).each do |piece| %>
+        <%= link_to studio_my_piece_path(current_studio, piece), class: 'kml-title' do %>
+          <span class="kml-tile__photo kml-photo-empty"></span>
+          <span class="kml-tile__title"><%= piece.title %></span>
+        <% end %>
+      <% end %>
+    </ul>
+
+    <%= link_to 'すべて表示する', studio_my_pieces_path(current_studio), class: 'btn btn-light w-100 border' %>
+  </section>
+<% else %>
+  <section class="kml-empty px-8 pt-9 pb-9">
+    <span class="kml-empty__icon">土</span>
+    <h2 class="h4 mb-0">まだ作品がありません</h2>
+    <p class="kml-empty__lead mb-0">つくり始めたものを登録すると、<br>作業記録を残せるようになります。</p>
+    <%= link_to '最初の作品を登録する', new_studio_my_piece_path, class: 'btn btn-primary w-100 mt-7' %>
+  </section>
+<% end %>
