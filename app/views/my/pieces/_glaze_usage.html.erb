@@ -1,10 +1,15 @@
-<div class="hstack gap-3 mb-3" data-nested-form-target="item">
-  <%= form.collection_select :glaze_id, current_studio.glazes.order(:created_at), :id, :name, include_blank: true, hide_label: true, wrapper: {class: false} %>
+<div class="kml-material-row" data-nested-form-target="item">
+  <% if form.object.persisted? %>
+    <%= form.hidden_field :id %>
+  <% end %>
 
-  <div>
+  <%= form.label :glaze_id, class: 'visually-hidden' %>
+  <%= form.collection_select :glaze_id, current_studio.glazes.order(:created_at), :id, :name, {prompt: true, required: true}, class: 'form-select form-select-sm' %>
+
+  <div class="kml-material-row__amount">
     <button
       type="button"
-      class="btn btn-outline-danger"
+      class="kml-remove-btn"
       data-nested-form-target="removeButton"
       data-action="click->nested-form#remove"
     >

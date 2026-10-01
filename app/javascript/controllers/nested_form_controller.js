@@ -35,7 +35,7 @@ export default class NestedFormController extends Controller {
 
   remove(e) {
     const item         = e.target.closest('[data-nested-form-target="item"]');
-    const maybeIdInput = item.nextElementSibling;
+    const maybeIdInput = item.querySelector('input[type="hidden"][name$="[id]"]');
 
     if (maybeIdInput instanceof HTMLInputElement && maybeIdInput.name.endsWith('[id]')) {
       item.hidden = true;
@@ -59,11 +59,11 @@ export default class NestedFormController extends Controller {
   }
 
   #arrangeRemoveButtons() {
-    const visibleItems  = this.itemTargets.filter((item) => !item.hidden);
-    const disabled      = visibleItems.length <= this.minItemsValue;
+    const visibleItems = this.itemTargets.filter((item) => !item.hidden);
+    const hidden       = visibleItems.length <= this.minItemsValue;
 
     for (const button of this.removeButtonTargets) {
-      button.disabled = disabled;
+      button.hidden = hidden;
     }
   }
 }

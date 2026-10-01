@@ -16,6 +16,11 @@ class My::PiecesController < ApplicationController
   def create
     @piece = current_membership.pieces.new(piece_params)
 
+    if params[:piece][:complete] == '1'
+      @piece.status       = :complete
+      @piece.completed_at = Time.current
+    end
+
     if @piece.save
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を登録しました。'
     else
@@ -31,6 +36,10 @@ class My::PiecesController < ApplicationController
     @piece = current_membership.pieces.find(params[:id])
 
     @piece.assign_attributes piece_params
+
+    if params[:piece][:complete] == '1'
+      @piece.status = :complete
+    end
 
     if @piece.complete?
       @piece.completed_at ||= Time.current
@@ -56,7 +65,6 @@ class My::PiecesController < ApplicationController
   def piece_params
     params.expect(piece: [
       :title,
-      :status,
       :form_method,
       :description,
 

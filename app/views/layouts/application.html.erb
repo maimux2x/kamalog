@@ -107,8 +107,10 @@
   <%= yield %>
 <% end %>
 
-<%= render template: 'layouts/blank' %>
-
-<% if current_studio %>
-  <%= render 'shared/tabbar' %>
+<% content_for :footer do %>
+  <% if current_studio %>
+    <%= render 'shared/tabbar' %>
+  <% end %>
 <% end %>
+
+<%= render template: 'layouts/blank' %>
