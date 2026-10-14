@@ -17,7 +17,11 @@
         <%= f.collection_select :form_method, Piece.form_methods_i18n, :first, :last, {prompt: true}, class: 'form-select', id: 'piece_method' %>
       </div>
 
-      <fieldset class="kml-piece-form__clays" data-controller="nested-form" data-nested-form-min-items-value="1">
+      <fieldset
+        class="kml-piece-form__clays"
+        data-controller="nested-form"
+        data-nested-form-min-items-value="1"
+      >
         <legend class="form-label">土の種類と使用量</legend>
 
         <div data-nested-form-target="container">
@@ -71,6 +75,7 @@
           <span class="kml-switch-row__label">もう完成している</span>
           <span class="kml-switch-row__note">代表画像とコメントを設定できます</span>
         </div>
+
         <div class="form-check form-switch m-0">
           <%= f.checkbox :status, id: 'piece_complete', name: 'piece[complete]', class: 'form-check-input' %>
           <%= f.label 'もう完成している', class: 'visually-hidden', for: 'piece_complete' %>
