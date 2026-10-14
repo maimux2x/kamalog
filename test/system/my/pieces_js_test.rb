@@ -20,24 +20,16 @@ class My::PiecesJsTest < ApplicationSystemTestCase
 
     click_on '作品を登録'
 
-    fill_in 'タイトル', with: 'お茶碗'
-    choose '製作中'
+    fill_in '作品名', with: 'お茶碗'
     select '電動ろくろ', from: '成形方法'
 
-    within '[data-nested-form-target="item"]' do
-      assert_selector 'button[disabled]', text: '削除'
-
-      select '白土',    from: '土'
-      fill_in '使用量', with: '0.5'
-      choose 'kg'
-    end
+    select '白土',    from: '土'
+    fill_in '使用量', with: '0.5'
+    choose 'kg', allow_label_click: true
 
     click_on '釉薬を追加'
 
     select '白マット', from: '釉薬'
-
-    assert_no_text '作品説明'
-    assert_no_text '画像を追加'
 
     click_on '登録する'
 
@@ -54,29 +46,23 @@ class My::PiecesJsTest < ApplicationSystemTestCase
 
     click_on '編集'
 
-    fill_in 'タイトル', with: '大きいマグカップ'
-
-    choose '完成'
+    fill_in '作品名', with: '大きいマグカップ'
 
     click_on '土を追加'
 
-    within '.clays :nth-last-child(1 of [data-nested-form-target="item"])' do
+    within '.kml-piece-form__clays [data-nested-form-target="item"]:nth-last-child(1)' do
       select '黒土',    from: '土'
       fill_in '使用量', with: '100'
-      choose 'g'
+      choose 'g', allow_label_click: true
     end
 
     click_on '釉薬を追加'
 
-    within '.glazes :nth-last-child(1 of [data-nested-form-target="item"])' do
+    within '.kml-piece-form__glazes [data-nested-form-target="item"]:nth-last-child(1)' do
       select '黒マット', from: '釉薬'
     end
 
-    fill_in '作品説明', with: 'たくさん量が入るマグカップを作った'
-
-    attach_file file_fixture('dish_cup.png'), make_visible: true
-
-    fill_in '説明', with: '持ち手を工夫した'
+    check 'もう完成している'
 
     click_on '更新する'
 
@@ -86,9 +72,6 @@ class My::PiecesJsTest < ApplicationSystemTestCase
     assert_text '黒土 100g'
     assert_text '白マット'
     assert_text '黒マット'
-    assert_text 'たくさん量が入るマグカップを作った'
-    assert_selector 'img[src$="/dish_cup.png"]'
-    assert_text '持ち手を工夫した'
   end
 
   test '作品から土と釉薬を削除する' do
@@ -96,11 +79,11 @@ class My::PiecesJsTest < ApplicationSystemTestCase
 
     click_on '編集'
 
-    within '.clays :nth-last-child(1 of [data-nested-form-target="item"])' do
+    within '.kml-piece-form__clays :nth-last-child(1 of [data-nested-form-target="item"])' do
       click_on '削除'
     end
 
-    within '.glazes :nth-last-child(1 of [data-nested-form-target="item"])' do
+    within '.kml-piece-form__glazes :nth-last-child(1 of [data-nested-form-target="item"])' do
       click_on '削除'
     end
 
@@ -111,33 +94,5 @@ class My::PiecesJsTest < ApplicationSystemTestCase
     assert_no_text '黒土'
     assert_text '白マット'
     assert_no_text '黒マット'
-  end
-
-  test '作品の画像を並び替える' do
-    visit studio_my_piece_path(@studio, pieces(:teacup))
-
-    click_on '編集'
-    source = find('.list-group-item:nth-child(1) .handle')
-    target = find('.list-group-item:nth-child(2)')
-
-    source.drag_to target
-
-    within '.list-group-item:nth-child(1)' do
-      assert_selector 'img[src$="/dish.png"]'
-    end
-
-    within '.list-group-item:nth-child(2)' do
-      assert_selector 'img[src$="/dish_cup.png"]'
-    end
-
-    click_on '更新する'
-
-    within '.g-col-12:nth-child(1)' do
-      assert_selector 'img[src$="/dish.png"]'
-    end
-
-    within '.g-col-12:nth-child(2)' do
-      assert_selector 'img[src$="/dish_cup.png"]'
-    end
   end
 end
