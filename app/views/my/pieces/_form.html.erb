@@ -8,12 +8,12 @@
 
     <div class="kml-form__body kml-piece-form">
       <div class="kml-piece-form__name">
-        <%= f.label'作品名', class: 'form-label', for: 'piece_name' %>
+        <%= f.label '作品名', class: 'form-label', for: 'piece_name' %>
         <%= f.text_field :title, class: 'form-control', id: 'piece_name' %>
       </div>
 
       <div class="kml-piece-form__method">
-        <%= f.label'成形方法', class: 'form-label', for: 'piece_method' %>
+        <%= f.label '成形方法', class: 'form-label', for: 'piece_method' %>
         <%= f.collection_select :form_method, Piece.form_methods_i18n, :first, :last, {prompt: true}, class: 'form-select', id: 'piece_method' %>
       </div>
 
