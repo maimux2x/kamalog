@@ -30,15 +30,7 @@ class My::PiecesController < ApplicationController
   def update
     @piece = current_membership.pieces.find(params[:id])
 
-    @piece.assign_attributes piece_params
-
-    if @piece.complete?
-      @piece.completed_at ||= Time.current
-    else
-      @piece.completed_at = nil
-    end
-
-    if @piece.save
+    if @piece.update(piece_params)
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
     else
       render :edit, status: :unprocessable_content
@@ -56,9 +48,9 @@ class My::PiecesController < ApplicationController
   def piece_params
     params.expect(piece: [
       :title,
-      :status,
       :form_method,
       :description,
+      :complete,
 
       clay_usages_attributes: [[
         :clay_id,

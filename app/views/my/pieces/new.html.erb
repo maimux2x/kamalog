@@ -1,7 +1,1 @@
-<%= render 'breadcrumb', items: [
-  [current_studio.name, studio_path(current_studio)],
-  ['自分の作品', studio_my_pieces_path(current_studio)],
-  '新規登録'
-] %>
-
 <%= render 'form', studio: current_studio, piece: @piece %>

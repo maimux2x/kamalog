@@ -187,6 +187,8 @@ $form-select-indicator-color: $kml-ink-faint;
 //   $form-switch-padding-start: $form-switch-width + .5em
 // と em を足すため、rem を入れると単位不一致でビルドが落ちる。
 $form-switch-width:           2.875em;   // 約46px（font-size 16px 基準）
+$form-switch-color:           $kml-card; // つまみは OFF でも白（13b）
+$form-switch-focus-color:     $kml-card;
 $form-switch-checked-color:   $kml-card;
 $form-check-input-bg:         #E4DACB;
 $form-check-input-border:     0;
