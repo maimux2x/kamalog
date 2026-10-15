@@ -77,8 +77,8 @@
         </div>
 
         <div class="form-check form-switch m-0">
-          <%= f.checkbox :status, id: 'piece_complete', name: 'piece[complete]', class: 'form-check-input' %>
-          <%= f.label 'もう完成している', class: 'visually-hidden', for: 'piece_complete' %>
+          <%= f.checkbox :complete, class: 'form-check-input' %>
+          <%= f.label :complete, 'もう完成している', class: 'visually-hidden' %>
         </div>
       </div>
     </div>

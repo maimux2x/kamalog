@@ -16,11 +16,6 @@ class My::PiecesController < ApplicationController
   def create
     @piece = current_membership.pieces.new(piece_params)
 
-    if params[:piece][:complete] == '1'
-      @piece.status       = :complete
-      @piece.completed_at = Time.current
-    end
-
     if @piece.save
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を登録しました。'
     else
@@ -35,19 +30,7 @@ class My::PiecesController < ApplicationController
   def update
     @piece = current_membership.pieces.find(params[:id])
 
-    @piece.assign_attributes piece_params
-
-    if params[:piece][:complete] == '1'
-      @piece.status = :complete
-    end
-
-    if @piece.complete?
-      @piece.completed_at ||= Time.current
-    else
-      @piece.completed_at = nil
-    end
-
-    if @piece.save
+    if @piece.update(piece_params)
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
     else
       render :edit, status: :unprocessable_content
@@ -67,6 +50,7 @@ class My::PiecesController < ApplicationController
       :title,
       :form_method,
       :description,
+      :complete,
 
       clay_usages_attributes: [[
         :clay_id,

@@ -32,4 +32,16 @@ class Piece < ApplicationRecord
   accepts_nested_attributes_for :clay_usages,  allow_destroy: true
   accepts_nested_attributes_for :glaze_usages, allow_destroy: true
   accepts_nested_attributes_for :photos,       allow_destroy: true
+
+  def complete = complete?
+
+  def complete=(value)
+    if ActiveRecord::Type::Boolean.new.cast(value)
+      self.status         = :complete
+      self.completed_at ||= Time.current
+    else
+      self.status       = :in_progress
+      self.completed_at = nil
+    end
+  end
 end
