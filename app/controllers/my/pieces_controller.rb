@@ -24,7 +24,9 @@ class My::PiecesController < ApplicationController
   end
 
   def edit
-    @piece = current_membership.pieces.find(params[:id])
+    @piece        = current_membership.pieces.find(params[:id])
+    @clay_usages  = @piece.clay_usages.order(:created_at)
+    @glaze_usages = @piece.glaze_usages.order(:created_at)
   end
 
   def update
@@ -33,6 +35,9 @@ class My::PiecesController < ApplicationController
     if @piece.update(piece_params)
       redirect_to studio_my_piece_path(current_studio, @piece), status: :see_other, notice: '製作中の作品を更新しました。'
     else
+      @clay_usages  = @piece.clay_usages
+      @glaze_usages = @piece.glaze_usages
+
       render :edit, status: :unprocessable_content
     end
   end

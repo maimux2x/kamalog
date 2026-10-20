@@ -4,7 +4,7 @@
   <% end %>
 
   <%= form.label :glaze_id, class: 'visually-hidden' %>
-  <%= form.collection_select :glaze_id, current_studio.glazes.order(:created_at), :id, :name, {prompt: true, required: true}, class: 'form-select form-select-sm' %>
+  <%= form.collection_select :glaze_id, current_studio.glazes.order(:position), :id, :name, {prompt: true, required: true}, class: 'form-select form-select-sm' %>
 
   <div class="kml-material-row__amount">
     <button

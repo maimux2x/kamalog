@@ -4,7 +4,7 @@
   <% end %>
 
   <%= form.label :clay_id, class: 'visually-hidden' %>
-  <%= form.collection_select :clay_id, current_studio.clays.order(:created_at), :id, :name, {prompt: true, required: true}, class: 'form-select form-select-sm' %>
+  <%= form.collection_select :clay_id, current_studio.clays.order(:position), :id, :name, {prompt: true, required: true}, class: 'form-select form-select-sm' %>
 
   <div class="kml-material-row__amount">
     <%= form.label :weight_amount, class: 'visually-hidden' %>

@@ -1,4 +1,4 @@
-<%= form_with model: [studio, :my, piece], class: 'kml-form kml-form--card' do |f| %>
+<%= form_with model: [current_studio, :my, piece], class: 'kml-form kml-form--card' do |f| %>
   <%= link_to '自分の作品', studio_my_pieces_path(current_studio), class: 'kml-back kml-form__back' %>
 
   <div class="kml-form__card">
@@ -25,7 +25,7 @@
         <legend class="form-label">土の種類と使用量</legend>
 
         <div data-nested-form-target="container">
-          <%= f.fields_for :clay_usages, include_id: false do |clay_usage| %>
+          <%= f.fields_for :clay_usages, clay_usages, include_id: false do |clay_usage| %>
             <%= render 'clay_usage', form: clay_usage %>
           <% end %>
         </div>
@@ -50,7 +50,7 @@
         <p class="form-text mt-0">釉掛けの作業記録からでも登録できます。</p>
 
         <div data-nested-form-target="container">
-          <%= f.fields_for :glaze_usages, include_id: false do |glaze_usage| %>
+          <%= f.fields_for :glaze_usages, glaze_usages, include_id: false do |glaze_usage| %>
             <%= render 'glaze_usage', form: glaze_usage %>
           <% end %>
         </div>
@@ -84,7 +84,7 @@
     </div>
 
     <footer class="kml-form__foot">
-      <%= link_to 'キャンセル', piece.persisted? ? studio_my_piece_path(studio, piece) : studio_my_pieces_path(studio), class: 'btn btn-outline-secondary kml-form__foot-cancel' %>
+      <%= link_to 'キャンセル', piece.persisted? ? studio_my_piece_path(current_studio, piece) : studio_my_pieces_path(current_studio), class: 'btn btn-outline-secondary kml-form__foot-cancel' %>
       <%= f.submit class: 'btn btn-primary' %>
     </footer>
   </div>
