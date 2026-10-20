@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_15_014309) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_20_071155) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -133,6 +133,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_15_014309) do
     t.index ["membership_id"], name: "index_pieces_on_membership_id"
   end
 
+  create_table "process_kinds", force: :cascade do |t|
+    t.integer "studio_id", null: false
+    t.string "name", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["studio_id", "position"], name: "index_process_kinds_on_studio_id_and_position", unique: true
+    t.index ["studio_id"], name: "index_process_kinds_on_studio_id"
+  end
+
+  create_table "processes", force: :cascade do |t|
+    t.integer "log_id", null: false
+    t.integer "process_kind_id", null: false
+    t.index ["log_id"], name: "index_processes_on_log_id"
+    t.index ["process_kind_id"], name: "index_processes_on_process_kind_id"
+  end
+
   create_table "studios", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "invitation_token"
@@ -144,10 +161,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_15_014309) do
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", null: false
-    t.integer "last_seen_studio_id"
     t.string "name", null: false
     t.string "uid", null: false
     t.datetime "updated_at", null: false
+    t.integer "last_seen_studio_id"
     t.index ["last_seen_studio_id"], name: "index_users_on_last_seen_studio_id"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
