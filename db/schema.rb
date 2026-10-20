@@ -133,21 +133,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_20_071155) do
     t.index ["membership_id"], name: "index_pieces_on_membership_id"
   end
 
-  create_table "process_kinds", force: :cascade do |t|
+  create_table "step_kinds", force: :cascade do |t|
     t.integer "studio_id", null: false
     t.string "name", null: false
     t.integer "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["studio_id", "position"], name: "index_process_kinds_on_studio_id_and_position", unique: true
-    t.index ["studio_id"], name: "index_process_kinds_on_studio_id"
+    t.index ["studio_id", "position"], name: "index_step_kinds_on_studio_id_and_position", unique: true
+    t.index ["studio_id"], name: "index_step_kinds_on_studio_id"
   end
 
-  create_table "processes", force: :cascade do |t|
+  create_table "steps", force: :cascade do |t|
     t.integer "log_id", null: false
-    t.integer "process_kind_id", null: false
-    t.index ["log_id"], name: "index_processes_on_log_id"
-    t.index ["process_kind_id"], name: "index_processes_on_process_kind_id"
+    t.integer "step_kind_id", null: false
+    t.index ["log_id"], name: "index_steps_on_log_id"
+    t.index ["step_kind_id"], name: "index_steps_on_step_kind_id"
   end
 
   create_table "studios", force: :cascade do |t|
