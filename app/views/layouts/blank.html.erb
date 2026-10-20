@@ -31,6 +31,8 @@
           <%= render 'shared/flash' %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
+
+        <%= yield :footer %>
       </div>
     </div>
   </body>

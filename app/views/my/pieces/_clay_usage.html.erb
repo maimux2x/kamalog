@@ -1,12 +1,25 @@
-<div class="hstack gap-3 mb-3" data-nested-form-target="item">
-  <%= form.collection_select :clay_id, current_studio.clays.order(:created_at), :id, :name, include_blank: true, hide_label: true, required: true, wrapper: {class: false} %>
-  <%= form.number_field :weight_amount, hide_label: true, wrapper: {class: false}, step: 'any', value: number_to_rounded(form.object.weight_amount, strip_insignificant_zeros: true) %>
-  <%= form.collection_radio_buttons :weight_unit, ClayUsage.weight_units_i18n, :first, :last, hide_label: true, wrapper: {class: false}, inline: true %>
+<div class="kml-material-row" data-nested-form-target="item">
+  <% if form.object.persisted? %>
+    <%= form.hidden_field :id %>
+  <% end %>
 
-  <div>
+  <%= form.label :clay_id, class: 'visually-hidden' %>
+  <%= form.collection_select :clay_id, current_studio.clays.order(:position), :id, :name, {prompt: true, required: true}, class: 'form-select form-select-sm' %>
+
+  <div class="kml-material-row__amount">
+    <%= form.label :weight_amount, class: 'visually-hidden' %>
+    <%= form.number_field :weight_amount, step: 'any', value: number_to_rounded(form.object.weight_amount, strip_insignificant_zeros: true), class: 'form-control form-control-sm text-end' %>
+
+    <div class="btn-group btn-group-sm kml-unit" role="group" aria-label="単位">
+      <%= form.collection_radio_buttons :weight_unit, ClayUsage.weight_units_i18n, :first, :last, inline: true, include_hidden: false do |b| %>
+        <%= b.radio_button class: 'btn-check' %>
+        <%= b.label class: 'btn btn-outline-secondary' %>
+      <% end %>
+    </div>
+
     <button
       type="button"
-      class="btn btn-outline-danger"
+      class="kml-remove-btn"
       data-nested-form-target="removeButton"
       data-action="nested-form#remove"
     >

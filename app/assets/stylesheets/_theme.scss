@@ -832,6 +832,203 @@ $kml-notice-border:  #DDD5CA !default;
   &.is-enabled { color: var(--kml-clay); font-weight: 500; }
 }
 .kml-formbar__spacer { width: 3.125rem; }
+.kml-form__head,
+.kml-form__back { display: none; }
+.kml-form__card { display: contents; }   // スマホでは枠なし
+
+.kml-form__foot { display: flex; padding: 0 1.125rem 1.625rem; }
+.kml-form__foot .btn { flex: 1; }
+.kml-form__foot-cancel { display: none; }
+
+// PC：登録・編集フォームをページ内のカードとして出す（13b）
+// ------------------------------------------------------------
+// 共通ヘッダーの下に、幅720pxの白いカードを中央寄せで置く。背景は暗くしない。
+// 地（$kml-bg）とカード（白）の差で、余白が多くても間延びしない。
+@include media-breakpoint-up(lg) {
+  .kml-form--card {
+    width: 100%; max-width: 720px;
+    min-height: 0;
+    margin: 0 auto;
+    padding: 1.5rem 0 2.5rem;
+    gap: .875rem;
+    background: transparent;
+
+    .kml-formbar { display: none; }   // スマホ用。PCは共通ヘッダーがある
+    .kml-form__back { display: inline-flex; align-self: flex-start; }
+
+    .kml-form__card {
+      display: block;
+      border: 1px solid $kml-border;
+      border-radius: 1.125rem;
+      background: #FFF;
+      box-shadow: 0 6px 18px rgba(80, 60, 40, .06);
+      overflow: hidden;
+    }
+
+    .kml-form__head {
+      display: block;
+      padding: 1.125rem 1.5rem;
+      border-bottom: 1px solid var(--kml-border-soft);
+    }
+    .kml-form__title {
+      margin: 0;
+      font-family: $headings-font-family;
+      font-size: 1.125rem; font-weight: 700;
+    }
+
+    .kml-form__body { padding: 1.375rem 1.5rem; }
+
+    // 白いカードの上では入力欄が同化するので、地を一段沈める
+    // （土・釉薬の行の中だけは逆に、行の地を沈めて入力欄を白にする）
+    .form-control,
+    .form-select { background-color: $kml-surface; }
+
+    // 入力欄：角丸9px・高さ約42px
+    .form-control,
+    .form-select {
+      min-height: 2.625rem;
+      padding: .6875rem .75rem;
+      border-radius: .5625rem;
+      font-size: .875rem;
+    }
+    .form-select { padding-right: 2.25rem; }
+
+    // 土・釉薬の行：地は $kml-surface、行内の入力欄は白。1行に並べるので何が消えるか分かる
+    .kml-material-row {
+      flex-direction: row;
+      align-items: center;
+      gap: .5625rem;
+      padding: .75rem;
+      border-radius: .8125rem;
+      background: $kml-surface;
+      border: 1px solid $kml-border;
+
+      // 全幅にしても入りきらない名前は … で省略し、選んだ後は title で全文を出す
+      > .form-select {
+        flex: 1; min-width: 0;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+
+      .form-control,
+      .form-select {
+        background-color: #FFF;
+        border-color: transparent;
+        &:focus { border-color: $input-focus-border-color; }
+      }
+    }
+
+    // 量・単位・削除は行に直接並べる
+    .kml-material-row__amount { display: contents; }
+    .kml-material-row__amount .form-control { flex: none; width: 4.75rem; }
+
+    // g / kg：選択中は土色
+    .kml-unit {
+      flex: none;
+      border: 1px solid $kml-border;
+      border-radius: .5625rem;
+      overflow: hidden;
+
+      .btn {
+        min-height: 0;
+        padding: .625rem .8125rem;
+        border: 0;
+        border-radius: 0;
+        background: #FFF;
+        color: $kml-ink-muted;
+        font-size: .8125rem;
+        font-weight: 400;
+      }
+      .btn-check:checked + .btn {
+        background: $kml-clay;
+        color: #FFF;
+      }
+      .btn-check:focus-visible + .btn { box-shadow: inset 0 0 0 2px rgba($kml-clay, .4); }
+    }
+
+    .kml-material-row__amount .kml-remove-btn {
+      margin-left: 0;
+      padding: .375rem .125rem;
+      font-size: .78125rem;
+      white-space: nowrap;
+    }
+
+    // 追加ボタン：入力欄と同じくらいの高さ
+    .kml-add-btn {
+      min-height: 0;
+      padding: .6875rem;
+      border-radius: .6875rem;
+      font-size: .84375rem;
+    }
+
+    // 土・釉薬の行の間隔
+    .kml-piece-form__clays,
+    .kml-piece-form__glazes {
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+
+    // もう完成している：地 $kml-surface の箱
+    .kml-piece-form__done {
+      padding: .875rem .9375rem;
+      border-radius: .8125rem;
+      background: $kml-surface;
+      border: 1px solid $kml-border;
+    }
+
+    .kml-form__foot {
+      justify-content: flex-end; gap: .625rem;
+      padding: 1rem 1.5rem;
+      background: $kml-surface;
+      border-top: 1px solid var(--kml-border-soft);
+      // 13b：高さ約42px・角丸10px・文字14px
+      .btn {
+        flex: none;
+        min-height: 0;
+        padding: .6875rem 1.5rem;
+        border-radius: .625rem;
+        font-size: .875rem;
+        line-height: 1.4;
+      }
+    }
+
+    // キャンセルは白地に罫線。緑の outline-secondary だと登録と同じ重さに見える
+    .kml-form__foot-cancel {
+      display: inline-flex;
+      padding-inline: 1.25rem;
+      background: #FFF;
+      border: 1px solid $kml-border;
+      color: $kml-ink-2;
+      font-weight: 400;
+
+      &:hover,
+      &:focus-visible {
+        background: $kml-sand;
+        border-color: $kml-border;
+        color: $kml-ink;
+      }
+      &:active { background: $kml-bg; border-color: $kml-border; color: $kml-ink; }
+    }
+  }
+
+  // 作品フォームは2カラム。土・釉薬は全幅：量・単位・削除で約210pxを使うので、
+  // 左カラム（約350px）に入れると土の選択欄が110px前後しか残らない
+  .kml-piece-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+      "name   method"
+      "clays  clays"
+      "glazes glazes"
+      "done   done";
+    align-items: start;
+    column-gap: 1.5rem;
+    row-gap: 1.25rem;
+  }
+  .kml-piece-form__name   { grid-area: name; }
+  .kml-piece-form__method { grid-area: method; }
+  .kml-piece-form__clays  { grid-area: clays; }
+  .kml-piece-form__glazes { grid-area: glazes; }
+  .kml-piece-form__done   { grid-area: done; }
+}
 
 .kml-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
 
@@ -852,6 +1049,7 @@ $kml-notice-border:  #DDD5CA !default;
 }
 .kml-material-row__amount { display: flex; align-items: center; gap: .5625rem; }
 .kml-unit { flex: none; }
+.kml-material-row__amount .kml-remove-btn { margin-left: auto; padding: .375rem .25rem; }
 
 .kml-add-btn {
   display: block; width: 100%; margin-top: .5625rem;
@@ -871,9 +1069,18 @@ $kml-notice-border:  #DDD5CA !default;
   border-radius: .875rem; background: var(--kml-glaze-tint);
   .form-label { color: var(--kml-glaze-ink); }
 }
+.kml-glaze-panel__list { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .625rem; }
 .kml-glaze-panel__item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: .8125rem; border-radius: .6875rem; background: #FFF; font-size: .90625rem;
+  display: flex; align-items: center; gap: .5625rem;
+
+  // 土・釉薬の行（.kml-material-row）と同じ：白いプルダウン + 右に削除
+  > .form-select {
+    flex: 1; min-width: 0;
+    background-color: #FFF; border-color: transparent;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    &:focus { border-color: $input-focus-border-color; }
+  }
+  > .kml-remove-btn { flex: none; padding: .375rem .125rem; white-space: nowrap; }
 }
 
 .kml-switch-row {
@@ -885,6 +1092,27 @@ $kml-notice-border:  #DDD5CA !default;
 .kml-switch-row__body  { display: flex; flex-direction: column; gap: .1875rem; }
 .kml-switch-row__label { font-size: .875rem; font-weight: 500; }
 .kml-switch-row__note  { font-size: .71875rem; color: $kml-ink-muted; }
+
+// トグル本体：幅44px・高さ26px、つまみ20px（上下左右3pxの余白）
+// Bootstrap のスイッチは高さ 1em・つまみ＝高さいっぱいなので細く見える。
+// 幅を変えると .form-switch の padding-left / 負の margin-left とずれるため、
+// 行の中では両方 0 にして、つまみの位置は background-position で決める。
+.kml-switch-row .form-switch {
+  flex: none;
+  min-height: 0;
+  padding-left: 0;
+}
+.kml-switch-row .form-switch .form-check-input {
+  width: 2.75rem;
+  height: 1.625rem;
+  margin: 0;
+  float: none;
+  background-size: 1.25rem 1.25rem;
+  background-position: left .1875rem center;
+  cursor: pointer;
+
+  &:checked { background-position: right .1875rem center; }
+}
 
 .kml-link-btn { color: $kml-ink-muted; font-size: .84375rem; text-decoration: none;
   &:hover { color: $kml-ink; text-decoration: underline; } }
@@ -989,7 +1217,18 @@ $kml-notice-border:  #DDD5CA !default;
 // 空状態・ログイン
 // ------------------------------------------------------------
 
-.kml-empty { display: flex; flex-direction: column; align-items: center; gap: 1.125rem; text-align: center; }
+// 本文の残り高さいっぱいに広げて中央に置く（.kml-main は flex column）。
+// 上下の余白は同じにして、見た目の重心をわずかに上げるため下だけ少し多めに取る。
+.kml-empty {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.125rem;
+  width: 100%; max-width: 360px; margin-inline: auto;
+  padding: 2.75rem 1.625rem 4rem;
+  text-align: center;
+}
+// ボタンは本文幅（360px）まで。スマホでは画面幅いっぱい
+.kml-empty .btn { width: 100%; }
 .kml-empty__icon {
   display: grid; place-items: center; width: 88px; height: 88px;
   border-radius: 1.75rem; background: var(--kml-placeholder-a);
