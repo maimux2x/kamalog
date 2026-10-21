@@ -18,7 +18,7 @@ gem 'kamal', require: false
 gem 'litestream'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
-gem 'pagy', '~> 43.7'
+gem 'pagy', '~> 43.8'
 gem 'positioning'
 gem 'propshaft'
 gem 'puma', '>= 5.0'
