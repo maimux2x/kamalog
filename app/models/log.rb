@@ -2,6 +2,7 @@ class Log < ApplicationRecord
   belongs_to :piece
 
   has_many :photos, dependent: :destroy, class_name: 'LogPhoto'
+  has_many :steps,  dependent: :destroy
 
   validates :date,  presence: true
   validates :title, presence: true

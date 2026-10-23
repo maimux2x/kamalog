@@ -145,9 +145,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_20_071155) do
 
   create_table "steps", force: :cascade do |t|
     t.integer "log_id", null: false
-    t.integer "step_kind_id", null: false
+    t.integer "kind_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kind_id"], name: "index_steps_on_kind_id"
     t.index ["log_id"], name: "index_steps_on_log_id"
-    t.index ["step_kind_id"], name: "index_steps_on_step_kind_id"
   end
 
   create_table "studios", force: :cascade do |t|
@@ -183,5 +185,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_20_071155) do
   add_foreign_key "memberships", "users"
   add_foreign_key "piece_photos", "pieces"
   add_foreign_key "pieces", "memberships"
+  add_foreign_key "step_kinds", "studios"
+  add_foreign_key "steps", "logs"
+  add_foreign_key "steps", "step_kinds", column: "kind_id"
   add_foreign_key "users", "studios", column: "last_seen_studio_id"
 end

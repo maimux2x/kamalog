@@ -17,7 +17,11 @@
 
             <span class="kml-piece-row__body">
               <span class="kml-piece-row__title"><%= piece.title %></span>
-              <span class="kml-badge kml-badge--clay">前回 釉掛け</span>
+              <% if log = piece.logs.last %>
+                <% if step = log.steps.last %>
+                  <span class="kml-badge kml-badge--clay">前回 <%= step.kind.name %></span>
+                <% end %>
+              <% end %>
               <span class="kml-meta"><%= l piece.created_at, format: :month_date %>から ・ 記録<%= piece.logs.size %>件</span>
             </span>
           <% end %>
