@@ -1,9 +1,3 @@
-<%= render 'breadcrumb', items: [
-  [current_studio.name, studio_path(current_studio)],
-  ['自分の作品', studio_my_pieces_path(current_studio)],
-  [@piece.title, studio_my_piece_path(current_studio, @piece)],
-  '作業記録'
-] %>
 
 <%= render 'my/piece_tab', studio: current_studio, piece: @piece %>
 
@@ -15,7 +9,7 @@
   <div class="card mb-3">
     <div class="card-body">
       <h2>
-        <%= link_to log.title, studio_my_piece_log_path(current_studio, @piece, log), class: 'text-decoration-none stretched-link' %>
+        <%= link_to log.date, studio_my_piece_log_path(current_studio, @piece, log), class: 'text-decoration-none stretched-link' %>
       </h2>
 
       <time datetime="<%= log.date %>" class="d-block mb-3">

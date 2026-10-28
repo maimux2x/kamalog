@@ -1070,17 +1070,27 @@ $kml-notice-border:  #DDD5CA !default;
   .form-label { color: var(--kml-glaze-ink); }
 }
 .kml-glaze-panel__list { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .625rem; }
-.kml-glaze-panel__item {
+// 釉薬の行（_glaze_usage.html.erb の1件分）
+// ------------------------------------------------------------
+// 1行 = 白いプルダウン + 右に削除。土の行（.kml-material-row）と同じ見た目。
+// nested-form で行を包む div（.kml-glaze-panel__item）や hidden input が増えても崩れないよう、
+// 横並びは「行」自身（.kml-glaze-row）に持たせ、外側はただの縦積みにする。
+
+.kml-glaze-panel__item { display: flex; flex-direction: column; gap: .5rem; }
+
+.kml-glaze-row {
   display: flex; align-items: center; gap: .5625rem;
 
-  // 土・釉薬の行（.kml-material-row）と同じ：白いプルダウン + 右に削除
   > .form-select {
     flex: 1; min-width: 0;
     background-color: #FFF; border-color: transparent;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     &:focus { border-color: $input-focus-border-color; }
   }
-  > .kml-remove-btn { flex: none; padding: .375rem .125rem; white-space: nowrap; }
+
+  // 削除ボタンは直下でも、ラッパー（.kml-material-row__amount など）の中でもよい
+  > div { flex: none; display: flex; align-items: center; }
+  .kml-remove-btn { flex: none; padding: .375rem .125rem; white-space: nowrap; }
 }
 
 .kml-switch-row {
