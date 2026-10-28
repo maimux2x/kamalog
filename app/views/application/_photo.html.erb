@@ -1,41 +1,22 @@
-<div class="list-group-item position-relative" data-attach-images-target="item">
-  <div class="vstack">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-list handle mb-2"
-      viewBox="0 0 16 16"
-      style="cursor: grab;"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
-      />
-    </svg>
+<div class="kml-sortable__row" data-attach-images-target="item">
+  <span class="kml-sortable__handle" aria-hidden="true">⣿</span>
+  <% if photo.object.persisted? %>
+    <%= image_tag photo.object.file, height: 100, alt: '' %>
+    <%= photo.hidden_field :id %>
+  <% else %>
+    <%= image_tag '', height: 100, alt: '', class: 'kml-sortable__thumb kml-photo-empty' %>
+    <%= photo.label :file, hidden:true %>
+    <%= photo.file_field :file, hidden: true %>
+  <% end %>
 
-    <div>
-      <% if photo.object.persisted? %>
-        <%= image_tag photo.object.file, height: 100, alt: '' %>
-        <%= photo.hidden_field :id %>
-      <% else %>
-        <%= image_tag '', height: 100, alt: '' %>
-        <%= photo.file_field :file, hidden: true, wrapper: false %>
-      <% end %>
+  <%= photo.hidden_field :position, data: {sortable_positioning_target: 'position'} %>
 
-      <%= photo.hidden_field :position, data: {sortable_positioning_target: 'position'} %>
-
-      <%= photo.text_field :caption %>
-    </div>
-  </div>
+  <%= photo.text_field :caption, class: 'kml-sortable__caption' %>
 
   <button
-    class="btn-close position-absolute"
+    class="kml-sortable__remove"
     aria-label="削除"
     type="button"
-    data-attach-images-target="removeButton"
     data-action="attach-images#remove"
-    style="top: 10px; right: 10px;"
-  ></button>
+  >削除</button>
 </div>

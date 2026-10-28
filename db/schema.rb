@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_20_071155) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_28_080012) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -67,6 +67,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_20_071155) do
     t.integer "piece_id", null: false
     t.datetime "updated_at", null: false
     t.index ["glaze_id"], name: "index_glaze_usages_on_glaze_id"
+    t.index ["piece_id", "glaze_id"], name: "index_glaze_usages_on_piece_id_and_glaze_id", unique: true
     t.index ["piece_id"], name: "index_glaze_usages_on_piece_id"
   end
 
@@ -96,7 +97,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_20_071155) do
     t.datetime "created_at", null: false
     t.date "date", null: false
     t.integer "piece_id", null: false
-    t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["piece_id"], name: "index_logs_on_piece_id"
   end
