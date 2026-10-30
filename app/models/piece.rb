@@ -30,8 +30,12 @@ class Piece < ApplicationRecord
   }, validate: true
 
   accepts_nested_attributes_for :clay_usages,  allow_destroy: true
-  accepts_nested_attributes_for :glaze_usages, allow_destroy: true
+  accepts_nested_attributes_for :glaze_usages, allow_destroy: true, reject_if: :duplicated_glaze_usage
   accepts_nested_attributes_for :photos,       allow_destroy: true
+
+  def duplicated_glaze_usage(attr)
+    glaze_usages.any? { it.glaze_id.to_s == attr[:glaze_id] }
+  end
 
   def complete = complete?
 
