@@ -10,7 +10,8 @@ class My::LogsController < ApplicationController
   end
 
   def new
-    @log = find_piece.logs.new(date: Date.current)
+    @log = find_piece.logs.new(log_params)
+    @log.date = Date.current
   end
 
   def create
@@ -48,7 +49,7 @@ class My::LogsController < ApplicationController
   private
 
   def log_params
-    params.expect(log: [
+    params.fetch(:log, {}).permit(
       :date,
       :body,
       kind_ids: [],
@@ -69,7 +70,7 @@ class My::LogsController < ApplicationController
         :position,
         :_destroy
       ]]
-    ])
+    )
   end
 
   def find_piece
