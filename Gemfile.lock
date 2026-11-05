@@ -471,13 +471,13 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.7.0)
-    rusty_racer (0.2.4)
+    rusty_racer (0.2.5)
       rb_sys (~> 0.9)
-    rusty_racer (0.2.4-aarch64-linux)
+    rusty_racer (0.2.5-aarch64-linux)
       rb_sys (~> 0.9)
-    rusty_racer (0.2.4-arm64-darwin)
+    rusty_racer (0.2.5-arm64-darwin)
       rb_sys (~> 0.9)
-    rusty_racer (0.2.4-x86_64-linux)
+    rusty_racer (0.2.5-x86_64-linux)
       rb_sys (~> 0.9)
     sass-embedded (1.100.0)
       google-protobuf (~> 4.31)
@@ -796,10 +796,10 @@ CHECKSUMS
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
   rubyzip (3.7.0) sha256=65c19294da75297a939006f3516deacc33185fbd721ff1954f7a231db6d3e121
-  rusty_racer (0.2.4) sha256=a96753a1c99928b6315bda4b294e876081da11a52031eaba506a505ebe0d56ad
-  rusty_racer (0.2.4-aarch64-linux) sha256=e7e4b6533b708a07466d6b69d51356a2049bd2de4aa47feb97cb1cf0ac3bbe8e
-  rusty_racer (0.2.4-arm64-darwin) sha256=1288c1ea0a15dc38f8ae4db4170c1d83af0e001135505cc997c308d5a0b1afd6
-  rusty_racer (0.2.4-x86_64-linux) sha256=e565d356fea2bf51729f5ad690fb0da68660bf26841f71709e2c75cd5998e6f8
+  rusty_racer (0.2.5) sha256=46c7415ff2ac34cc62808e3d1ca59ad6401e933d98e9962156e1cbff95f0dc03
+  rusty_racer (0.2.5-aarch64-linux) sha256=a1eeab5c289bc5c701030f7ab69d2ac6f73ad387be5ee6e56b2f944852001c30
+  rusty_racer (0.2.5-arm64-darwin) sha256=71ef88c6303c2cec9382a0a179c6ae03bde581a58a0bdf5bbfb4c3c5c38254b1
+  rusty_racer (0.2.5-x86_64-linux) sha256=006020dc027682d34d375b58584e8c5da2acb7014811b829c3be64adbfe4156a
   sass-embedded (1.100.0) sha256=b7d4831f304be5ba8717b2a1307644164b63dc158113a67f469e90578d3fc092
   sass-embedded (1.100.0-aarch64-linux-gnu) sha256=c13187f8eaae7e7e64246b18eb896534a84465a17198829ef65730db4662860e
   sass-embedded (1.100.0-aarch64-linux-musl) sha256=1b0945a66cd4e40f505db73b1e790e2561e07e6d9fd04ef6ebbf279835666b3f
