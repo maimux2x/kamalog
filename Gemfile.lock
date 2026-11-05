@@ -281,7 +281,6 @@ GEM
     marcel (1.2.1)
     matrix (0.4.3)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.9)
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
@@ -306,9 +305,6 @@ GEM
     net-ssh (7.3.8)
       logger
     nio4r (2.7.5)
-    nokogiri (1.19.7)
-      mini_portile2 (~> 2.8.2)
-      racc (~> 1.4)
     nokogiri (1.19.7-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.19.7-aarch64-linux-musl)
@@ -475,13 +471,13 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.7.0)
-    rusty_racer (0.2.4)
+    rusty_racer (0.2.5)
       rb_sys (~> 0.9)
-    rusty_racer (0.2.4-aarch64-linux)
+    rusty_racer (0.2.5-aarch64-linux)
       rb_sys (~> 0.9)
-    rusty_racer (0.2.4-arm64-darwin)
+    rusty_racer (0.2.5-arm64-darwin)
       rb_sys (~> 0.9)
-    rusty_racer (0.2.4-x86_64-linux)
+    rusty_racer (0.2.5-x86_64-linux)
       rb_sys (~> 0.9)
     sass-embedded (1.100.0)
       google-protobuf (~> 4.31)
@@ -532,8 +528,6 @@ GEM
       fugit (~> 1.11)
       railties (>= 7.1)
       thor (>= 1.3.1)
-    sqlite3 (2.10.2)
-      mini_portile2 (~> 2.8.0)
     sqlite3 (2.10.2-aarch64-linux-gnu)
     sqlite3 (2.10.2-aarch64-linux-musl)
     sqlite3 (2.10.2-arm-linux-gnu)
@@ -736,7 +730,6 @@ CHECKSUMS
   marcel (1.2.1) sha256=1678e9360e32f9eafa917c80029e2f6d10b2715c66a4b87b6d0da9b9cd1f859f
   matrix (0.4.3) sha256=a0d5ab7ddcc1973ff690ab361b67f359acbb16958d1dc072b8b956a286564c5b
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
-  mini_portile2 (2.8.9) sha256=0cd7c7f824e010c072e33f68bc02d85a00aeb6fce05bb4819c03dfd3c140c289
   minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
   msgpack (1.8.4) sha256=4411c22d350dd1c20250f7eada3cca2695438c2f769cf0782f0cd065d90a3e7b
   multi_xml (0.9.1) sha256=7ce766b59c17241ed62976caeae1fae9b2431b263398c35396239a68c4a64e57
@@ -749,7 +742,6 @@ CHECKSUMS
   net-smtp (0.5.1) sha256=ed96a0af63c524fceb4b29b0d352195c30d82dd916a42f03c62a3a70e5b70736
   net-ssh (7.3.8) sha256=16bb1fccc4d9a580decdeea8ddb98e8544df29b7e6ac8cb94d4b379cfe4bee9f
   nio4r (2.7.5) sha256=6c90168e48fb5f8e768419c93abb94ba2b892a1d0602cb06eef16d8b7df1dca1
-  nokogiri (1.19.7) sha256=abe94507c54cb18f872777b16bdca4aad32b1abdc4c52fe843f1c80fbdf992b8
   nokogiri (1.19.7-aarch64-linux-gnu) sha256=8f5e15d299602456406e1f03a9f3456cceb33a0722811e818d2ee2214eb4c84a
   nokogiri (1.19.7-aarch64-linux-musl) sha256=efe0c3602e6e54521bc21c681930ce5568e2d11203de17400710b2b3ca2e4cb4
   nokogiri (1.19.7-arm-linux-gnu) sha256=7fd1907125691aa89e838cc91161761c758b4e17bb32f0dd9b5515a82cc759af
@@ -804,10 +796,10 @@ CHECKSUMS
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
   rubyzip (3.7.0) sha256=65c19294da75297a939006f3516deacc33185fbd721ff1954f7a231db6d3e121
-  rusty_racer (0.2.4) sha256=a96753a1c99928b6315bda4b294e876081da11a52031eaba506a505ebe0d56ad
-  rusty_racer (0.2.4-aarch64-linux) sha256=e7e4b6533b708a07466d6b69d51356a2049bd2de4aa47feb97cb1cf0ac3bbe8e
-  rusty_racer (0.2.4-arm64-darwin) sha256=1288c1ea0a15dc38f8ae4db4170c1d83af0e001135505cc997c308d5a0b1afd6
-  rusty_racer (0.2.4-x86_64-linux) sha256=e565d356fea2bf51729f5ad690fb0da68660bf26841f71709e2c75cd5998e6f8
+  rusty_racer (0.2.5) sha256=46c7415ff2ac34cc62808e3d1ca59ad6401e933d98e9962156e1cbff95f0dc03
+  rusty_racer (0.2.5-aarch64-linux) sha256=a1eeab5c289bc5c701030f7ab69d2ac6f73ad387be5ee6e56b2f944852001c30
+  rusty_racer (0.2.5-arm64-darwin) sha256=71ef88c6303c2cec9382a0a179c6ae03bde581a58a0bdf5bbfb4c3c5c38254b1
+  rusty_racer (0.2.5-x86_64-linux) sha256=006020dc027682d34d375b58584e8c5da2acb7014811b829c3be64adbfe4156a
   sass-embedded (1.100.0) sha256=b7d4831f304be5ba8717b2a1307644164b63dc158113a67f469e90578d3fc092
   sass-embedded (1.100.0-aarch64-linux-gnu) sha256=c13187f8eaae7e7e64246b18eb896534a84465a17198829ef65730db4662860e
   sass-embedded (1.100.0-aarch64-linux-musl) sha256=1b0945a66cd4e40f505db73b1e790e2561e07e6d9fd04ef6ebbf279835666b3f
@@ -824,7 +816,6 @@ CHECKSUMS
   solid_cable (4.1.0) sha256=828e3d509207b82b4f05f4e9c85f696994710679b52d511aa7f97ebd212d3226
   solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41
   solid_queue (1.7.0) sha256=6566b70b801d1c317c81bba7bcdd5677c019afac584a30374b4164002ca356d3
-  sqlite3 (2.10.2) sha256=f1ea68cd3287f8a49f39a088ac9e4bd0ef4e7f394c3d4a60dd4c7e44b0566964
   sqlite3 (2.10.2-aarch64-linux-gnu) sha256=e9aea2c2b3476fc875dd8a89313a9a2862818519c0186bfb5b56d6f57bb08d98
   sqlite3 (2.10.2-aarch64-linux-musl) sha256=4986fc40cdf21342362b72a941df28e95cfe0e644f3ad2532d948b157c39dbee
   sqlite3 (2.10.2-arm-linux-gnu) sha256=762f609ef891463226b472d3df66aea84d5466ff4376d3ccf4a059718c4ce9c9
