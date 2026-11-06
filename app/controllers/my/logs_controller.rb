@@ -11,7 +11,7 @@ class My::LogsController < ApplicationController
 
   def new
     @log = find_piece.logs.new(log_params)
-    @log.date = Date.current
+    @log.date ||= Date.current
   end
 
   def create
