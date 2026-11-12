@@ -13,8 +13,11 @@
       <% @pieces.in_progress.order(:created_at).each do |piece| %>
         <li>
           <%= link_to studio_my_piece_path(current_studio, piece), class: 'kml-piece-row' do %>
-            <span class="kml-piece-row__thumb kml-photo-empty">
-            </span>
+            <% if piece.photos.empty? %>
+              <span class="kml-piece-row__thumb kml-photo-empty"></span>
+            <% else %>
+              <%= image_tag piece.photos.order('logs.date': :desc, position: :asc).first.file, alt: '', class: 'kml-piece-row__thumb' %>
+            <% end %>
 
             <span class="kml-piece-row__body">
               <span class="kml-piece-row__title"><%= piece.title %></span>
