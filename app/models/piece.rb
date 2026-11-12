@@ -7,10 +7,10 @@ class Piece < ApplicationRecord
   has_many :clay_usages,  dependent: :destroy
   has_many :glaze_usages, dependent: :destroy
   has_many :logs,         dependent: :destroy
-  has_many :photos,       dependent: :destroy, class_name: 'PiecePhoto'
 
   has_many :clays,  through: :clay_usages
   has_many :glazes, through: :glaze_usages
+  has_many :photos, through: :logs
 
   validates :title, presence: true
   validates :completed_at, presence: true, if: :complete?

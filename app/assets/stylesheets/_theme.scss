@@ -30,6 +30,7 @@
   --kml-sand:         #{$kml-sand};
   --kml-border:       #{$kml-border};
   --kml-border-soft:  #{$kml-border-soft};
+  --kml-border-hair:  #{$kml-border-hair};
   --kml-ink-muted:    #{$kml-ink-muted};
   --kml-placeholder-a:#{$kml-placeholder-a};
   --kml-placeholder-b:#{$kml-placeholder-b};
@@ -47,6 +48,16 @@ body {
 // 写真のプレースホルダ
 // ------------------------------------------------------------
 // 画像がない作品のサムネイル枠。
+
+// 写真枠の中の画像は、縦横比を保ったまま枠いっぱいに切り抜く。
+// image_tag が <picture> や <a> で包まれていても効くよう、子ではなく子孫で指定する。
+:is(.kml-tile__photo, .kml-piece-row__thumb, .kml-log__photo, .kml-hero, .kml-carousel__photo) img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+}
+// 枠のクラスを <img> に直接付けた場合（image_tag(..., class: "kml-piece-row__thumb")）も伸ばさない
+img:is(.kml-tile__photo, .kml-piece-row__thumb, .kml-log__photo, .kml-hero, .kml-carousel__photo) {
+  object-fit: cover;
+}
 
 .kml-photo-empty {
   background: repeating-linear-gradient(
@@ -796,7 +807,12 @@ $kml-notice-border:  #DDD5CA !default;
 .kml-confirm__foot { border-top: 0; gap: .5rem; padding: 0 1.5rem 1.5rem; }
 .kml-detail__body { display: flex; flex-direction: column; gap: 1.25rem; padding: 1.125rem; }
 
-.kml-hero { height: 300px; }
+.kml-hero {
+  height: 300px;
+  overflow: hidden;
+
+  > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+}
 
 // 作品詳細の2カラム（10i）
 // ------------------------------------------------------------
@@ -854,7 +870,8 @@ $kml-notice-border:  #DDD5CA !default;
   padding: 0 1.125rem .625rem; scroll-snap-type: x mandatory;
 }
 .kml-carousel__item    { flex: none; width: 296px; margin: 0; scroll-snap-align: center; }
-.kml-carousel__photo   { display: block; height: 296px; border-radius: $border-radius-xl; }
+.kml-carousel__photo   { display: block; height: 296px; border-radius: $border-radius-xl; overflow: hidden;
+  > img { display: block; width: 100%; height: 100%; object-fit: cover; } }
 .kml-carousel__caption { padding-top: .4375rem; font-size: .75rem; color: $kml-ink-muted; }
 
 .kml-dots { display: flex; justify-content: center; gap: .375rem; }
@@ -881,14 +898,44 @@ $kml-notice-border:  #DDD5CA !default;
 .kml-log__head {
   gap: .6875rem; padding: .8125rem .9375rem;
   background: #FFF; box-shadow: none; font-size: .78125rem;
-  &:not(.collapsed) { background: #FFF; color: $kml-ink; border-bottom: 1px solid var(--kml-border-hair); }
+  // Bootstrap の .accordion-button:not(.collapsed) が inset の box-shadow で下線を引く。
+  // ボタンの幅で切れてしまうので、同じ詳細度で打ち消す
+  &:not(.collapsed) { background: #FFF; color: $kml-ink; box-shadow: none; }
   &::after { margin-left: auto; }
 }
 .kml-log__date   { color: $kml-ink-muted; white-space: nowrap; }
-.kml-log__body   { display: flex; flex-direction: column; gap: .6875rem; padding: .875rem .9375rem; font-size: .84375rem; }
-.kml-log__photos { display: flex; gap: .5rem; }
-.kml-log__photo  { display: block; width: 78px; height: 78px; border-radius: .6875rem; background: var(--kml-placeholder-a); }
-.kml-log__caption{ display: block; padding-top: .3125rem; font-size: .65625rem; color: $kml-ink-muted; }
+// 区切り線は本文の上端に引く。本文は記録の幅いっぱいなので、操作ボタンの下まで通る
+.kml-log__body   { display: flex; flex-direction: column; gap: .6875rem; padding: .875rem .9375rem; font-size: .84375rem;
+  border-top: 1px solid var(--kml-border-hair); }
+
+// 記録の画像：本文の下に正方形のサムネイルを並べ、入りきらない分は次の行へ折り返す。
+// 列幅をサムネイル幅で固定するので、キャプションが長くても列が広がらない。
+.kml-log__photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 78px);
+  gap: .75rem .625rem;
+  margin: 0;
+  > li { min-width: 0; }
+}
+.kml-log__photo {
+  display: block; width: 100%; aspect-ratio: 1;
+  border-radius: .6875rem; background: var(--kml-placeholder-a);
+  overflow: hidden;   // 中の img を角丸で切り抜く
+
+  > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+}
+// キャプションは2行まで。全文は title 属性で出す
+.kml-log__caption {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden; overflow-wrap: anywhere;
+  padding-top: .3125rem; font-size: .65625rem; line-height: 1.5; color: $kml-ink-muted;
+}
+
+@include media-breakpoint-up(lg) {
+  .kml-log__body   { padding: .9375rem 1rem; }
+  .kml-log__photos { grid-template-columns: repeat(auto-fill, 96px); }
+  .kml-log__caption{ font-size: .71875rem; }
+}
 
 .kml-author { display: flex; align-items: center; gap: .6875rem; padding: 0 1.125rem 1rem; }
 .kml-author__body { display: flex; flex-direction: column; gap: .1875rem; }

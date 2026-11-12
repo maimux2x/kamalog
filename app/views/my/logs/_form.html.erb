@@ -88,7 +88,7 @@
         </div>
 
         <template data-attach-images-target="template">
-          <%= form.fields_for :photos, LogPhoto.new, child_index: '__INDEX__' do |photo| %>
+          <%= form.fields_for :photos, Photo.new, child_index: '__INDEX__' do |photo| %>
             <%= render 'photo', photo: %>
           <% end %>
         </template>
