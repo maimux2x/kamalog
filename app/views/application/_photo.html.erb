@@ -5,7 +5,7 @@
     <%= photo.hidden_field :id %>
   <% else %>
     <%= image_tag '', height: 100, alt: '', class: 'kml-sortable__thumb kml-photo-empty' %>
-    <%= photo.label :file, hidden:true %>
+    <%= photo.label :file, hidden: true %>
     <%= photo.file_field :file, hidden: true %>
   <% end %>
 

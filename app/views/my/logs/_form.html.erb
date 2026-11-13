@@ -1,6 +1,6 @@
 <%= form_with model: [current_studio, :my, log.piece, log], class: 'kml-form kml-form--card', data: {controller: 'reform', reform_visit_options_value: {frame: 'glaze'}.to_json} do |form| %>
   <header class="kml-formbar">
-    <%= link_to 'キャンセル', studio_my_piece_path(current_studio, log.piece),class: 'kml-formbar__cancel' %>
+    <%= link_to 'キャンセル', studio_my_piece_path(current_studio, log.piece), class: 'kml-formbar__cancel' %>
     <span class="kml-formbar__title">作業を記録</span>
     <%= form.submit class: 'kml-formbar__submit is-enabled' %>
   </header>
