@@ -11,6 +11,7 @@
 
   <%= photo.hidden_field :position, data: {sortable_positioning_target: 'position'} %>
 
+  <%= photo.label :caption, '説明', class: 'visually-hidden' %>
   <%= photo.text_field :caption, class: 'kml-sortable__caption' %>
 
   <button

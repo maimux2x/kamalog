@@ -7,3 +7,8 @@ dish_photo_file:
   name: file
   record: dish_photo (Photo)
   blob: dish_photo_blob
+
+teacup_photo_file:
+  name: file
+  record: teacup_photo (Photo)
+  blob: teacup_photo_blob

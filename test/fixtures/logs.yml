@@ -12,3 +12,8 @@ base_log_day1:
   piece: base
   date: 2026-05-01
   body: 紐作りで初めて花瓶を作ることにした。
+
+teacup_log_day1:
+  piece: teacup
+  date: 2026-11-01
+  body: マグカップを作った。

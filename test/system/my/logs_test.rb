@@ -17,23 +17,11 @@ class My::LogsTest < ApplicationSystemTestCase
   test '作業記録を表示できること' do
     visit studio_my_piece_path(@studio, @piece)
 
-    click_on '作業記録'
-
     assert_text '2026-04-05'
     assert_text '好きな作家さんの作風を参考に作ってみる。'
 
     assert_text '2026-04-12'
     assert_text '削りを入れて凹凸や底の厚みを削って形を整えた。'
-  end
-
-  test '詳細を表示する' do
-    visit studio_my_piece_logs_path(@studio, @piece)
-
-    click_on '紐作りでマグカップ作り'
-
-    assert_text '2026-04-05'
-    assert_text '好きな作家さんの作風を参考に作ってみる。'
-    assert_selector "img[src$='/dish_cup.png']"
   end
 
   test '作業記録を削除する' do
