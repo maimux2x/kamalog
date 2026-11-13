@@ -21,8 +21,9 @@ export default class AttachImagesController extends Controller {
         input.name  = input.name.replace('__INDEX__', index);
       }
 
-      const label   = photo.querySelector('label');
-      label.htmlFor = label.htmlFor.replace('__INDEX__', index);
+      for (const label of photo.querySelectorAll('label')) {
+        label.htmlFor = label.htmlFor.replace('__INDEX__', index);
+      }
 
       const img = photo.querySelector('img');
       this.containerTarget.appendChild(photo);

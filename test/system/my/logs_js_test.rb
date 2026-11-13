@@ -17,15 +17,17 @@ class My::LogsJsTest < ApplicationSystemTestCase
   end
 
   test '作業記録を登録する' do
-    visit studio_my_piece_logs_path(@studio, @piece)
+    visit studio_my_piece_path(@studio, @piece)
 
-    click_on '作業記録を登録する'
+    click_on '＋ 作業記録を追加'
 
     fill_in '作業日',   with: Date.new(2026, 4, 23)
+    check '釉掛け', allow_label_click: true
+    select '白マット', from: '釉薬'
     fill_in '作業内容', with: '素焼きが終わったマグカップをやすりで削って、白マットの釉薬をかけた。'
     attach_file '画像を追加', [file_fixture('dish_cup.png'), file_fixture('syokki_mug_cup.png')], make_visible: true
 
-    within '[data-attach-images-target="container"] :nth-child(1 of [data-attach-images-target="item"])' do
+    within '[data-attach-images-target="item"]:first-child' do
       fill_in '説明', with: '釉薬をかけた写真'
     end
 
@@ -75,26 +77,28 @@ class My::LogsJsTest < ApplicationSystemTestCase
 
     click_on '編集'
 
-    source = find('div.list-group div.list-group-item:nth-child(1) div.vstack .handle')
-    target = find('div.list-group div.list-group-item:nth-child(2)')
+    source = find('.kml-sortable__row:nth-child(1) .kml-sortable__handle')
+    target = find('.kml-sortable__row:nth-child(2)')
 
     source.drag_to target
 
-    within 'div.list-group div.list-group-item:nth-child(1) div.vstack' do
+    within '.kml-sortable__row:nth-child(1)' do
       assert_selector 'img[src$="/dish.png"]'
     end
 
-    within 'div.list-group div.list-group-item:nth-child(2) div.vstack' do
+    within '.kml-sortable__row:nth-child(2)' do
       assert_selector 'img[src$="/dish_cup.png"]'
     end
 
     click_on '更新する'
 
-    within 'div.grid div.g-col-12:nth-child(1) div.d-flex' do
+    assert_text '作業記録を更新しました。'
+
+    within 'div.grid > div:nth-child(1)' do
       assert_selector 'img[src$="/dish.png"]'
     end
 
-    within 'div.grid div.g-col-12:nth-child(2) div.d-flex' do
+    within 'div.grid > div:nth-child(2)' do
       assert_selector 'img[src$="/dish_cup.png"]'
     end
   end
