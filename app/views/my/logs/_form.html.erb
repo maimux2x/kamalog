@@ -16,6 +16,7 @@
     <div class="kml-form__body">
       <div class="kml-target">
         <span class="kml-target__thumb kml-photo-empty"></span>
+
         <span class="kml-target__body">
           <span class="kml-target__label">記録する作品</span>
           <span class="kml-target__name"><%= log.piece.title %></span>
@@ -49,9 +50,13 @@
         <% if log.kinds.any? { it.name == '釉掛け' } %>
           <fieldset class="kml-glaze-panel" data-controller="nested-form">
             <legend class="form-label">使った釉薬</legend>
+
             <!-- 作品の登録（6b）の釉薬と同じ部品。パネル自体が箱なので、行には地の色を付けない -->
             <div class="kml-glaze-panel__list">
-              <div class="kml-glaze-panel__item" data-nested-form-target="container">
+              <div
+                class="kml-glaze-panel__item"
+                data-nested-form-target="container"
+              >
                 <%= form.fields_for :piece do |piece| %>
                   <%= piece.fields_for :glaze_usages, log.piece.glaze_usages.new do |glaze_usage| %>
                     <%= render 'glaze_usage', form: glaze_usage %>
@@ -60,7 +65,13 @@
               </div>
             </div>
 
-            <button class="kml-add-btn kml-add-btn--glaze" type="button" data-action="click->nested-form#add">＋ 釉薬を追加</button>
+            <button
+              class="kml-add-btn kml-add-btn--glaze"
+              type="button"
+              data-action="click->nested-form#add"
+            >
+              ＋ 釉薬を追加
+            </button>
 
             <template data-nested-form-target="template">
               <%= form.fields_for :piece do |piece| %>
@@ -81,7 +92,12 @@
       <fieldset data-controller="attach-images">
         <legend class="form-label">画像</legend>
 
-        <div class="kml-sortable" data-attach-images-target="container" data-controller="sortable-positioning" data-sortable-handle-value=".kml-sortable__handle">
+        <div
+          class="kml-sortable"
+          data-attach-images-target="container"
+          data-controller="sortable-positioning"
+          data-sortable-handle-value=".kml-sortable__handle"
+        >
           <%= form.fields_for :photos, log.photos, include_id: false do |photo| %>
             <%= render 'photo', photo: %>
           <% end %>
@@ -94,7 +110,8 @@
         </template>
 
         <label class="kml-add-btn">
-          画像を追加 <input type="file" multiple data-action="attach-images#add" hidden>
+          画像を追加
+          <input type="file" multiple data-action="attach-images#add" hidden>
         </label>
       </fieldset>
 
@@ -103,8 +120,16 @@
           <span class="kml-switch-row__label">完成品にする</span>
           <span class="kml-switch-row__note">次の画面で代表画像を選びます</span>
         </div>
+
         <div class="form-check form-switch m-0">
-          <input class="form-check-input" type="checkbox" role="switch" id="log_finish" name="log[finish]">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="log_finish"
+            name="log[finish]"
+          >
+
           <label class="visually-hidden" for="log_finish">完成品にする</label>
         </div>
       </div>

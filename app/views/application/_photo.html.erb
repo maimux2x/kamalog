@@ -1,5 +1,6 @@
 <div class="kml-sortable__row" data-attach-images-target="item">
   <span class="kml-sortable__handle" aria-hidden="true">⣿</span>
+
   <% if photo.object.persisted? %>
     <%= image_tag photo.object.file, height: 100, alt: '' %>
     <%= photo.hidden_field :id %>
@@ -19,5 +20,7 @@
     aria-label="削除"
     type="button"
     data-action="attach-images#remove"
-  >削除</button>
+  >
+    削除
+  </button>
 </div>

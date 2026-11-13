@@ -45,8 +45,7 @@
     <ul class="kml-grid kml-grid--3 list-unstyled mb-5">
       <% @pieces.complete.order(completed_at: :desc).each do |piece| %>
         <%= link_to studio_my_piece_path(current_studio, piece), class: 'kml-title' do %>
-          <span class="kml-tile__photo kml-photo-empty">
-          </span>
+          <span class="kml-tile__photo kml-photo-empty"></span>
           <span class="kml-tile__title"><%= piece.title %></span>
         <% end %>
       <% end %>
