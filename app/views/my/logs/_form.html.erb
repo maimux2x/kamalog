@@ -1,33 +1,144 @@
-<%= bootstrap_form_with model: [studio, :my, log.piece, log], multipart: true do |f| %>
-  <%= f.date_field :date %>
-  <%= f.text_field :title %>
-  <%= f.text_area :body, class: 'auto-resize' %>
+<%= form_with model: [current_studio, :my, log.piece, log], class: 'kml-form kml-form--card', data: {controller: 'reform', reform_visit_options_value: {frame: 'glaze'}.to_json} do |form| %>
+  <header class="kml-formbar">
+    <%= link_to 'キャンセル', studio_my_piece_path(current_studio, log.piece), class: 'kml-formbar__cancel' %>
+    <span class="kml-formbar__title">作業を記録</span>
+    <%= form.submit class: 'kml-formbar__submit is-enabled' %>
+  </header>
 
-  <div data-controller="attach-images" class="mb-3">
-    <label class="btn btn-secondary mb-3">
-      画像を追加 <input type="file" multiple data-action="attach-images#add" hidden>
-    </label>
+  <!-- PCのみ -->
+  <%= link_to log.piece.title, studio_my_piece_path(current_studio, log.piece), class: 'kml-back kml-form__back' %>
 
-    <div
-      class="list-group"
-      data-attach-images-target="container"
-      data-controller="sortable-positioning"
-      data-sortable-handle-value=".handle"
-    >
-      <%= f.fields_for :photos, log.photos.order(:position), include_id: false do |photo| %>
-        <%= render 'photo', photo: %>
-      <% end %>
+  <div class="kml-form__card">
+    <div class="kml-form__head">
+      <h1 class="kml-form__title">作業を記録</h1>
     </div>
 
-    <template data-attach-images-target="template">
-      <%= f.fields_for :photos, LogPhoto.new, child_index: '__INDEX__' do |photo| %>
-        <%= render 'photo', photo: %>
-      <% end %>
-    </template>
-  </div>
+    <div class="kml-form__body">
+      <div class="kml-target">
+        <span class="kml-target__thumb kml-photo-empty"></span>
 
-  <div class="hstack gap-3">
-    <%= f.primary %>
-    <%= link_to 'キャンセル', studio_my_piece_logs_path(studio, log.piece), class: 'btn btn-outline-primary' %>
+        <span class="kml-target__body">
+          <span class="kml-target__label">記録する作品</span>
+          <span class="kml-target__name"><%= log.piece.title %></span>
+        </span>
+      </div>
+
+      <div>
+        <%= form.label :date, class: 'form-label' %>
+        <%= form.date_field :date, class: 'form-control' %>
+      </div>
+
+      <fieldset>
+        <legend class="form-label">工程</legend>
+        <p class="form-text mt-0">複数選べます。いちばん進んだ工程が作品に表示されます。</p>
+
+        <div class="kml-chips">
+          <%= form.collection_check_boxes :kind_ids, current_studio.step_kinds.all, :id, :name do |b| %>
+            <% if b.text == '釉掛け' %>
+              <%= b.checkbox class: 'kml-chip-input', data: {action: 'reform#visit'} %>
+              <%= b.label class: 'kml-chip' %>
+            <% else %>
+              <%= b.checkbox class: 'kml-chip-input' %>
+              <%= b.label class: 'kml-chip' %>
+            <% end %>
+          <% end %>
+        </div>
+      </fieldset>
+
+      <!-- 釉掛けを選んだときだけ表示 -->
+      <%= turbo_frame_tag 'glaze' do %>
+        <% if log.kinds.any? { it.name == '釉掛け' } %>
+          <fieldset class="kml-glaze-panel" data-controller="nested-form">
+            <legend class="form-label">使った釉薬</legend>
+
+            <!-- 作品の登録（6b）の釉薬と同じ部品。パネル自体が箱なので、行には地の色を付けない -->
+            <div class="kml-glaze-panel__list">
+              <div
+                class="kml-glaze-panel__item"
+                data-nested-form-target="container"
+              >
+                <%= form.fields_for :piece do |piece| %>
+                  <%= piece.fields_for :glaze_usages, log.piece.glaze_usages.new do |glaze_usage| %>
+                    <%= render 'glaze_usage', form: glaze_usage %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+
+            <button
+              class="kml-add-btn kml-add-btn--glaze"
+              type="button"
+              data-action="click->nested-form#add"
+            >
+              ＋ 釉薬を追加
+            </button>
+
+            <template data-nested-form-target="template">
+              <%= form.fields_for :piece do |piece| %>
+                <%= piece.fields_for :glaze_usages, log.piece.glaze_usages.new, child_index: '__INDEX__' do |glaze_usage| %>
+                  <%= render 'glaze_usage', form: glaze_usage %>
+                <% end %>
+              <% end %>
+            </template>
+          </fieldset>
+        <% end %>
+      <% end %>
+
+      <div>
+        <%= form.label :body, class: 'form-label' %>
+        <%= form.text_area :body, class: 'form-control' %>
+      </div>
+
+      <fieldset data-controller="attach-images">
+        <legend class="form-label">画像</legend>
+
+        <div
+          class="kml-sortable"
+          data-attach-images-target="container"
+          data-controller="sortable-positioning"
+          data-sortable-handle-value=".kml-sortable__handle"
+        >
+          <%= form.fields_for :photos, log.photos, include_id: false do |photo| %>
+            <%= render 'photo', photo: %>
+          <% end %>
+        </div>
+
+        <template data-attach-images-target="template">
+          <%= form.fields_for :photos, Photo.new, child_index: '__INDEX__' do |photo| %>
+            <%= render 'photo', photo: %>
+          <% end %>
+        </template>
+
+        <label class="kml-add-btn">
+          画像を追加
+          <input type="file" multiple data-action="attach-images#add" hidden>
+        </label>
+      </fieldset>
+
+      <div class="kml-switch-row">
+        <div class="kml-switch-row__body">
+          <span class="kml-switch-row__label">完成品にする</span>
+          <span class="kml-switch-row__note">次の画面で代表画像を選びます</span>
+        </div>
+
+        <div class="form-check form-switch m-0">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="log_finish"
+            name="log[finish]"
+          >
+
+          <label class="visually-hidden" for="log_finish">完成品にする</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- スマホ：登録ボタンだけ幅いっぱい。PC：右下にキャンセルと並べる -->
+    <footer class="kml-form__foot">
+      <%= link_to 'キャンセル', studio_my_piece_path(current_studio, log.piece), class: 'btn btn-outline-secondary kml-form__foot-cancel' %>
+      <%= form.submit class: 'btn btn-primary' %>
+    </footer>
   </div>
 <% end %>

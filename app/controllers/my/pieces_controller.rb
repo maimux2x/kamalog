@@ -1,6 +1,6 @@
 class My::PiecesController < ApplicationController
   def index
-    @pagy, @pieces = pagy(current_membership.pieces.order(:created_at))
+    @pagy, @pieces = pagy(current_membership.pieces.includes(logs: {steps: :kind}).order(:created_at))
   end
 
   def show

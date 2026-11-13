@@ -2,6 +2,7 @@ class Studio < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :clays,       dependent: :destroy
   has_many :glazes,      dependent: :destroy
+  has_many :step_kinds,  dependent: :destroy
 
   has_many :last_seen_users, class_name: 'User', dependent: :nullify, foreign_key: :last_seen_studio_id
 

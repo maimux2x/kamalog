@@ -1,0 +1,11 @@
+cup_log_day1:
+  log: cup_log_day1
+  kind: molding
+
+cup_log_day2:
+  log: cup_log_day2
+  kind: shaving
+
+base_log_day1:
+  log: base_log_day1
+  kind: molding

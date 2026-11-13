@@ -1,0 +1,24 @@
+molding:
+  name: 成形
+  studio: wonderland
+  position: 1
+
+shaving:
+  name: 削り
+  studio: wonderland
+  position: 2
+
+bisque_firing:
+  name: 素焼き
+  studio: wonderland
+  position: 3
+
+glazing:
+  name: 釉掛け
+  studio: wonderland
+  position: 4
+
+glaze_firing:
+  name: 本焼き
+  studio: wonderland
+  position: 5

@@ -10,11 +10,13 @@ class My::LogsController < ApplicationController
   end
 
   def new
-    @log = find_piece.logs.new(date: Date.current)
+    @log = find_piece.logs.new(log_params)
+    @log.date ||= Date.current
   end
 
   def create
-    @log = find_piece.logs.new(log_params)
+    @log = find_piece.logs.new
+    @log.assign_attributes log_params
 
     if @log.save
       redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
@@ -47,10 +49,19 @@ class My::LogsController < ApplicationController
   private
 
   def log_params
-    params.expect(log: [
+    params.fetch(:log, {}).permit(
       :date,
-      :title,
       :body,
+      kind_ids: [],
+
+      piece_attributes: [
+        :id,
+        glaze_usages_attributes: [[
+          :glaze_id,
+          :id,
+          :_destroy
+        ]]
+      ],
 
       photos_attributes: [[
         :id,
@@ -59,7 +70,7 @@ class My::LogsController < ApplicationController
         :position,
         :_destroy
       ]]
-    ])
+    )
   end
 
   def find_piece

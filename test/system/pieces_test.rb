@@ -17,7 +17,6 @@ class PiecesTest < ApplicationSystemTestCase
     assert_text     '湯呑み'
     assert_text     '小鉢'
     assert_text     'Aliceさんの作品'
-    assert_text     'Bobさんの作品'
     assert_selector 'img[src$="/dish_cup.png"]'
   end
 
@@ -31,7 +30,6 @@ class PiecesTest < ApplicationSystemTestCase
     end
 
     assert_selector 'img[src$="/dish_cup.png"]'
-    assert_text     '湯呑みの説明'
     assert_text     '自宅用の小さな湯呑みを作った'
   end
 

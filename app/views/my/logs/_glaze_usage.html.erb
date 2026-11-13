@@ -1,0 +1,19 @@
+<div class="kml-glaze-row" data-nested-form-target="item">
+  <% if form.object.persisted? %>
+    <%= form.hidden_field :id %>
+  <% end %>
+
+  <%= form.label :glaze_id, class: 'visually-hidden' %>
+  <%= form.collection_select :glaze_id, current_studio.glazes.order(:position), :id, :name, {prompt: true, required: true}, class: 'form-select form-select-sm' %>
+
+  <div class="kml-material-row__amount">
+    <button
+      type="button"
+      class="kml-remove-btn"
+      data-nested-form-target="removeButton"
+      data-action="click->nested-form#remove"
+    >
+      削除
+    </button>
+  </div>
+</div>
