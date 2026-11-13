@@ -3,9 +3,11 @@
     <%= link_to '自分の作品', studio_my_pieces_path(current_studio), class: 'kml-back' %>
   </header>
 
-  <!-- PC（lg 以上）は左に画像と追加ボタン、右に作品情報と作業記録の2カラム（10i）。
-       スマホは2つの列を display: contents で外し、order で
-       見出し → 画像 → 追加ボタン → 仕様 → 作業記録 の順に並べ直す -->
+  <!--
+    PC（lg 以上）は左に画像と追加ボタン、右に作品情報と作業記録の2カラム（10i）。
+    スマホは2つの列を display: contents で外し、order で
+    見出し → 画像 → 追加ボタン → 仕様 → 作業記録 の順に並べ直す
+  -->
   <div class="kml-detail__layout">
     <div class="kml-detail__media">
       <% if photo = @piece.photos.order('logs.date': :desc, position: :asc).first %>
@@ -15,6 +17,7 @@
       <% else %>
         <div class="kml-hero kml-photo-empty"></div>
       <% end %>
+
       <%= link_to '＋ 作業記録を追加', new_studio_my_piece_log_path(current_studio, @piece), class: 'btn btn-primary w-100' %>
     </div>
 
@@ -22,20 +25,52 @@
       <div class="kml-detail__head">
         <div class="kml-title-row">
           <h1 class="h2 mb-0"><%= @piece.title %></h1>
+
           <div class="kml-title-actions">
             <%= link_to edit_studio_my_piece_path(current_studio, @piece), class: 'kml-icon-btn', aria: {label: 'この作品を編集'} do %>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L20 8l-4-4L4 16z"></path><path d="M14.5 5.5 18.5 9.5"></path></svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 20h4L20 8l-4-4L4 16z"></path>
+                <path d="M14.5 5.5 18.5 9.5"></path>
+              </svg>
+
               <span class="kml-icon-btn__label">編集</span>
             <% end %>
 
             <%= button_to studio_my_piece_path(current_studio, @piece), method: :delete, form: {data: {turbo_confirm: '本当に削除しますか？'}}, class: 'kml-icon-btn kml-icon-btn--danger', aria: {label: 'この作品を削除'} do %>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M9.5 7V4.8h5V7"></path><path d="M6.5 7l1 13h9l1-13"></path></svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 7h16"></path>
+                <path d="M9.5 7V4.8h5V7"></path>
+                <path d="M6.5 7l1 13h9l1-13"></path>
+              </svg>
+
               <span class="kml-icon-btn__label">削除</span>
             <% end %>
           </div>
         </div>
+
         <div class="d-flex align-items-center flex-wrap gap-3">
           <span class="kml-badge kml-badge--clay"><%= @piece.status_i18n %></span>
+
           <% if log = @piece.logs.last %>
             <span class="kml-meta">前回 <%= log.steps.last.kind.name %> ・ <%= log.date %></span>
           <% end %>
@@ -47,8 +82,10 @@
           <dt>成形方法</dt>
           <dd><%= @piece.form_method_i18n %></dd>
         </div>
+
         <div class="kml-spec__row">
           <dt>土</dt>
+
           <dd>
             <% @piece.clay_usages.each.with_index 1 do |usage, i| %>
               <%= usage.clay.name %> <%= clay_weight(usage) %>
@@ -56,8 +93,10 @@
             <% end %>
           </dd>
         </div>
+
         <div class="kml-spec__row">
           <dt>釉薬</dt>
+
           <dd>
             <% @piece.glaze_usages.each.with_index 1 do |usage, i| %>
               <%= usage.glaze.name %>
@@ -74,25 +113,65 @@
         </div>
 
         <% @piece.logs.each do |log| %>
-          <div class="accordion kml-logs" id="logs">
+          <div class="accordion kml-logs">
             <div class="accordion-item kml-log">
               <h3 class="accordion-header kml-log__header">
-                <button class="accordion-button kml-log__head" type="button" data-bs-toggle="collapse" data-bs-target="#log-<%= log.id %>">
+                <button
+                  class="accordion-button kml-log__head"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#log-<%= log.id %>"
+                >
                   <span class="kml-log__date"><%= log.date %></span>
                   <span class="kml-badge kml-badge--clay"><%= log.steps.last.kind.name %></span>
                 </button>
+
                 <span class="kml-log__actions">
                   <%= link_to edit_studio_my_piece_log_path(current_studio, @piece, log), class: 'kml-icon-btn kml-icon-btn--sm', aria: {label: 'この記録を編集'} do %>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L20 8l-4-4L4 16z"></path><path d="M14.5 5.5 18.5 9.5"></path></svg>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M4 20h4L20 8l-4-4L4 16z"></path>
+                      <path d="M14.5 5.5 18.5 9.5"></path>
+                    </svg>
                   <% end %>
+
                   <%= button_to studio_my_piece_log_path(current_studio, @piece, log), method: :delete, form: {data: {turbo_confirm: '本当に削除しますか？'}}, class: 'kml-icon-btn kml-icon-btn--sm kml-icon-btn--danger', aria: {label: 'この記録を削除'} do %>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M9.5 7V4.8h5V7"></path><path d="M6.5 7l1 13h9l1-13"></path></svg>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M4 7h16"></path>
+                      <path d="M9.5 7V4.8h5V7"></path>
+                      <path d="M6.5 7l1 13h9l1-13"></path>
+                    </svg>
                   <% end %>
                 </span>
               </h3>
-              <div class="accordion-collapse collapse show" id="log-<%= log.id %>" data-bs-parent="#logs">
+
+              <div
+                class="accordion-collapse collapse show"
+                id="log-<%= log.id %>"
+                data-bs-parent="#logs"
+              >
                 <div class="accordion-body kml-log__body">
                   <p class="mb-0"><%= log.body %></p>
+
                   <% if log.photos.present? %>
                     <ul class="kml-log__photos list-unstyled mb-0">
                       <% log.photos.each do |photo| %>
@@ -100,6 +179,7 @@
                           <span class="kml-log__photo">
                             <%= image_tag photo.file %>
                           </span>
+
                           <span class="kml-log__caption"><%= photo.caption %></span>
                         </li>
                       <% end %>
