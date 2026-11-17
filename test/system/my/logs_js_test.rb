@@ -46,9 +46,11 @@ class My::LogsJsTest < ApplicationSystemTestCase
   end
 
   test '作業記録を更新する' do
-    visit studio_my_piece_log_path(@studio, @piece, logs(:cup_log_day1))
+    visit studio_my_piece_path(@studio, @piece)
 
-    click_on '編集'
+    within 'div.kml-log', text: '2026-04-05' do
+      click_on 'この記録を編集'
+    end
 
     fill_in '作業内容', with: '更新後の作業内容'
     attach_file '画像を追加', file_fixture('syokki_mug_cup.png'), make_visible: true
@@ -61,7 +63,9 @@ class My::LogsJsTest < ApplicationSystemTestCase
       fill_in '説明', with: '説明を更新'
     end
 
-    click_on '更新する'
+    within 'footer' do
+      click_on '更新する'
+    end
 
     assert_text        '作業記録を更新しました。'
     assert_text        '2026-04-05'
@@ -73,9 +77,11 @@ class My::LogsJsTest < ApplicationSystemTestCase
   end
 
   test '作業記録の画像の並び順を変更する' do
-    visit studio_my_piece_log_path(@studio, @piece, logs(:cup_log_day1))
+    visit studio_my_piece_path(@studio, @piece)
 
-    click_on '編集'
+    within 'div.kml-log', text: '2026-04-05' do
+      click_on 'この記録を編集'
+    end
 
     source = find('.kml-sortable__row:nth-child(1) .kml-sortable__handle')
     target = find('.kml-sortable__row:nth-child(2)')
@@ -90,16 +96,20 @@ class My::LogsJsTest < ApplicationSystemTestCase
       assert_selector 'img[src$="/dish_cup.png"]'
     end
 
-    click_on '更新する'
+    within 'footer' do
+      click_on '更新する'
+    end
 
     assert_text '作業記録を更新しました。'
 
-    within 'div.grid > div:nth-child(1)' do
-      assert_selector 'img[src$="/dish.png"]'
-    end
+    within '.kml-log', text: '2026-04-05' do
+      within '.kml-log__photos li:nth-child(1)' do
+        assert_selector 'img[src$="/dish.png"]'
+      end
 
-    within 'div.grid > div:nth-child(2)' do
-      assert_selector 'img[src$="/dish_cup.png"]'
+      within '.kml-log__photos li:nth-child(2)' do
+        assert_selector 'img[src$="/dish_cup.png"]'
+      end
     end
   end
 end

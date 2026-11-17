@@ -112,8 +112,8 @@
           <span class="kml-count"><%= @piece.logs.size %>件</span>
         </div>
 
-        <% @piece.logs.each do |log| %>
-          <div class="accordion kml-logs">
+        <div class="accordion kml-logs">
+          <% @piece.logs.each do |log| %>
             <div class="accordion-item kml-log">
               <h3 class="accordion-header kml-log__header">
                 <button
@@ -174,7 +174,7 @@
 
                   <% if log.photos.present? %>
                     <ul class="kml-log__photos list-unstyled mb-0">
-                      <% log.photos.each do |photo| %>
+                      <% log.photos.order(:position).each do |photo| %>
                         <li>
                           <span class="kml-log__photo">
                             <%= image_tag photo.file %>
@@ -188,8 +188,8 @@
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </section>
     </div>
   </div>

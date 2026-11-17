@@ -51,11 +51,11 @@ body {
 
 // 写真枠の中の画像は、縦横比を保ったまま枠いっぱいに切り抜く。
 // image_tag が <picture> や <a> で包まれていても効くよう、子ではなく子孫で指定する。
-:is(.kml-tile__photo, .kml-piece-row__thumb, .kml-log__photo, .kml-hero, .kml-carousel__photo) img {
+:is(.kml-tile__photo, .kml-piece-row__thumb, .kml-log__photo, .kml-hero, .kml-carousel__photo, .kml-sortable__thumb) img {
   display: block; width: 100%; height: 100%; object-fit: cover;
 }
 // 枠のクラスを <img> に直接付けた場合（image_tag(..., class: "kml-piece-row__thumb")）も伸ばさない
-img:is(.kml-tile__photo, .kml-piece-row__thumb, .kml-log__photo, .kml-hero, .kml-carousel__photo) {
+img:is(.kml-tile__photo, .kml-piece-row__thumb, .kml-log__photo, .kml-hero, .kml-carousel__photo, .kml-sortable__thumb) {
   object-fit: cover;
 }
 
@@ -224,12 +224,17 @@ img:is(.kml-tile__photo, .kml-piece-row__thumb, .kml-log__photo, .kml-hero, .kml
   &:active { cursor: grabbing; }
 }
 
+// 画像の縦横比に関係なく 56px の正方形に切り抜く。幅が揃うのでキャプションの左端も揃う。
+// <img class="kml-sortable__thumb"> でも <span class="kml-sortable__thumb"><img></span> でもよい
 .kml-sortable__thumb {
+  display: block;
   flex: none;
   width: 56px;
   height: 56px;
+  max-width: none;         // .img-fluid などの max-width で縮まないように
   border-radius: $border-radius-sm;
   object-fit: cover;
+  overflow: hidden;
   background: var(--kml-placeholder-a);
 }
 

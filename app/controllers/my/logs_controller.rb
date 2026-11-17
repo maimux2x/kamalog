@@ -1,14 +1,4 @@
 class My::LogsController < ApplicationController
-  def index
-    @piece = current_membership.pieces.find(params[:piece_id])
-
-    @pagy, @logs = pagy(@piece.logs.order(:created_at))
-  end
-
-  def show
-    @log = find_piece.logs.find(params[:id])
-  end
-
   def new
     @log = find_piece.logs.new(log_params)
     @log.date ||= Date.current
@@ -19,7 +9,7 @@ class My::LogsController < ApplicationController
     @log.assign_attributes log_params
 
     if @log.save
-      redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を登録しました。'
+      redirect_to studio_my_piece_path(current_studio, @log.piece), status: :see_other, notice: '作業記録を登録しました。'
     else
       render :new, status: :unprocessable_content
     end
@@ -33,7 +23,7 @@ class My::LogsController < ApplicationController
     @log = find_piece.logs.find(params[:id])
 
     if @log.update(log_params)
-      redirect_to studio_my_piece_log_path(current_studio, @log.piece, @log), status: :see_other, notice: '作業記録を更新しました。'
+      redirect_to studio_my_piece_path(current_studio, @log.piece), status: :see_other, notice: '作業記録を更新しました。'
     else
       render :edit, status: :unprocessable_content
     end
@@ -43,7 +33,7 @@ class My::LogsController < ApplicationController
     piece = find_piece
     piece.logs.find(params[:id]).destroy!
 
-    redirect_to studio_my_piece_logs_path(current_studio, piece), status: :see_other, notice: '作業記録を削除しました。'
+    redirect_to studio_my_piece_path(current_studio, piece), status: :see_other, notice: '作業記録を削除しました。'
   end
 
   private
