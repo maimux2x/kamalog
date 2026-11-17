@@ -6,6 +6,10 @@ cup_log_day2:
   log: cup_log_day2
   kind: shaving
 
+cup_log_day3:
+  log: cup_log_day3
+  kind: glazing
+
 base_log_day1:
   log: base_log_day1
   kind: molding

@@ -8,6 +8,11 @@ cup_log_day2:
   date: 2026-04-12
   body: 削りを入れて凹凸や底の厚みを削って形を整えた。
 
+cup_log_day3:
+  piece: cup
+  date: 2026-04-19
+  body: 釉掛けをした。
+
 base_log_day1:
   piece: base
   date: 2026-05-01

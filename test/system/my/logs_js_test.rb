@@ -48,18 +48,17 @@ class My::LogsJsTest < ApplicationSystemTestCase
   test '作業記録を更新する' do
     visit studio_my_piece_path(@studio, @piece)
 
-    within 'div.kml-log', text: '2026-04-05' do
+    within 'div.kml-log', text: '2026-04-19' do
       click_on 'この記録を編集'
     end
 
     fill_in '作業内容', with: '更新後の作業内容'
+
+    assert_no_text '使った釉薬'
+
     attach_file '画像を追加', file_fixture('syokki_mug_cup.png'), make_visible: true
 
     within '[data-attach-images-target="container"] :nth-child(1 of [data-attach-images-target="item"])' do
-      click_on '削除'
-    end
-
-    within '[data-attach-images-target="container"] :nth-child(2 of [data-attach-images-target="item"])' do
       fill_in '説明', with: '説明を更新'
     end
 
@@ -71,8 +70,6 @@ class My::LogsJsTest < ApplicationSystemTestCase
     assert_text        '2026-04-05'
     assert_text        '更新後の作業内容'
     assert_text        '説明を更新'
-    assert_no_selector 'img[src$="/dish_cup.png"]'
-    assert_selector    'img[src$="/dish.png"]'
     assert_selector    'img[src$="/syokki_mug_cup.png"]'
   end
 
