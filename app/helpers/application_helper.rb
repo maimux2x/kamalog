@@ -20,4 +20,8 @@ module ApplicationHelper
   def clay_weight(usage)
     "#{number_to_rounded(usage.weight_amount, strip_insignificant_zeros: true)}#{usage.weight_unit_i18n}"
   end
+
+  def latest_photo(piece)
+    piece.photos.order('logs.date': :desc, position: :asc).first
+  end
 end
