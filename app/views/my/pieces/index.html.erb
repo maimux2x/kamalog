@@ -16,7 +16,7 @@
             <% if piece.photos.empty? %>
               <span class="kml-piece-row__thumb kml-photo-empty"></span>
             <% else %>
-              <%= image_tag piece.photos.order('logs.date': :desc, position: :asc).first.file, alt: '', class: 'kml-piece-row__thumb' %>
+              <%= image_tag latest_photo(piece).file, alt: '', class: 'kml-piece-row__thumb' %>
             <% end %>
 
             <span class="kml-piece-row__body">

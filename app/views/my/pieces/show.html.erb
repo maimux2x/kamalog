@@ -10,7 +10,7 @@
   -->
   <div class="kml-detail__layout">
     <div class="kml-detail__media">
-      <% if photo = @piece.photos.order('logs.date': :desc, position: :asc).first %>
+      <% if photo = latest_photo(@piece) %>
         <div class="kml-hero">
           <%= image_tag photo.file, alt: '' %>
         </div>
