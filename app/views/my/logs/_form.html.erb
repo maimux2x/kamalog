@@ -47,7 +47,7 @@
 
       <!-- 釉掛けを選んだときだけ表示 -->
       <%= turbo_frame_tag 'glaze' do %>
-        <% if log.kinds.any? { it.name == '釉掛け' } %>
+        <% if log.new_record? && log.kinds.any? { it.name == '釉掛け' } %>
           <fieldset class="kml-glaze-panel" data-controller="nested-form">
             <legend class="form-label">使った釉薬</legend>
 
