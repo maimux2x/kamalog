@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
     namespace :my do
       resources :pieces, only: %i[index show new create edit update destroy] do
-        resources :logs, only: %i[index show new create edit update destroy]
+        resources :logs, only: %i[new create edit update destroy]
       end
     end
   end

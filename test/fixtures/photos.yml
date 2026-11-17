@@ -7,3 +7,8 @@ dish_photo:
   log: cup_log_day1
   caption: 皿の説明
   position: 2
+
+teacup_photo:
+  log: teacup_log_day1
+  caption: ティーカップの説明
+  position: 1
